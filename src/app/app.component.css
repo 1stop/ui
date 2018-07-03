@@ -1,0 +1,39 @@
+.section {
+    border-right: 1px lightgray solid;
+    overflow: auto;
+}
+
+/* .section:hover {
+    overflow: auto
+} */
+
+.search{
+    border: none;
+    outline: none;
+    font-size: 16px;
+}
+
+.search-bar {
+    background-color: white;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.button {
+    cursor: pointer;
+}
+
+.full {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: 100%;
+    border-radius: 0px !important;
+}
+
+.fullTopbar {
+    padding: 0px;
+}
+
+.fullButton {
+    line-height: 39px;
+}

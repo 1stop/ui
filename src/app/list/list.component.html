@@ -1,0 +1,36 @@
+<mat-list style="padding-top:0px">
+    <mat-list-item *ngFor="let list of lists"
+                   (click)="_select(list)"
+                   [class.selected]="selectedId == list.id"
+                   style="height:auto;min-height:48px"
+                   fxLayout="column"
+                   fxLayoutAlign="center none">
+        <div *ngIf="!(state.edit | async)"
+             class="item">
+            <span>{{ list.name }}</span>
+            <span mat-line class="excerpt" [innerHtml]="list.data?.text | stipMarkdown | highlight: keyword | excerpt">
+            <!-- <span mat-line class="excerpt" [innerHtml]="list.data?.completeText | stipMarkdown | highlight: keyword | excerpt"> -->
+            </span>
+        </div>
+
+        <div *ngIf="state.edit | async" fxLayout="rows" style="width:100%">
+            <button mat-icon-button (click)="delete(list.id, $event)" style="color:lightgray">
+                <mat-icon>close</mat-icon>
+            </button>
+            <input class="edit"
+                   style="width:100%"
+                   [(ngModel)]="list.name"
+                   placeholder="Name"
+                   (ngModelChange)="edit(list)"/>
+        </div>
+    </mat-list-item>
+
+    <mat-list-item *ngIf="state.edit | async">
+        <button mat-icon-button
+                style="color:lightgray"
+                (click)="add()">
+            <mat-icon>add</mat-icon>
+            <span>New List</span>
+        </button>
+    </mat-list-item>
+</mat-list>

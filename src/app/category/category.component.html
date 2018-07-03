@@ -1,0 +1,28 @@
+<mat-list style="padding-top:0px">
+    <mat-list-item *ngFor="let category of categories"
+                   (click)="_select(category.id)"
+                   [class.selected]="selectedId == category.id"
+                   style="height:auto;min-height:48px"
+                   fxLayout="column"
+                   fxLayoutAlign="center none">
+        <span *ngIf="!(state.edit | async)" class="item">{{ category.name }}</span>
+        <div *ngIf="state.edit | async" fxLayout="rows">
+            <button mat-icon-button (click)="delete(category.id, $event)" style="color:lightgray">
+                <mat-icon>close</mat-icon>
+            </button>
+            <input class="edit"
+                    [(ngModel)]="category.name"
+                    placeholder="Name"
+                    (ngModelChange)="edit(category)"/>
+        </div>
+    </mat-list-item>
+
+    <mat-list-item *ngIf="state.edit | async">
+        <button mat-icon-button
+                style="color:lightgray"
+                (click)="add()">
+            <mat-icon>add</mat-icon>
+            <span>New Category</span>
+        </button>
+    </mat-list-item>
+</mat-list>

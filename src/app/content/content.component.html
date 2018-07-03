@@ -1,0 +1,89 @@
+<div style="height:100%;width:100%"
+     fxLayout="rows"
+     split="row">
+    <div fxFlex="20"
+         fxFlex.lt-sm="100"
+         class="section"
+         [fxHide.lt-sm]="true && _swipe != 'category'"
+         splitArea
+         (swipeleft)="swipe('list')">
+        <app-category (select)="list_refresh($event, true)"
+                      [categories]="categories"
+                      [selectedId]="catId">
+        </app-category>
+    </div>
+
+    <div class="handle handle-row"
+         [fxHide.lt-sm]="true"
+         style="background-color:lightgray;width:3px;height:100%;cursor:col-resize"
+         splitHandler>
+    </div>
+
+    <div fxFlex
+         splitArea>
+        <div style="height:100%;width:100%"
+             fxLayout="rows"
+             split="row">
+             <div fxFlex="40"
+                  fxFlex.lt-sm="100"
+                  [fxHide.lt-sm]="true && _swipe != 'list'"
+                  class="section"
+                  splitArea
+                  (swipeleft)="swipe('text')"
+                  (swiperight)="swipe('category')">
+                 <app-list #list
+                           *ngIf="catId != undefined"
+                           (highlight)="text_refresh($event)"
+                           [lists]="lists"
+                           [categoryId]="catId"
+                           [selectedId]="listId"
+                           [keyword]="query">
+                 </app-list>
+                 <div fxLayout="row"
+                      fxLayoutAlign="center center"
+                      style="height:100%"
+                      *ngIf="catId == undefined">
+                     <mat-icon style="font-size:30vh;height:30vh;width:30vh;color:gray">
+                         not_interested
+                     </mat-icon>
+                 </div>
+             </div>
+
+             <div class="handle handle-row"
+                  splitHandler
+                  [fxHide.lt-sm]="true"
+                  style="background-color:lightgray;width:3px;height:100%;cursor:col-resize">
+             </div>
+
+             <div fxFlex
+                  class="section"
+                  style="padding:1em"
+                  splitArea
+                  [fxHide.lt-sm]="true && _swipe != 'text'"
+                  (swiperight)="swipe('list')">
+                 <app-text #text2
+                           *ngIf="listId != undefined"
+                           [content]="currentList"
+                           (update)="update($event)">
+                 </app-text>
+                 <div fxLayout="row"
+                      fxLayoutAlign="center center"
+                      style="height:100%"
+                      *ngIf="listId == undefined">
+                     <mat-icon style="font-size:30vh;height:30vh;width:30vh;color:gray">
+                         not_interested
+                     </mat-icon>
+                 </div>
+             </div>
+
+        </div>
+    </div>
+</div>
+
+<div style="position:absolute;bottom:10px;right:10px">
+    <button mat-fab (click)="toggle()"
+            *ngIf="user?.email == 'chyeap89@gmail.com' || user?.email == 'sindrosa.24@gmail.com'" >
+        <mat-icon *ngIf="!(state.edit | async)">edit</mat-icon>
+        <mat-icon *ngIf="state.edit | async">visibility</mat-icon>
+    </button>
+</div>

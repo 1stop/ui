@@ -1,0 +1,56 @@
+<!-- <div fxLayout="column">
+    <div class="mat-subheading-1">New Section</div>
+    <mat-form-field>
+        <input matInput placeholder="Name" [formControl]="name" required>
+        <mat-error *ngIf="name.invalid">{{getErrorMessage()}}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+        <input matInput placeholder="Short Name" [formControl]="short" required>
+    </mat-form-field>
+
+    <mat-form-field>
+       <textarea matInput placeholder="Description" [formControl]="description" required></textarea>
+    </mat-form-field>
+
+    <div>
+        <button mat-raised-button (click)="close()">Cancel</button>
+        <button mat-raised-button color="primary" (click)="submit()">
+            <span *ngIf="!data">Add</span>
+            <span *ngIf="data">Update</span>
+        </button>
+    </div>
+</div> -->
+
+<div fxLayout="column">
+    <div class="mat-subheading-1">New Book</div>
+    <mat-form-field>
+        <input matInput placeholder="Name" [formControl]="name" required>
+        <mat-error *ngIf="name.invalid">{{getErrorMessage()}}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-select placeholder="Categories">
+            <mat-option *ngFor="let category of [{ id: '', name: 'None'},
+            { id: 'osha', name: 'Occupational Safety and Health'},
+            { id: 'civil', name: 'Civil'},
+            { id: 'account', name: 'Account'},
+            { id: 'physics', name: 'Physics'},
+            { id: 'biology', name: 'Biology'}]" [value]="category.id">
+                {{ category.name }}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+        <textarea matInput placeholder="Description" [formControl]="description" required></textarea>
+    </mat-form-field>
+
+    <div>
+        <button mat-raised-button (click)="close()">Cancel</button>
+        <button mat-raised-button color="primary" (click)="submit()">
+            <span *ngIf="!data">Add</span>
+            <span *ngIf="data">Update</span>
+        </button>
+    </div>
+</div>   

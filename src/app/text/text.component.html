@@ -1,0 +1,54 @@
+<div class="main"
+     style="padding:10px"
+     fxLayout="column">
+    <div style="margin-bottom:5px" *ngIf="content?.name">
+        <b>{{ content.name }}</b>
+    </div>
+
+
+    <div fxLayout="column"
+         fxFlex
+         *ngIf="state.edit | async"
+         style="padding:5px;height:100%">
+        <textarea class="edit"
+                  fxFlex
+                  [(ngModel)]="content.data.text"
+                  (ngModelChange)="edit()">
+        </textarea>
+
+        <mat-form-field>
+            <mat-chip-list #chipList>
+                <mat-chip *ngFor="let tag of content?.data?.tag"
+                          [removable]="true"
+                          (remove)="removeTag(tag)">
+                 {{ tag }}
+                 <mat-icon matChipRemove>cancel</mat-icon>
+            </mat-chip>
+            <input placeholder="New Tags..."
+               [matChipInputFor]="chipList"
+               [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+               [matChipInputAddOnBlur]="true"
+               (matChipInputTokenEnd)="addTag($event)" />
+           </mat-chip-list>
+       </mat-form-field>
+       <div style="height:30vh;overflow:auto" *ngIf="content?.meta">
+            <div>
+              Score: {{ content?.meta?.score }}
+            </div>
+            <div>text:</div>
+            <div *ngFor="let t of content?.meta?.highlight?.text">
+                {{ t }}
+            </div>
+            <div>tag:</div>
+            <div *ngFor="let t of content?.meta?.highlight?.tag">
+                {{ t }}
+            </div>
+
+       </div>
+    </div>
+
+    <div style="margin-left:5px">
+        <markdown *ngIf="!(state.edit | async)" [data]="content?.data?.text">
+        </markdown>
+    </div>
+</div>
