@@ -1,4 +1,4 @@
-import { Component, ViewChild, HostListener } from '@angular/core';
+import { Component, ViewChild, HostListener, OnInit } from '@angular/core';
 import { AppState } from './app.service';
 import { CategoryService } from './category/category.service';
 import { ListService } from './list/list.service';
@@ -8,35 +8,23 @@ import { BehaviorSubject } from 'rxjs';
 import * as firebase from 'firebase/app';
 import { AuthService } from './services/auth.service';
 import { get, findIndex } from 'lodash';
+import { UserService } from './services/user.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   user: any;
-  query: string = "";
-  searching: boolean = false;
+  query = '';
+  searching = false;
 
   constructor(public state: AppState,
-              private _auth: AuthService){}
+              private _auth: AuthService,
+              public _user: UserService ) {}
 
-  ngOnInit(){
-    var config = {
-      apiKey: "AIzaSyA1Xia725799awT7BTMZBVDQN0EW09VDRA",
-      authDomain: "osha-b65ae.firebaseapp.com",
-      databaseURL: "https://osha-b65ae.firebaseio.com",
-      projectId: "osha-b65ae",
-      storageBucket: "osha-b65ae.appspot.com",
-      messagingSenderId: "536860153158"
-    };
-    firebase.initializeApp(config);
-    this._auth.authStatus().subscribe((user)=> {
-        this.user = user;
-        this.state.load_user(user);
-    });
-  }
+  ngOnInit() {}
 
   @HostListener('document:keydown.escape')
   clear(){
@@ -47,17 +35,17 @@ export class AppComponent {
     this.searching = false;
   }
 
-  search(){
+  search() {
     this.state.search.next(this.query);
   }
 
-  login(){
-    this._auth.loginWithGoogle().subscribe((user)=>{
+  login() {
+    this._auth.loginWithGoogle().subscribe((user) => {
         this.user = user;
     });
   }
 
-  toggle(){
+  toggle() {
     this.state.edit.next(!this.state.edit.value);
   }
 }
