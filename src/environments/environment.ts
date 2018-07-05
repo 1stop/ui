@@ -5,5 +5,13 @@
 
 export const environment = {
   production: false,
+  firebase: {
+    apiKey: 'AIzaSyD6ick0dvTFeV0pnK8c2EeTAxzUnE0Zt3w',
+    authDomain: 'arrow-29902.firebaseapp.com',
+    databaseURL: 'https://arrow-29902.firebaseio.com',
+    projectId: 'arrow-29902',
+    storageBucket: 'arrow-29902.appspot.com',
+    messagingSenderId: '473482270627'
+  },
   url: ''
 };

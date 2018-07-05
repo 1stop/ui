@@ -6,7 +6,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatListModule, MatIconModule, MatToolbarModule,
          MatButtonModule, MatChipsModule,
-         MatFormFieldModule, MatSnackBarModule, 
+         MatFormFieldModule, MatSnackBarModule,
          MatProgressSpinnerModule, MatSidenavModule, MatInputModule } from '@angular/material';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -26,6 +26,7 @@ import { ListService } from './list/list.service';
 import { environment } from '../environments/environment';
 import { Autosize } from 'ng-autosize/src/autosize.directive';
 import { AuthService } from './services/auth.service';
+import { AngularFireModule } from 'angularfire2';
 
 import * as Raven from 'raven-js';
 import { SplitAreaDirective } from './directive/split/split-area.directive';
@@ -50,6 +51,9 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule} from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
+import { UserService, LoginDialogComponent } from './services/user.service';
+import { AngularFireAuthModule } from 'angularfire2/auth';
+
 
 export class MyHammerConfig extends HammerGestureConfig  {
   overrides = {
@@ -67,15 +71,15 @@ export class MyHammerConfig extends HammerGestureConfig  {
 }
 
 
-if ( environment.production ){
+if ( environment.production ) {
   Raven
     .config('https://b91dde0b546c45008931c588e63de99c@sentry.io/272501')
     .install();
 }
 
 export class RavenErrorHandler implements ErrorHandler {
-  handleError(err:any) : void {
-    if ( environment.production ){
+  handleError(err: any): void {
+    if ( environment.production ) {
       Raven.captureException(err.originalError || err);
     }
   }
@@ -96,13 +100,14 @@ export class RavenErrorHandler implements ErrorHandler {
     HighlightPipe,
     ExcerptPipe,
     MainComponent,
-    DialogComponent
+    DialogComponent,
+    LoginDialogComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     FlexLayoutModule,
-    RouterModule.forRoot( appRoutes, {enableTracing:false}),
+    RouterModule.forRoot( appRoutes, {enableTracing: false}),
     MatListModule,
     MatIconModule,
     FormsModule,
@@ -125,12 +130,16 @@ export class RavenErrorHandler implements ErrorHandler {
     MatCardModule,
     MatTabsModule,
     MatExpansionModule,
-    MatDividerModule
+    MatDividerModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireAuthModule
   ],
   providers: [
     AppState,
     CategoryService,
     ListService,
+    UserService,
+    // FireBaseService,
     // { provide: ErrorHandler, useClass: RavenErrorHandler },
     AuthService,
     {
@@ -143,7 +152,8 @@ export class RavenErrorHandler implements ErrorHandler {
     }],
   bootstrap: [AppComponent],
   entryComponents: [
-    DialogComponent
+    DialogComponent,
+    LoginDialogComponent
   ]
 })
 export class AppModule { }
