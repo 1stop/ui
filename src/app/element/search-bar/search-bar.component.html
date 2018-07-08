@@ -1,0 +1,26 @@
+<div class="search-bar mat-elevation-z2"
+        fxLayout="row"
+        style="width:100%">
+    <mat-icon class="button fullButton icon"
+                *ngIf="focus"
+                (click)="searching=false">arrow_back</mat-icon>
+
+    <mat-icon *ngIf="!focus" 
+              class="button icon">search</mat-icon>
+    
+    <span class="vertLine"></span>
+
+    <input fxFlex 
+            class="search"
+            placeholder="Search"
+            [(ngModel)]="query"
+            (keydown.enter)="search()" 
+            
+            (focus)="focus=true"
+            (blur)="focus=false"/>
+    <mat-icon *ngIf="query"
+        class="button"
+        [class.fullButton]="searching"
+        style="color:black"
+        (click)="clear()">close</mat-icon>
+</div>

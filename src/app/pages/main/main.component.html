@@ -13,7 +13,7 @@
     </div>
     <button mat-button color="primary">Favorite List</button>
 </div> -->
-
+<!-- 
 <mat-tab-group (selectedIndexChange)="onCategoryChange($event)">
     <ng-template ngFor let-bcat [ngForOf]="categories">
         <div *ngIf="bcat.type === 'book'">
@@ -45,7 +45,6 @@
                                         <button mat-icon-button *ngIf="state.user">
                                             <mat-icon (click)="removeBook(b, i)">delete</mat-icon>
                                         </button>
-                                        <!-- <button mat-icon-button><mat-icon>more_horiz</mat-icon></button> -->
                                     </mat-card-actions>
                                 </mat-card>
                             </mat-grid-tile> 
@@ -61,11 +60,6 @@
                     <b>Search History</b>
                     <br>
                     <div style="height:25px" *ngIf="!srcKeys?.length"><i>Empty Search History</i></div>
-                    <!-- <div fxLayout="row" fxLayoutGap="15px">
-                        <div *ngFor="let k of srcKeys;">
-                            <mat-card>{{k}}</mat-card>
-                        </div>
-                    </div> -->
                     <br>
                     <mat-divider></mat-divider>
                     <br>
@@ -118,16 +112,14 @@
     
 </mat-tab-group>
 
-<!-- <div fxLayout="row" style="height:100%">
-    <app-content fxFlex></app-content>
-</div> -->
-
-
-<!-- <div style="position:absolute;bottom:10px;right:10px"> -->
 <div class="mat-fab-btn">
-    <!-- <button mat-fab (click)="add()"
-            *ngIf="state.user?.email == 'chyeap89@gmail.com' || state.user?.email == 'sindrosa.24@gmail.com'" > -->
     <button mat-fab (click)="add()">
         <mat-icon>add</mat-icon>
     </button>
+</div> -->
+
+<div style="height:100%" fxLayout="row" fxLayoutAlign="center center">
+    <div style="width:80%">
+        <app-search-bar></app-search-bar>
+    </div>
 </div>

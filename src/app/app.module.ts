@@ -39,8 +39,8 @@ import { HammerGestureConfig, HAMMER_GESTURE_CONFIG } from '@angular/platform-br
 import { ContentComponent } from './content/content.component';
 
 import { appRoutes } from './app.routing';
-import { MainComponent } from './main/main.component';
-import { DialogComponent } from './main/dialog/dialog.component';
+// import { MainComponent } from './main/main.component';
+// import { DialogComponent } from './main/dialog/dialog.component';
 import { CustomRouteReuseStrategy } from './router-strategy';
 
 import { MatCardModule } from '@angular/material/card';
@@ -52,6 +52,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { UserService, LoginDialogComponent } from './services/user.service';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { HttpClientModule } from '@angular/common/http';
+import { MainModule } from './pages/main/main.module';
 
 
 export class MyHammerConfig extends HammerGestureConfig  {
@@ -98,11 +99,12 @@ export class RavenErrorHandler implements ErrorHandler {
     StipMarkdownPipe,
     HighlightPipe,
     ExcerptPipe,
-    MainComponent,
-    DialogComponent,
+    // MainComponent,
+    // DialogComponent,
     LoginDialogComponent
   ],
   imports: [
+    MainModule,
     BrowserModule,
     BrowserAnimationsModule,
     FlexLayoutModule,
@@ -150,7 +152,7 @@ export class RavenErrorHandler implements ErrorHandler {
     }],
   bootstrap: [AppComponent],
   entryComponents: [
-    DialogComponent,
+    // DialogComponent,
     LoginDialogComponent
   ]
 })
