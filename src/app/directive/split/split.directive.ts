@@ -6,7 +6,7 @@ import {
 import {SplitAreaDirective} from './split-area.directive';
 import {SplitHandlerDirective} from './split-handler.directive';
 import {FlexDirective} from '@angular/flex-layout';
-import {Subscription} from 'rxjs/Subscription';
+import {Subscription} from 'rxjs';
 
 @Directive({
   selector: '[split]',
@@ -18,7 +18,7 @@ export class SplitDirective implements AfterContentInit, OnDestroy {
   watcher: Subscription;
 
   @Input('split')
-  direction: string = 'row';
+  direction = 'row';
 
   @ContentChild(SplitHandlerDirective) handle: SplitHandlerDirective;
   @ContentChildren(SplitAreaDirective) areas: QueryList<SplitAreaDirective>;
@@ -28,7 +28,7 @@ export class SplitDirective implements AfterContentInit, OnDestroy {
 
   ngAfterContentInit(): void {
     this.watcher = this.handle.drag.subscribe(pos => {
-        this.onDrag(pos)
+        this.onDrag(pos);
     });
   }
 
@@ -71,7 +71,7 @@ export class SplitDirective implements AfterContentInit, OnDestroy {
    * pixel float value.
    */
   valueToPixel(value: string | number, parentWidth: number): number {
-    let isPercent = () => String(value).indexOf('px') < 0;
+    const isPercent = () => String(value).indexOf('px') < 0;
     let size = parseFloat(String(value));
     if (isPercent()) {
       size = parentWidth * (size / 100);  // Convert percentage to actual pixel float value

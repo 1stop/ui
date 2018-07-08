@@ -16,7 +16,6 @@ import { UserService } from './services/user.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  user: any;
   query = '';
   searching = false;
 
@@ -27,8 +26,8 @@ export class AppComponent implements OnInit {
   ngOnInit() {}
 
   @HostListener('document:keydown.escape')
-  clear(){
-    if ( this.query ){
+  clear() {
+    if ( this.query ) {
         this.state.search.next(undefined);
     }
     this.query = '';
@@ -37,12 +36,6 @@ export class AppComponent implements OnInit {
 
   search() {
     this.state.search.next(this.query);
-  }
-
-  login() {
-    this._auth.loginWithGoogle().subscribe((user) => {
-        this.user = user;
-    });
   }
 
   toggle() {

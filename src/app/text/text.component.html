@@ -48,7 +48,6 @@
     </div>
 
     <div style="margin-left:5px">
-        <markdown *ngIf="!(state.edit | async)" [data]="content?.data?.text">
-        </markdown>
+        {{ content?.data?.text }}
     </div>
 </div>

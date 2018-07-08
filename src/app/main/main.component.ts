@@ -1,19 +1,22 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ObservableMedia, MediaChange } from '@angular/flex-layout';
 import { HttpClient } from '@angular/common/http';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 import { AppState } from '../app.service';
-import { MatDialog, MatDialogRef } from '@angular/material';
+import { MatDialog } from '@angular/material';
 import { DialogComponent } from './dialog/dialog.component';
 import { Router } from '@angular/router';
-import { cloneDeep, each, filter, compact } from 'lodash';
+import cloneDeep from 'lodash-es/cloneDeep';
+import each from 'lodash-es/each';
+import filter from 'lodash-es/filter';
+import compact from 'lodash-es/compact';
 
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
   styleUrls: ['./main.component.css']
 })
-export class MainComponent implements OnInit {
+export class MainComponent implements OnInit, OnDestroy {
     list: any[] = [];
     allBooks: any[] = [];
     books: any[] = [];
@@ -24,7 +27,7 @@ export class MainComponent implements OnInit {
     historiies: any[] = [];
     srcKeys: any[] = [];
 
-    column: number = 1;
+    column = 1;
     media$: Subscription;
     constructor(public media: ObservableMedia,
                 private http: HttpClient,
@@ -33,8 +36,8 @@ export class MainComponent implements OnInit {
                 private _router: Router ) { }
 
     ngOnInit() {
-        this.media$ = this.media.subscribe((change: MediaChange)=>{
-            switch (change.mqAlias){
+        this.media$ = this.media.subscribe((change: MediaChange) => {
+            switch (change.mqAlias) {
                 case 'xs':
                     this.column = 1;
                     break;
@@ -49,26 +52,30 @@ export class MainComponent implements OnInit {
             }
         });
 
-        //get category list
+        // get category list
         this.categories = [
-            { 
-                id: 'osha', 
-                name: 'Safety and Health', 
+            {
+                id: 'osha',
+                name: 'Safety and Health',
                 type: 'book',
-                description: 'The <b>OSHA</b> or <b>Occupational Safety and Health Administration</b> is an department of the Malaysia under Ministry of Human Resource which is reponsible for labour safety, sets and enforces protective workplace safety and health standards. OSHA also provides information, training and assistance to employers and workers'
+                description: `The <b>OSHA</b> or <b>Occupational Safety and Health
+                Administration</b> is an department of the Malaysia under Ministry
+                of Human Resource which is reponsible for labour safety, sets and
+                enforces protective workplace safety and health standards. OSHA
+                 also provides information, training and assistance to employers and workers`
             },
             // { id: 'civil', name: 'Civil', type: 'book'},
-            { id: 'account', name: 'Account',type: 'book'},
+            { id: 'account', name: 'Account', type: 'book'},
             { id: 'physics', name: 'Physics', type: 'book'},
             { id: 'biology', name: 'Biology', type: 'book'},
             { id: 'personal', name: 'Personal', type: 'info'}
         ];
 
-        this.srcKeys = ['OSHA','Safety','Chemical']
+        this.srcKeys = ['OSHA', 'Safety', 'Chemical'];
 
-        this.http.get('/api/namespaces').subscribe((v: any[])=>{
-            //this.allBooks = v['data'] || [];
-            //sample books
+        this.http.get('/api/namespaces').subscribe((v: any[]) => {
+            // this.allBooks = v['data'] || [];
+            // sample books
             this.allBooks = [
                 {
                     id: 1,
@@ -120,16 +127,17 @@ export class MainComponent implements OnInit {
     }
 
     getHistoryList() {
-        each(this.books, (b: any)=>{
-            if (b.favourite)
-                    this.favourites.push(b)
-        })
+        each(this.books, (b: any) => {
+            if (b.favourite) {
+                this.favourites.push(b);
+            }
+        });
     }
 
-    add(){
-        this.dialog.open(DialogComponent).afterClosed().subscribe((v)=>{
-            let url: string = '/api/namespaces';
-            console.log(v); //undefined?
+    add() {
+        this.dialog.open(DialogComponent).afterClosed().subscribe((v) => {
+            let url = '/api/namespaces';
+            console.log(v); // undefined?
             if ( v.id ) {
                 url = `${url}/${v.id}`;
             }
@@ -137,29 +145,30 @@ export class MainComponent implements OnInit {
                 name: v.name,
                 short: v.short,
                 description: v.description
-            }).subscribe((namespace)=>{
-                if ( !v.id ){
-                    //this.list.push(v);
+            }).subscribe((namespace) => {
+                if ( !v.id ) {
+                    // this.list.push(v);
                     this.books.push(v);
                 }
             });
         });
     }
 
-    edit(namespace: any){
+    edit(namespace: any) {
         this.dialog.open(DialogComponent, { data: namespace });
     }
 
-    ngOnDestroy(){
+    ngOnDestroy() {
         this.media$.unsubscribe();
     }
 
     onCategoryChange(id: number) {
         console.log(id);
-        if (id === null)
+        if (id === null) {
             this.books = cloneDeep(this.allBooks);
-        else
-            this.books = filter(this.allBooks, (o)=> { return o.category === this.categories[id].id; });
+        } else {
+            this.books = filter(this.allBooks, (o) => o.category === this.categories[id].id);
+        }
     }
 
     saveFavorite(book: any, i: number) {
@@ -181,7 +190,7 @@ export class MainComponent implements OnInit {
     }
 
     removeBook(book: any, i: number) {
-        //call remove api
-        this.allBooks = filter(this.allBooks, (o)=> { return o.id !== i; });
+        // call remove api
+        this.allBooks = filter(this.allBooks, (o) => o.id !== i);
     }
 }

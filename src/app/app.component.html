@@ -55,10 +55,10 @@
                         (click)="_user.login()">
                     <span>Sign In {{ _user.user | async }} </span>
                 </button>
-                <ngx-avatar *ngIf="(_user.user | async) != null" 
+                <!-- <ngx-avatar *ngIf="(_user.user | async) != null" 
                             [size]="30" 
                             [name]="(_user.user | async)?.displayName">
-                </ngx-avatar>
+                </ngx-avatar> -->
             </div>
         </mat-toolbar>
         <div style="height:calc(100% - 64px)">

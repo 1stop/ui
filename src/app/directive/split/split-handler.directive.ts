@@ -1,12 +1,7 @@
 import { Directive, ElementRef, Inject, Output } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
-
-import { Observable } from 'rxjs/Observable';
-
-import { fromEvent } from 'rxjs/observable/fromEvent';
-import { map } from 'rxjs/operators/map';
-import { switchMap } from 'rxjs/operators/switchMap';
-import { takeUntil } from 'rxjs/operators/takeUntil';
+import { Observable, fromEvent } from 'rxjs';
+import { map, switchMap, takeUntil } from 'rxjs/operators';
 
 
 @Directive({

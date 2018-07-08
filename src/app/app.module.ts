@@ -17,7 +17,6 @@ import { AppState } from './app.service';
 
 import { AppComponent } from './app.component';
 import { TextComponent } from './text/text.component';
-import { MarkdownModule } from 'ngx-md';
 import { ListComponent } from './list/list.component';
 import { CategoryComponent } from './category/category.component';
 
@@ -39,7 +38,6 @@ import { ExcerptPipe } from './pipe/excerpt.pipe';
 import { HammerGestureConfig, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 import { ContentComponent } from './content/content.component';
 
-import { AvatarModule } from 'ngx-avatar';
 import { appRoutes } from './app.routing';
 import { MainComponent } from './main/main.component';
 import { DialogComponent } from './main/dialog/dialog.component';
@@ -53,6 +51,7 @@ import { MatTableModule} from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { UserService, LoginDialogComponent } from './services/user.service';
 import { AngularFireAuthModule } from 'angularfire2/auth';
+import { HttpClientModule } from '@angular/common/http';
 
 
 export class MyHammerConfig extends HammerGestureConfig  {
@@ -107,12 +106,12 @@ export class RavenErrorHandler implements ErrorHandler {
     BrowserModule,
     BrowserAnimationsModule,
     FlexLayoutModule,
+    HttpClientModule,
     RouterModule.forRoot( appRoutes, {enableTracing: false}),
     MatListModule,
     MatIconModule,
     FormsModule,
     ReactiveFormsModule,
-    MarkdownModule.forRoot(),
     MatToolbarModule,
     MatButtonModule,
     MatChipsModule,
@@ -120,7 +119,6 @@ export class RavenErrorHandler implements ErrorHandler {
     MatInputModule,
     MatSnackBarModule,
     MatProgressSpinnerModule,
-    AvatarModule,
     MatSidenavModule,
     CommonModule,
     MatGridListModule,
