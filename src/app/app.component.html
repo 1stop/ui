@@ -50,12 +50,15 @@
             </mat-spinner> -->
 
             <div *ngIf="!searching">
-                <button mat-icon-button *ngIf="!user" (click)="login()">
-                    <!-- <mat-icon>vpn_key</mat-icon> -->
-                    <!-- <mat-icon>account_circle</mat-icon> -->
-                    <mat-icon>login</mat-icon>
+                <button mat-button 
+                        *ngIf="(_user.user | async) == null" 
+                        (click)="_user.login()">
+                    <span>Sign In {{ _user.user | async }} </span>
                 </button>
-                <ngx-avatar *ngIf="user" [size]="30" [name]="user?.displayName"></ngx-avatar>
+                <ngx-avatar *ngIf="(_user.user | async) != null" 
+                            [size]="30" 
+                            [name]="(_user.user | async)?.displayName">
+                </ngx-avatar>
             </div>
         </mat-toolbar>
         <div style="height:calc(100% - 64px)">
