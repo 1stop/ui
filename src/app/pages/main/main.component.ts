@@ -13,6 +13,7 @@ import { Store } from '@ngrx/store';
 import * as browser from '../../state/actions/browser';
 import { suggestion } from '../../fake_data/suggestion';
 import { map } from 'rxjs/operators';
+import { namespaces } from '../../fake_data/namespaces';
 
 @Component({
   selector: 'app-main',
@@ -21,6 +22,7 @@ import { map } from 'rxjs/operators';
 })
 export class MainComponent implements OnInit {
     suggestion$: Observable<string>;
+    namespaces = namespaces;
 
     constructor(public _store: Store<any>) {}
 

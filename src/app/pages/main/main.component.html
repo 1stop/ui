@@ -1,128 +1,25 @@
-
-<!-- <div fxLayout="row" style="margin-left:0.5rem;margin-top:0.5rem" fxLayoutAlign=" center">
-    <mat-form-field>
-        <mat-select placeholder="Categories" [(ngModel)]="selectedCategory" (ngModelChange)="onCategoryChange($event)">
-            <mat-option *ngFor="let category of categories" [value]="category.id">
-                {{ category.name }}
-            </mat-option>
-        </mat-select>
-    </mat-form-field>
-
-    <div fxFlex>
-        <button style= 'position: relative;float: right;' mat-button color="primary">Favorite List</button>
-    </div>
-    <button mat-button color="primary">Favorite List</button>
-</div> -->
-<!-- 
-<mat-tab-group (selectedIndexChange)="onCategoryChange($event)">
-    <ng-template ngFor let-bcat [ngForOf]="categories">
-        <div *ngIf="bcat.type === 'book'">
-            <mat-tab [label]="bcat.name">
-                <div style="margin:1rem 1rem"> {{bcat.description}} </div>
-                <div fxLayout="row">
-                    <div fxFlex class="container">
-                        <mat-grid-list [cols]="column" rowHeight="150px" gutterSize="10">
-                            <mat-grid-tile *ngFor="let b of books; let i = index" class="mat-elevation-z2">
-                                <mat-card style="width:100%;">
-                                    <mat-card-header>
-                                        <mat-card-title><b>{{b.name}}</b></mat-card-title>
-                                        <mat-icon *ngIf="b.bookmark">bookmark</mat-icon>
-                                    </mat-card-header>
-                                    <mat-card-content style="overflow:hidden">
-                                        <p style="text-overflow:ellipsis">{{b.description}}</p>
-                                    </mat-card-content>
-                                    <mat-card-actions align="end">
-                                        <button mat-icon-button>
-                                            <mat-icon (click)="openBook(b)">arrow_right_alt</mat-icon>
-                                        </button>
-                                        <button mat-icon-button *ngIf="state.user">
-                                            <mat-icon *ngIf="!b.favorite" (click)="saveFavorite(b, i)">favorite_border</mat-icon>
-                                            <mat-icon *ngIf="b.favorite" (click)="removeFavorite(b, i)">favorite</mat-icon>
-                                        </button>
-                                        <button mat-icon-button *ngIf="state.user">
-                                            <mat-icon (click)="edit(b)">edit</mat-icon>
-                                        </button>
-                                        <button mat-icon-button *ngIf="state.user">
-                                            <mat-icon (click)="removeBook(b, i)">delete</mat-icon>
-                                        </button>
-                                    </mat-card-actions>
-                                </mat-card>
-                            </mat-grid-tile> 
-                        </mat-grid-list>
-                    </div>
-                </div>
-            </mat-tab>
-        </div>
-        <div *ngIf="bcat.type === 'info'">
-            <mat-tab [label]="bcat.name">
-                <div style="margin-left:0.5rem">
-                    <br>
-                    <b>Search History</b>
-                    <br>
-                    <div style="height:25px" *ngIf="!srcKeys?.length"><i>Empty Search History</i></div>
-                    <br>
-                    <mat-divider></mat-divider>
-                    <br>
-                    <b>Reading History</b>
-                    <br>
-                    <div style="height:25px" *ngIf="!histories?.length"><i>Empty Favourite List</i></div>
-                    <div *ngIf="histories?.length">
-                        <mat-grid-list [cols]="column" rowHeight="100px" gutterSize="10">
-                            <mat-grid-tile *ngFor="let h of histories; let i = index" class="mat-elevation-z2">
-                                <div fxFlex fxLayout="column" fxLayoutAlign=" center">
-                                    <div fxFlex style='text-align:left'><b>{{ h.name }}</b></div>
-                                    <div fxFlex>{{ h.description }}</div>
-                                    <mat-card-actions align="end">
-                                        <button mat-icon-button>
-                                            <mat-icon>info</mat-icon>
-                                        </button>
-                                    </mat-card-actions>
-                                </div>
-                            </mat-grid-tile> 
-                        </mat-grid-list>
-                    </div>            
-                    <br>
-                    <mat-divider></mat-divider>
-                    <br>
-                    <b>Favorite</b>
-                    <br>
-                    <div style="height:25px" *ngIf="!favourites?.length"><i>Empty Favourite List</i></div>
-                    <div *ngIf="favourites?.length">
-                        <mat-grid-list [cols]="column" rowHeight="100px" gutterSize="10">
-                            <mat-grid-tile *ngFor="let f of favourites; let i = index" class="mat-elevation-z2">
-                                <div fxFlex fxLayout="column" fxLayoutAlign=" center">
-                                    <div fxFlex style='text-align:left'><b>{{ f.name }}</b></div>
-                                    <div fxFlex>{{ f.description }}</div>
-                                    <mat-card-actions align="end">
-                                        <button mat-icon-button>
-                                            <mat-icon>info</mat-icon>
-                                        </button>
-                                        <button mat-icon-button>
-                                            <mat-icon (click)="removeFavorite(b, i)">cross</mat-icon>
-                                        </button>
-                                    </mat-card-actions>
-                                </div>
-                            </mat-grid-tile> 
-                        </mat-grid-list>
-                    </div>
-                </div>
-            </mat-tab>
-        </div> 
-    </ng-template>
-    
-</mat-tab-group>
-
-<div class="mat-fab-btn">
-    <button mat-fab (click)="add()">
-        <mat-icon>add</mat-icon>
-    </button>
-</div> -->
-
 <div class="main" 
      style="height:100%" 
-     fxLayout="row" 
+     fxLayout="column" 
      fxLayoutAlign="center center">
     <div style="width:80%">
         <app-search-bar [shouldFocus]="true" [placeholder]="suggestion$ | async"></app-search-bar>
+    </div>
+
+    <div fxLayout="row" style="width:100%;margin-top:50px">
+        <div fxFlex class="container">
+            <mat-grid-list cols="4" rowHeight="150px" gutterSize="10">
+                <mat-grid-tile *ngFor="let namespace of namespaces">
+                    <mat-card style="width:100%;">
+                        <a [routerLink]="[namespace.id, namespace.name]">
+                            <mat-card-header>
+                                <mat-card-title><b>{{ namespace.name }}</b></mat-card-title>
+                                <mat-icon *ngIf="namespace.bookmark">bookmark</mat-icon>
+                            </mat-card-header>
+                        </a>
+                    </mat-card>
+                </mat-grid-tile> 
+            </mat-grid-list>
+        </div>
     </div>
 </div>

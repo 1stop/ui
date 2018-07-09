@@ -5,6 +5,7 @@ import { RouterModule } from '@angular/router';
 import { SearchBarModule } from '../../element/search-bar/search-bar.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { CommonModule } from '@angular/common';
+import { MatGridListModule, MatCardModule, MatIconModule } from '@angular/material';
 
 @NgModule({
     declarations: [
@@ -17,7 +18,10 @@ import { CommonModule } from '@angular/common';
         ]),
         SearchBarModule,
         FlexLayoutModule,
-        CommonModule
+        CommonModule,
+        MatGridListModule,
+        MatCardModule,
+        MatIconModule
     ],
     providers: [],
     entryComponents: [
