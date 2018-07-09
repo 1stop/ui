@@ -11,13 +11,14 @@
     <span class="vertLine"></span>
 
     <input fxFlex 
-            class="search"
-            placeholder="Search"
-            [(ngModel)]="query"
-            (keydown.enter)="search()" 
+           #input
+           class="search"
+           placeholder="Search"
+           [(ngModel)]="query"
+           (keydown.enter)="commit()" 
             
-            (focus)="focus=true"
-            (blur)="focus=false"/>
+           (focus)="focus=true"
+           (blur)="focus=false"/>
     <mat-icon *ngIf="query"
         class="button"
         [class.fullButton]="searching"
