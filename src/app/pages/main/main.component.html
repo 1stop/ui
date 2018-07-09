@@ -123,6 +123,6 @@
      fxLayout="row" 
      fxLayoutAlign="center center">
     <div style="width:80%">
-        <app-search-bar [shouldFocus]="true"></app-search-bar>
+        <app-search-bar [shouldFocus]="true" [placeholder]="suggestion$ | async"></app-search-bar>
     </div>
 </div>

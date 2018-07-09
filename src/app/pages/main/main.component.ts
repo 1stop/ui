@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ObservableMedia, MediaChange } from '@angular/flex-layout';
 import { HttpClient } from '@angular/common/http';
-import { Subscription, interval } from 'rxjs';
+import { Subscription, interval, Observable } from 'rxjs';
 import { MatDialog } from '@angular/material';
 import { DialogComponent } from './dialog/dialog.component';
 import { Router } from '@angular/router';
@@ -11,6 +11,8 @@ import filter from 'lodash-es/filter';
 import compact from 'lodash-es/compact';
 import { Store } from '@ngrx/store';
 import * as browser from '../../state/actions/browser';
+import { suggestion } from '../../fake_data/suggestion';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-main',
@@ -18,10 +20,18 @@ import * as browser from '../../state/actions/browser';
   styleUrls: ['./main.component.css']
 })
 export class MainComponent implements OnInit {
+    suggestion$: Observable<string>;
+
     constructor(public _store: Store<any>) {}
 
     ngOnInit() {
-      this._store.dispatch(new browser.SearchOff());
+      setTimeout(() => {
+        this._store.dispatch(new browser.SearchOff());
+      });
+
+      this.suggestion$ = interval(4000).pipe(
+        map( v => suggestion[ v % 3] )
+      );
     }
     // list: any[] = [];
     // allBooks: any[] = [];

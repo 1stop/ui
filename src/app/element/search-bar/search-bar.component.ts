@@ -9,6 +9,7 @@ export class SearchBarComponent implements OnInit {
     focus = false;
     query = '';
     @Input() shouldFocus = false;
+    @Input() placeholder: string;
     @Output() search: EventEmitter<string> = new EventEmitter();
     @ViewChild('input') searchbar: ElementRef;
 

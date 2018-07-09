@@ -13,7 +13,7 @@
     <input fxFlex 
            #input
            class="search"
-           placeholder="Search"
+           [placeholder]="placeholder || 'Search'"
            [(ngModel)]="query"
            (keydown.enter)="commit()" 
             
