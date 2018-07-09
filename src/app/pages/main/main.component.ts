@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ObservableMedia, MediaChange } from '@angular/flex-layout';
 import { HttpClient } from '@angular/common/http';
-import { Subscription } from 'rxjs';
+import { Subscription, interval } from 'rxjs';
 import { MatDialog } from '@angular/material';
 import { DialogComponent } from './dialog/dialog.component';
 import { Router } from '@angular/router';
@@ -9,13 +9,20 @@ import cloneDeep from 'lodash-es/cloneDeep';
 import each from 'lodash-es/each';
 import filter from 'lodash-es/filter';
 import compact from 'lodash-es/compact';
+import { Store } from '@ngrx/store';
+import * as browser from '../../state/actions/browser';
 
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
   styleUrls: ['./main.component.css']
 })
-export class MainComponent {
+export class MainComponent implements OnInit {
+    constructor(public _store: Store<any>) {}
+
+    ngOnInit() {
+      this._store.dispatch(new browser.SearchOff());
+    }
     // list: any[] = [];
     // allBooks: any[] = [];
     // books: any[] = [];

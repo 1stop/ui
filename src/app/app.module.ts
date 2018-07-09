@@ -53,6 +53,9 @@ import { UserService, LoginDialogComponent } from './services/user.service';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { HttpClientModule } from '@angular/common/http';
 import { MainModule } from './pages/main/main.module';
+import { browserReducer } from './state/reducer/browser';
+import { StoreModule } from '@ngrx/store';
+import { SearchBarModule } from './element/search-bar/search-bar.module';
 
 
 export class MyHammerConfig extends HammerGestureConfig  {
@@ -132,7 +135,9 @@ export class RavenErrorHandler implements ErrorHandler {
     MatExpansionModule,
     MatDividerModule,
     AngularFireModule.initializeApp(environment.firebase),
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    StoreModule.forRoot({ browser: browserReducer}),
+    SearchBarModule
   ],
   providers: [
     AppState,

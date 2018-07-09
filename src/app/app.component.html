@@ -5,31 +5,11 @@
                      class="mat-elevation-z2"
                      [class.fullTopbar]="searching">
             <div *ngIf="!searching">1 Stop</div>
-            <div fxFlex fxLayout="row" fxLayoutAlign="center center" style="height:100%">
-                <div class="search-bar"
-                     fxLayout="row"
-                     style="max-width:50%;width:50%"
-                     [class.full]="searching"
-
-                     [fxHide.lt-sm]="true && !searching">
-                    <mat-icon class="button fullButton"
-                              style="color:black"
-                              *ngIf="searching"
-                              (click)="searching=false">arrow_back</mat-icon>
-
-                    <mat-icon *ngIf="!searching" class="button" style="color:black">search</mat-icon>
-                    <!-- <mat-spinner *ngIf="(state.load | async) && !searching" [diameter]="25" [color]="primary"></mat-spinner> -->
-
-                    <input fxFlex class="search"
-                           placeholder="Search"
-                           [(ngModel)]="query"
-                           (keydown.enter)="search()" />
-                    <mat-icon *ngIf="query"
-                              class="button"
-                              [class.fullButton]="searching"
-                              style="color:black"
-                              (click)="clear()">close</mat-icon>
-                </div>
+            <div fxFlex fxLayout="row" 
+                 *ngIf="searchbar$ | async"
+                 fxLayoutAlign="center center" 
+                 style="height:100%">
+                <app-search-bar></app-search-bar>
             </div>
 
             <button mat-icon-button fxHide

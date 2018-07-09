@@ -4,11 +4,13 @@ import { CategoryService } from './category/category.service';
 import { ListService } from './list/list.service';
 import { ListComponent } from './list/list.component';
 import { TextComponent } from './text/text.component';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import * as firebase from 'firebase/app';
 import { AuthService } from './services/auth.service';
 import { get, findIndex } from 'lodash';
 import { UserService } from './services/user.service';
+import { Store } from '@ngrx/store';
+import { map } from '../../node_modules/rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -18,12 +20,18 @@ import { UserService } from './services/user.service';
 export class AppComponent implements OnInit {
   query = '';
   searching = false;
+  searchbar$: Observable<any>;
 
   constructor(public state: AppState,
               private _auth: AuthService,
-              public _user: UserService ) {}
+              public _user: UserService,
+              public _store: Store<any> ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.searchbar$ = this._store.select('browser').pipe(
+                        map(state => state.searchbar )
+                      );
+  }
 
   @HostListener('document:keydown.escape')
   clear() {
