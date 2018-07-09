@@ -16,7 +16,7 @@
 }
 
 .vertLine {
-    border-right: solid 1px black;    /* line 1 pixel width, length of "Some content" */
+    border-right: solid 1px lightgray;    /* line 1 pixel width, length of "Some content" */
 }
 
 .button {
