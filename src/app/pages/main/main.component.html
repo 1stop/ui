@@ -11,7 +11,7 @@
             <mat-grid-list cols="4" rowHeight="150px" gutterSize="10">
                 <mat-grid-tile *ngFor="let namespace of namespaces">
                     <mat-card style="width:100%;">
-                        <a [routerLink]="[namespace.id, namespace.name]">
+                        <a [routerLink]="['books', namespace.id]">
                             <mat-card-header>
                                 <mat-card-title><b>{{ namespace.name }}</b></mat-card-title>
                                 <mat-icon *ngIf="namespace.bookmark">bookmark</mat-icon>

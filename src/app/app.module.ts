@@ -56,7 +56,7 @@ import { MainModule } from './pages/main/main.module';
 import { browserReducer } from './state/reducer/browser';
 import { StoreModule } from '@ngrx/store';
 import { SearchBarModule } from './element/search-bar/search-bar.module';
-
+import { BooksModule } from './pages/books/books.module';
 
 export class MyHammerConfig extends HammerGestureConfig  {
   overrides = {
@@ -137,7 +137,8 @@ export class RavenErrorHandler implements ErrorHandler {
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
     StoreModule.forRoot({ browser: browserReducer}),
-    SearchBarModule
+    SearchBarModule,
+    BooksModule
   ],
   providers: [
     AppState,
