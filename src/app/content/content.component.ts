@@ -88,7 +88,7 @@ export class ContentComponent {
           'name': 'Factories And Machinery Act(FMA)  1967 (Revised - 1974) '
         }
       ];
-
+    }
     //   this._route.params.subscribe((param) => {
     //     console.log(param);
     //     if ( this.namespace !== param.ns ) {

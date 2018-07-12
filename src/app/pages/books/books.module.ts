@@ -9,11 +9,16 @@ import { FormsModule } from '@angular/forms';
 import { SplitModule } from '../../directive/split/split.module';
 import { ListComponent } from './list/list.component';
 import { TextComponent } from './text/text.component';
+import { StoreModule } from '@ngrx/store';
+import { categoryReducer } from '../../state/reducer/category';
+import { textReducer } from '../../state/reducer/text';
+import { EffectsModule } from '../../../../node_modules/@ngrx/effects';
+import { CategoryEffects } from '../../state/effects/category';
 
 @NgModule({
     imports: [
         RouterModule.forChild([
-            { path: 'books/:id', component: BooksComponent }
+            { path: 'books/:namespace', component: BooksComponent }
         ]),
         FlexLayoutModule,
         CommonModule,
@@ -23,7 +28,10 @@ import { TextComponent } from './text/text.component';
         MatListModule,
         SplitModule,
         MatChipsModule,
-        MatFormFieldModule
+        MatFormFieldModule,
+        StoreModule.forFeature('category', categoryReducer),
+        StoreModule.forFeature('text', textReducer),
+        EffectsModule.forFeature([CategoryEffects])
     ],
     declarations: [
         BooksComponent,

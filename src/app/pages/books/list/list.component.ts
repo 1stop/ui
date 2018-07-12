@@ -336,9 +336,9 @@ export class ListComponent implements OnInit {
     }
 
     add(){
-      this._list.create(this.categoryId, '').subscribe((v: any) => {
-        this.lists.push(v);
-      });
+      // this._list.create(this.categoryId, '').subscribe((v: any) => {
+      //   this.lists.push(v);
+      // });
     }
 
     edit(list: any){
@@ -347,12 +347,12 @@ export class ListComponent implements OnInit {
     }
 
     delete(id: string, $event){
-      this._list.delete(this.categoryId, id).subscribe(() => {
-        remove(this.lists, (cat) => {
-          return cat.id === id;
-        });
-      });
-      $event.stopPropagation();
+      // this._list.delete(this.categoryId, id).subscribe(() => {
+      //   remove(this.lists, (cat) => {
+      //     return cat.id === id;
+      //   });
+      // });
+      // $event.stopPropagation();
     }
 
     _select(data: any){

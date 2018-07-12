@@ -4,10 +4,12 @@ import { Action } from '@ngrx/store';
 
 interface InitialState {
     searchbar: boolean;
+    editMode: boolean;
 }
 
 const initialState = {
-    searchbar: true
+    searchbar: true,
+    editMode: false
 };
 
 export function browserReducer(state: InitialState = initialState, action: Action) {

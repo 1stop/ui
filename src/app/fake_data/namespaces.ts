@@ -14,3 +14,10 @@ export const namespaces = [
     { id: 4, name: 'Biology', type: 'book'},
     { id: 5, name: 'Personal', type: 'info'}
 ];
+
+export const category = [
+    { id: '1', title: '1', order: 1},
+    { id: '2', title: '3', order: 2},
+    { id: '3', title: '2', order: 3}
+];
+

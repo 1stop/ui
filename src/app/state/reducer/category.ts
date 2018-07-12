@@ -2,7 +2,6 @@ import { createEntityAdapter } from '@ngrx/entity';
 import { Category } from '../../model/category';
 import { EntityState } from '@ngrx/entity';
 import * as category from '../actions/category';
-import { Action } from '@ngrx/store';
 
 const categoryAdapter = createEntityAdapter<Category>();
 interface CategoryState extends EntityState<Category> {
@@ -15,8 +14,10 @@ const initialState: CategoryState = {
     loading: false
 };
 
-export function categoryReducer(state: CategoryState = initialState, action: Action) {
+export function categoryReducer(state: CategoryState = initialState, action: category.Action) {
     switch (action.type) {
+    case category.ADD_ALL:
+        return categoryAdapter.addAll(action.categories, state);
     default:
       return state;
     }
