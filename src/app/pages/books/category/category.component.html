@@ -5,19 +5,19 @@
                    style="height:auto;min-height:48px"
                    fxLayout="column"
                    fxLayoutAlign="center none">
-        <span *ngIf="!(state.edit | async)" class="item">{{ category.name }}</span>
-        <div *ngIf="state.edit | async" fxLayout="rows">
+        <!-- <span *ngIf="!(state.edit | async)" class="item">{{ category.name }}</span> -->
+        <div *ngIf="true" fxLayout="rows">
             <button mat-icon-button (click)="delete(category.id, $event)" style="color:lightgray">
                 <mat-icon>close</mat-icon>
             </button>
             <input class="edit"
-                    [(ngModel)]="category.name"
+                    [(ngModel)]="category.title"
                     placeholder="Name"
                     (ngModelChange)="edit(category)"/>
         </div>
     </mat-list-item>
 
-    <mat-list-item *ngIf="state.edit | async">
+    <mat-list-item *ngIf="true">
         <button mat-icon-button
                 style="color:lightgray"
                 (click)="add()">

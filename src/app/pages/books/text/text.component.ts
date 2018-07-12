@@ -1,8 +1,6 @@
 import { Component, OnInit, Input, ElementRef, SimpleChanges,
          Output, EventEmitter, OnChanges } from '@angular/core';
-import { ListService } from '../list/list.service';
 import { Subject, Subscription, Observable, merge } from 'rxjs';
-import { AppState } from '../app.service';
 import { ENTER, COMMA, SPACE } from '@angular/cdk/keycodes';
 import { MatChipInputEvent, MatSnackBar } from '@angular/material';
 import { isEmpty, get, set } from 'lodash';
@@ -25,8 +23,6 @@ export class TextComponent implements OnInit, OnChanges {
   cache: any = {};
 
   constructor(private el: ElementRef,
-              public state: AppState,
-              private _list: ListService,
               public snackBar: MatSnackBar) { }
 
   ngOnInit() {
@@ -49,12 +45,12 @@ export class TextComponent implements OnInit, OnChanges {
   }
 
   _save(id: string, text: string, tags: string[]) {
-    this._list
-      .saveText(id, text, tags)
-      .subscribe(() => {
-        this.cache = {};
-        this.update.emit({ id: id, text: text, tag: tags });
-      });
+    // this._list
+    //   .saveText(id, text, tags)
+    //   .subscribe(() => {
+    //     this.cache = {};
+    //     this.update.emit({ id: id, text: text, tag: tags });
+    //   });
   }
 
   edit() {

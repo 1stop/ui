@@ -16,12 +16,7 @@ import { RouterModule, Routes, RouteReuseStrategy } from '@angular/router';
 import { AppState } from './app.service';
 
 import { AppComponent } from './app.component';
-import { TextComponent } from './text/text.component';
-import { ListComponent } from './list/list.component';
-import { CategoryComponent } from './category/category.component';
 
-import { CategoryService } from './category/category.service';
-import { ListService } from './list/list.service';
 import { environment } from '../environments/environment';
 import { Autosize } from 'ng-autosize/src/autosize.directive';
 import { AuthService } from './services/auth.service';
@@ -91,17 +86,15 @@ export class RavenErrorHandler implements ErrorHandler {
 @NgModule({
   declarations: [
     AppComponent,
-    TextComponent,
-    ListComponent,
-    CategoryComponent,
+    // CategoryComponent,
     ContentComponent,
     Autosize,
-    SplitAreaDirective,
-    SplitHandlerDirective,
-    SplitDirective,
+    // SplitAreaDirective,
+    // SplitHandlerDirective,
+    // SplitDirective,
     StipMarkdownPipe,
     HighlightPipe,
-    ExcerptPipe,
+    // ExcerptPipe,
     // MainComponent,
     // DialogComponent,
     LoginDialogComponent
@@ -142,8 +135,6 @@ export class RavenErrorHandler implements ErrorHandler {
   ],
   providers: [
     AppState,
-    CategoryService,
-    ListService,
     UserService,
     // FireBaseService,
     // { provide: ErrorHandler, useClass: RavenErrorHandler },

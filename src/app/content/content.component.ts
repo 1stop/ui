@@ -1,11 +1,11 @@
 import { Component, ViewChild } from '@angular/core';
 import { AppState } from '../app.service';
-import { CategoryService } from '../category/category.service';
-import { ListService } from '../list/list.service';
-import { ListComponent } from '../list/list.component';
-import { TextComponent } from '../text/text.component';
+// import { CategoryService } from '../category/category.service';
+// import { ListService } from '../list/list.service';
+// import { ListComponent } from '../list/list.component';
+// import { TextComponent } from '../text/text.component';
 import { BehaviorSubject } from 'rxjs';
-import * as firebase from 'firebase/app';
+import * as firebase from 'firebase';
 import { AuthService } from '../services/auth.service';
 import { get, findIndex, find, compact } from 'lodash';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -30,15 +30,15 @@ export class ContentComponent {
     currentList: any;
     _swipe = 'category';
     sequence = 0;
-    @ViewChild('list') list: ListComponent;
-    @ViewChild('text2') text2: TextComponent;
+    // @ViewChild('list') list: ListComponent;
+    // @ViewChild('text2') text2: TextComponent;
 
-    constructor(public state: AppState,
-                private _cat: CategoryService,
-                private _list: ListService,
-                private _auth: AuthService,
-                private _route: ActivatedRoute,
-                private _router: Router ) {}
+    // constructor(public state: AppState,
+    //             private _cat: CategoryService,
+    //             private _list: ListService,
+    //             private _auth: AuthService,
+    //             private _route: ActivatedRoute,
+    //             private _router: Router ) {}
 
     ngOnInit() {
       console.log('init');
@@ -89,151 +89,151 @@ export class ContentComponent {
         }
       ];
 
-      this._route.params.subscribe((param) => {
-        console.log(param);
-        if ( this.namespace !== param.ns ) {
-          this.namespace = param.ns;
+    //   this._route.params.subscribe((param) => {
+    //     console.log(param);
+    //     if ( this.namespace !== param.ns ) {
+    //       this.namespace = param.ns;
 
-          this.state.load.next(true);
-          console.log('load');
-          this._cat.list(this.query).subscribe((v: any[]) => {
-            console.log(v);
-            this.state.load.next(false);
-            // this.categories = v['data'] || [];
-            // this.categories = v;
-            // console.log('category', v);
+    //       this.state.load.next(true);
+    //       console.log('load');
+    //       this._cat.list(this.query).subscribe((v: any[]) => {
+    //         console.log(v);
+    //         this.state.load.next(false);
+    //         // this.categories = v['data'] || [];
+    //         // this.categories = v;
+    //         // console.log('category', v);
 
-            // if( v.length != 0){
-            //   if ( findIndex(v, {'id': this.catId}) === -1 ) {
-            //     this.catId = v[0].id
-            //   }
-            //   this.list_refresh(this.catId);
-            // } else {
-            //   this.catId = undefined;
-            // }
-          });
-        }
+    //         // if( v.length != 0){
+    //         //   if ( findIndex(v, {'id': this.catId}) === -1 ) {
+    //         //     this.catId = v[0].id
+    //         //   }
+    //         //   this.list_refresh(this.catId);
+    //         // } else {
+    //         //   this.catId = undefined;
+    //         // }
+    //       });
+    //     }
 
 
-        if ( this.catId !== +param.categoryId ) {
-            this.catId = +param.categoryId;
-            this.state.load.next(true); console.log(this.query);
-            this._list.list(this.catId || 1, this.query).subscribe((v: any[]) => {
-              this.state.load.next(false);
-              this.lists = v;
-              if ( v.length !== 0){
-                const data = find(v, { id: this.listId });
-                if ( !data || this.listId === undefined){
-                    this.listId = v[0].id;
-                    setTimeout(() => {
-                        this.text_refresh(v[0]);
-                    });
-                } else {
-                    this.currentList = data;
-                }
-              } else {
-                this.listId = undefined;
-              }
-            });
-        }
+    //     if ( this.catId !== +param.categoryId ) {
+    //         this.catId = +param.categoryId;
+    //         this.state.load.next(true); console.log(this.query);
+    //         this._list.list(this.catId || 1, this.query).subscribe((v: any[]) => {
+    //           this.state.load.next(false);
+    //           this.lists = v;
+    //           if ( v.length !== 0){
+    //             const data = find(v, { id: this.listId });
+    //             if ( !data || this.listId === undefined){
+    //                 this.listId = v[0].id;
+    //                 setTimeout(() => {
+    //                     this.text_refresh(v[0]);
+    //                 });
+    //             } else {
+    //                 this.currentList = data;
+    //             }
+    //           } else {
+    //             this.listId = undefined;
+    //           }
+    //         });
+    //     }
 
-        if ( this.listId !== +param.listId ) {
-          this.listId = +param.listId;
-        }
-      });
+    //     if ( this.listId !== +param.listId ) {
+    //       this.listId = +param.listId;
+    //     }
+    //   });
 
-      this._route.fragment.subscribe((v: string) => {
-        this._swipe = v;
-      });
+    //   this._route.fragment.subscribe((v: string) => {
+    //     this._swipe = v;
+    //   });
 
-      this.state.search.pipe(skip(1)).subscribe((q: string) => {
-        this.query = q;
-        this.search();
-      });
-    }
+    //   this.state.search.pipe(skip(1)).subscribe((q: string) => {
+    //     this.query = q;
+    //     this.search();
+    //   });
+    // }
 
-    list_refresh(id: number, clear = false ) {
-      if ( this.catId === id) {
-        return;
-      }
+    // list_refresh(id: number, clear = false ) {
+    //   if ( this.catId === id) {
+    //     return;
+    //   }
 
-      if ( clear ) {
-        this.listId = undefined;
-        this.currentList = undefined;
-      }
-      const urls: string[] = compact([
-            this.namespace,
-            id,
-            this.listId
-        ]);
+    //   if ( clear ) {
+    //     this.listId = undefined;
+    //     this.currentList = undefined;
+    //   }
+    //   const urls: string[] = compact([
+    //         this.namespace,
+    //         id,
+    //         this.listId
+    //     ]);
 
-      this._router.navigate(urls, { fragment: 'list', skipLocationChange: urls.length === 3 ? false : true});
-    }
+    //   this._router.navigate(urls, { fragment: 'list', skipLocationChange: urls.length === 3 ? false : true});
+    // }
 
-    text_refresh(data: any, force: boolean = false) {
-      console.log('text refresh', data);
-      this.currentList = data;
-      this._router.navigate(compact([
-        this.namespace,
-        this.catId,
-        data.id
-      ]), { fragment: 'text' });
-    }
+    // text_refresh(data: any, force: boolean = false) {
+    //   console.log('text refresh', data);
+    //   this.currentList = data;
+    //   this._router.navigate(compact([
+    //     this.namespace,
+    //     this.catId,
+    //     data.id
+    //   ]), { fragment: 'text' });
+    // }
 
-    update($event: any){
-      console.log('update');
-      const ind = findIndex(this.lists, (list: any) => {
-        return list.id === $event.id;
-      });
+    // update($event: any){
+    //   console.log('update');
+    //   const ind = findIndex(this.lists, (list: any) => {
+    //     return list.id === $event.id;
+    //   });
 
-      if ( ind !== undefined ){
-        this.lists[ind].data.tag = $event.tag;
-        this.lists[ind].data.text = $event.text;
-      }
-    }
+    //   if ( ind !== undefined ){
+    //     this.lists[ind].data.tag = $event.tag;
+    //     this.lists[ind].data.text = $event.text;
+    //   }
+    // }
 
-    search() {
-      this.sequence = 0;
-      this.state.load.next(true);
-      this._cat.list(this.query).subscribe((v: any[]) => {
-        this.state.load.next(false);
-        this.categories = v;
-        if ( v.length !== 0) {
-          if ( findIndex(v, {'id': this.catId}) === -1 ) {
-            this.catId = v[0].id;
-          }
-          this.list_refresh(this.catId);
-        } else {
-          this.catId = undefined;
-        }
-      });
-    }
+    // search() {
+    //   this.sequence = 0;
+    //   this.state.load.next(true);
+    //   this._cat.list(this.query).subscribe((v: any[]) => {
+    //     this.state.load.next(false);
+    //     this.categories = v;
+    //     if ( v.length !== 0) {
+    //       if ( findIndex(v, {'id': this.catId}) === -1 ) {
+    //         this.catId = v[0].id;
+    //       }
+    //       this.list_refresh(this.catId);
+    //     } else {
+    //       this.catId = undefined;
+    //     }
+    //   });
+    // }
 
-    clear() {
-      this.query = '';
-      this._cat.list().subscribe((v: any[]) => {
-        this.categories = v;
-        if ( v.length !== 0) {
-          this.catId = v[0].id;
-          this.list_refresh(this.catId);
-        }
-      });
-    }
+    // clear() {
+    //   this.query = '';
+    //   this._cat.list().subscribe((v: any[]) => {
+    //     this.categories = v;
+    //     if ( v.length !== 0) {
+    //       this.catId = v[0].id;
+    //       this.list_refresh(this.catId);
+    //     }
+    //   });
+    // }
 
-    filterSwipe(swipe: string ): string {
-      const allCat = ['text', 'category', 'list'];
-      if ( allCat.indexOf(swipe) !== -1 ) {
-        return swipe;
-      } else {
-          return 'category';
-      }
-    }
+    // filterSwipe(swipe: string ): string {
+    //   const allCat = ['text', 'category', 'list'];
+    //   if ( allCat.indexOf(swipe) !== -1 ) {
+    //     return swipe;
+    //   } else {
+    //       return 'category';
+    //   }
+    // }
 
-    swipe(target: string ) {
-      this._router.navigate([
-        this.namespace,
-        this.catId,
-        this.listId
-      ], { fragment: target });
-    }
+    // swipe(target: string ) {
+    //   this._router.navigate([
+    //     this.namespace,
+    //     this.catId,
+    //     this.listId
+    //   ], { fragment: target });
+    // }
 }

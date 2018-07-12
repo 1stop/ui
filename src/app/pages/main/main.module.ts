@@ -6,11 +6,13 @@ import { SearchBarModule } from '../../element/search-bar/search-bar.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { CommonModule } from '@angular/common';
 import { MatGridListModule, MatCardModule, MatIconModule } from '@angular/material';
+import { ExcerptPipe } from '../../pipe/excerpt.pipe';
 
 @NgModule({
     declarations: [
         MainComponent,
-        DialogComponent
+        DialogComponent,
+        ExcerptPipe
     ],
     imports: [
         RouterModule.forChild([
@@ -21,7 +23,7 @@ import { MatGridListModule, MatCardModule, MatIconModule } from '@angular/materi
         CommonModule,
         MatGridListModule,
         MatCardModule,
-        MatIconModule
+        MatIconModule,
     ],
     providers: [],
     entryComponents: [

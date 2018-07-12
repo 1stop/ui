@@ -1,7 +1,5 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { Subject, Subscription } from 'rxjs';
-import { AppState } from '../app.service';
-import { ListService } from './list.service';
 import { each, remove, find, isArray } from 'lodash';
 
 import {MatTableModule} from '@angular/material/table';
@@ -25,8 +23,7 @@ export class ListComponent implements OnInit {
 
     public completeText = '';
 
-    constructor(public state: AppState,
-                private _list: ListService) { }
+    constructor() { }
 
     ngOnInit() {
       this.change$ = this.change.pipe(
@@ -35,9 +32,9 @@ export class ListComponent implements OnInit {
         each(this.lists, (list) => {
           console.log(list);
           if (list.edit === true ) {
-            this._list.edit(this.categoryId, list.id, list.name).subscribe(() => {
-              list.edit = false;
-            });
+            // this._list.edit(this.categoryId, list.id, list.name).subscribe(() => {
+            //   list.edit = false;
+            // });
           }
 
           if (list.id === this.selectedId) {

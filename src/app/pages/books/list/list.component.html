@@ -8,9 +8,9 @@
         <div *ngIf="!(state.edit | async)"
              class="item">
             <span>{{ list.name }}</span>
-            <span mat-line class="excerpt" [innerHtml]="list.data?.text | stipMarkdown | highlight: keyword | excerpt">
+            <!-- <span mat-line class="excerpt" [innerHtml]="list.data?.text | stipMarkdown | highlight: keyword | excerpt"> -->
             <!-- <span mat-line class="excerpt" [innerHtml]="list.data?.completeText | stipMarkdown | highlight: keyword | excerpt"> -->
-            </span>
+            <!-- </span> -->
         </div>
 
         <div *ngIf="state.edit | async" fxLayout="rows" style="width:100%">
