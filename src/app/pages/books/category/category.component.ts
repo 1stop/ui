@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import * as category from '../../../state/actions/category';
 import { Observable } from 'rxjs';
@@ -14,14 +14,16 @@ import { map } from '../../../../../node_modules/rxjs/operators';
 export class CategoryComponent implements OnInit, OnDestroy {
   categories$: Observable<Category[]>;
   edit$: Observable<boolean>;
+  namespace: string;
 
   constructor(private _route: ActivatedRoute,
-  private _store: Store<any>) { }
+              private _store: Store<any>,
+              private _router: Router) { }
 
   ngOnInit() {
     this._route.params.subscribe((params) => {
-      const namespace = params['namespace'];
-      this._store.dispatch(new category.Query(namespace));
+      this.namespace = params['namespace'];
+      this._store.dispatch(new category.Query(this.namespace));
     });
 
     this.categories$ = this._store.select('category').pipe(
@@ -46,8 +48,8 @@ export class CategoryComponent implements OnInit, OnDestroy {
 
   }
 
-  _select(id: string) {
-
+  select(id: string) {
+    this._router.navigate(['books', this.namespace, id]);
   }
 
   ngOnDestroy() {

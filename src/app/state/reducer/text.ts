@@ -2,22 +2,32 @@ import { createEntityAdapter } from '@ngrx/entity';
 import { Text } from '../../model/text';
 import { EntityState } from '@ngrx/entity';
 import * as text from '../actions/text';
-import { Action } from '@ngrx/store';
 
 const textAdapter = createEntityAdapter<Text>();
 interface TextState {
     loading: boolean;
+    category: string;
     texts: { [name: string]: EntityState<Text>};
 }
 
 const initialState: TextState = {
     loading: false,
+    category: undefined,
     texts: {}
 };
 
-export function textReducer(state: TextState = initialState, action: Action) {
+export function textReducer(state: TextState = initialState, action: text.Action) {
     switch (action.type) {
+    case text.ADD_ALL:
+        return { ...state, texts: immutableAdd(state.texts, action.category, action.text)};
     default:
       return state;
     }
+}
+
+
+function immutableAdd(obj, key, val) {
+    return Object.assign({}, obj, {
+       [key] : val
+    });
 }

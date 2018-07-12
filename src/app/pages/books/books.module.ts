@@ -12,13 +12,24 @@ import { TextComponent } from './text/text.component';
 import { StoreModule } from '@ngrx/store';
 import { categoryReducer } from '../../state/reducer/category';
 import { textReducer } from '../../state/reducer/text';
-import { EffectsModule } from '../../../../node_modules/@ngrx/effects';
+import { EffectsModule } from '@ngrx/effects';
 import { CategoryEffects } from '../../state/effects/category';
+import { TextEffects } from '../../state/effects/text';
 
 @NgModule({
     imports: [
         RouterModule.forChild([
-            { path: 'books/:namespace', component: BooksComponent }
+            { path: 'books/:namespace', component: BooksComponent },
+            {
+                path: 'books/:namespace/:category',
+                component: BooksComponent,
+                data: { reuse: true }
+            },
+            {
+                path: 'books/:namespace/:category/:listid',
+                component: BooksComponent,
+                data: { reuse: true }
+            }
         ]),
         FlexLayoutModule,
         CommonModule,
@@ -31,7 +42,7 @@ import { CategoryEffects } from '../../state/effects/category';
         MatFormFieldModule,
         StoreModule.forFeature('category', categoryReducer),
         StoreModule.forFeature('text', textReducer),
-        EffectsModule.forFeature([CategoryEffects])
+        EffectsModule.forFeature([CategoryEffects, TextEffects])
     ],
     declarations: [
         BooksComponent,

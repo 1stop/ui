@@ -5,7 +5,7 @@
                    style="height:auto;min-height:48px"
                    fxLayout="column"
                    fxLayoutAlign="center none">
-        <div *ngIf="!(state.edit | async)"
+        <div *ngIf="!(edit$ | async)"
              class="item">
             <span>{{ list.name }}</span>
             <!-- <span mat-line class="excerpt" [innerHtml]="list.data?.text | stipMarkdown | highlight: keyword | excerpt"> -->
@@ -13,7 +13,7 @@
             <!-- </span> -->
         </div>
 
-        <div *ngIf="state.edit | async" fxLayout="rows" style="width:100%">
+        <div *ngIf="edit$ | async" fxLayout="rows" style="width:100%">
             <button mat-icon-button (click)="delete(list.id, $event)" style="color:lightgray">
                 <mat-icon>close</mat-icon>
             </button>
@@ -25,7 +25,7 @@
         </div>
     </mat-list-item>
 
-    <mat-list-item *ngIf="state.edit | async">
+    <mat-list-item *ngIf="edit$ | async">
         <button mat-icon-button
                 style="color:lightgray"
                 (click)="add()">
