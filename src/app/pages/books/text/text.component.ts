@@ -22,6 +22,9 @@ export class TextComponent implements OnInit, OnChanges {
   separatorKeysCodes = [ENTER, COMMA, SPACE];
   cache: any = {};
 
+  //test
+  text = `<div style='color:blue'>This is a text</div>`;
+
   constructor(private el: ElementRef,
               public snackBar: MatSnackBar) { }
 

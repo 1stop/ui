@@ -36,6 +36,7 @@
     "ng-autosize": "^1.1.0",
     "raven-js": "^3.22.1",
     "rxjs": "^6.2.1",
+    "tui-editor": "^1.2.5",
     "zone.js": "~0.8.26"
   },
   "devDependencies": {

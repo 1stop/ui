@@ -15,6 +15,7 @@ import { textReducer } from '../../state/reducer/text';
 import { EffectsModule } from '@ngrx/effects';
 import { CategoryEffects } from '../../state/effects/category';
 import { TextEffects } from '../../state/effects/text';
+import { TextEditorModule } from '../../element/text-editor/text-editor.module';
 
 @NgModule({
     imports: [
@@ -42,7 +43,8 @@ import { TextEffects } from '../../state/effects/text';
         MatFormFieldModule,
         StoreModule.forFeature('category', categoryReducer),
         StoreModule.forFeature('text', textReducer),
-        EffectsModule.forFeature([CategoryEffects, TextEffects])
+        EffectsModule.forFeature([CategoryEffects, TextEffects]),
+        TextEditorModule
     ],
     declarations: [
         BooksComponent,
