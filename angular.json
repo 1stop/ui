@@ -23,7 +23,9 @@
             "styles": [
               "src/styles.css",
               "src/public/vendor/codemirror/codemirror.css",
-              "src/public/vendor/highlight.js/github.css"
+              "src/public/vendor/highlight.js/github.css",
+              "node_modules/tui-editor/dist/tui-editor.css",
+              "node_modules/tui-editor/dist/tui-editor-contents.css"
             ],
             "scripts": []
           },
