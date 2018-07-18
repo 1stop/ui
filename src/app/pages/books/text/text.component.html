@@ -5,17 +5,21 @@
         <b>{{ content.name }}</b>
     </div>
 
+    <!-- <div fxLayout="column"
+        fxFlex
+        *ngIf="state.edit | async"
+        style="padding:5px;height:100%"> -->
+
 
     <div fxLayout="column"
          fxFlex
-         *ngIf="state.edit | async"
          style="padding:5px;height:100%">
-        <textarea class="edit"
+        <!-- <textarea class="edit"
                   fxFlex
                   [(ngModel)]="content.data.text"
                   (ngModelChange)="edit()">
-        </textarea>
-        <!-- <text-editor [code] ="text"></text-editor> -->
+        </textarea> -->
+        <text-editor [code] ="text"></text-editor>
 
         <mat-form-field>
             <mat-chip-list #chipList>

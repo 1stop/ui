@@ -21,7 +21,9 @@
               "src/favicon.ico"
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles.css",
+              "src/public/vendor/codemirror/codemirror.css",
+              "src/public/vendor/highlight.js/github.css"
             ],
             "scripts": []
           },

@@ -10,6 +10,8 @@ import * as browser from '../../state/actions/browser';
 export class BooksComponent implements OnInit {
     constructor(public _store: Store<any>) {}
 
+    listId = 1;
+
     ngOnInit() {
         this._store.dispatch( new browser.SearchOn());
     }
