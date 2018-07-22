@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Observable, Observer } from 'rxjs';
+import { Observable } from 'rxjs';
 import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { find } from 'lodash-es/find';
+import find from 'lodash-es/find';
 import { map } from 'rxjs/operators';
 
 @Injectable()
