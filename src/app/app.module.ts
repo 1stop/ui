@@ -54,6 +54,7 @@ import { SearchBarModule } from './element/search-bar/search-bar.module';
 import { BooksModule } from './pages/books/books.module';
 import { EffectsModule } from '@ngrx/effects';
 import { AvatarComponent } from './element/avatar/avatar.component';
+import { FirebaseInterceptor } from './services/http-interceptor.service';
 
 export class MyHammerConfig extends HammerGestureConfig  {
   overrides = {
@@ -142,6 +143,7 @@ export class RavenErrorHandler implements ErrorHandler {
     UserService,
     // FireBaseService,
     // { provide: ErrorHandler, useClass: RavenErrorHandler },
+    FirebaseInterceptor,
     AuthService,
     {
         provide: HAMMER_GESTURE_CONFIG,
