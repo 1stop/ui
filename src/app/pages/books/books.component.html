@@ -57,6 +57,7 @@
                   class="section"
                   style="padding:1em"
                   splitArea
+                  [ngStyle.gt-sm]="{'width': '33vw'}"
                   [fxHide.lt-sm]="true && _swipe != 'text'"
                   (swiperight)="swipe('list')">
                  <app-text #text2
