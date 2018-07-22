@@ -20,13 +20,7 @@ export class BooksComponent implements OnInit {
 
     ngOnInit() {
         this.editMode$ = this._store.select('browser').pipe(
-
-            map ( v => v.editMode ),
-            map ( v => {
-                console.log(v);
-                return v;
-                })
-
+            map ( v => v.editMode )
         );
         this._store.dispatch( new browser.SearchOn());
     }
