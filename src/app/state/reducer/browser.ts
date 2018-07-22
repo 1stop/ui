@@ -1,4 +1,3 @@
-// counter.ts
 import * as browser from '../actions/browser';
 import { Action } from '@ngrx/store';
 
@@ -18,6 +17,10 @@ export function browserReducer(state: InitialState = initialState, action: Actio
         return { ...state, searchbar: true };
     case browser.SEARCHBAR_OFF:
         return { ...state, searchbar: false };
+    case browser.EDIT_ON:
+        return { ...state, editMode: true };
+    case browser.EDIT_OFF:
+        return { ...state, editMode: false };
     default:
       return state;
   }
