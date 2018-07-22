@@ -13,5 +13,5 @@
 .main {
     background-image: url('https://i.imgur.com/EwFoppH.jpg');
     background-repeat: no-repeat;
-    background-size: contain;
+    background-size: cover;
 }

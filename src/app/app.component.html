@@ -1,6 +1,7 @@
 <mat-sidenav-container style="height:100%;width:100%">
     <div style="height:100%;width:100%">
         <mat-toolbar fxLayout="row"
+                     fxLayoutAlign="space-between center"
                      color="primary"
                      class="mat-elevation-z2"
                      [class.fullTopbar]="searching">
@@ -30,8 +31,9 @@
                 <button mat-button 
                         *ngIf="(_user.user | async) == null" 
                         (click)="_user.login()">
-                    <span>Sign In {{ _user.user | async }} </span>
+                    <span>Sign In</span>
                 </button>
+                <app-avatar [data]="_user.user | async"></app-avatar>
                 <!-- <ngx-avatar *ngIf="(_user.user | async) != null" 
                             [size]="30" 
                             [name]="(_user.user | async)?.displayName">

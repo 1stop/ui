@@ -53,6 +53,7 @@ import { StoreModule } from '@ngrx/store';
 import { SearchBarModule } from './element/search-bar/search-bar.module';
 import { BooksModule } from './pages/books/books.module';
 import { EffectsModule } from '@ngrx/effects';
+import { AvatarComponent } from './element/avatar/avatar.component';
 
 export class MyHammerConfig extends HammerGestureConfig  {
   overrides = {
@@ -98,7 +99,8 @@ export class RavenErrorHandler implements ErrorHandler {
     // ExcerptPipe,
     // MainComponent,
     // DialogComponent,
-    LoginDialogComponent
+    LoginDialogComponent,
+    AvatarComponent
   ],
   imports: [
     MainModule,
