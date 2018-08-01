@@ -5,8 +5,13 @@ import { RouterModule } from '@angular/router';
 import { SearchBarModule } from '../../element/search-bar/search-bar.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { CommonModule } from '@angular/common';
-import { MatGridListModule, MatCardModule, MatIconModule } from '@angular/material';
+import { MatGridListModule, MatCardModule, MatIconModule, MatButtonModule, MatFormFieldModule, MatInputModule } from '@angular/material';
 import { ExcerptPipe } from '../../pipe/excerpt.pipe';
+import { StoreModule } from '@ngrx/store';
+import { namespaceReducer } from '../../state/reducer/namespace';
+import { EffectsModule } from '@ngrx/effects';
+import { NamespaceEffects } from '../../state/effects/namespace';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
     declarations: [
@@ -21,9 +26,15 @@ import { ExcerptPipe } from '../../pipe/excerpt.pipe';
         SearchBarModule,
         FlexLayoutModule,
         CommonModule,
-        MatGridListModule,
         MatCardModule,
         MatIconModule,
+        StoreModule.forFeature('namespace', namespaceReducer),
+        EffectsModule.forFeature([NamespaceEffects]),
+        MatButtonModule,
+        MatFormFieldModule,
+        FormsModule,
+        ReactiveFormsModule,
+        MatInputModule
     ],
     providers: [],
     entryComponents: [

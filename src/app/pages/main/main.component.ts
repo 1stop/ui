@@ -1,19 +1,18 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ObservableMedia, MediaChange } from '@angular/flex-layout';
+import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Subscription, interval, Observable } from 'rxjs';
+import { interval, Observable } from 'rxjs';
 import { MatDialog } from '@angular/material';
 import { DialogComponent } from './dialog/dialog.component';
-import { Router } from '@angular/router';
-import cloneDeep from 'lodash-es/cloneDeep';
-import each from 'lodash-es/each';
-import filter from 'lodash-es/filter';
-import compact from 'lodash-es/compact';
+import values from 'lodash-es/values';
 import { Store } from '@ngrx/store';
 import * as browser from '../../state/actions/browser';
+import * as namespace from '../../state/actions/namespace';
 import { suggestion } from '../../fake_data/suggestion';
 import { map } from 'rxjs/operators';
-import { namespaces } from '../../fake_data/namespaces';
+import { Router } from '@angular/router';
+import { UserService } from '../../services/user.service';
+import { Namespace } from '../../model/namespace';
+import { Update } from '@ngrx/entity';
 
 @Component({
   selector: 'app-main',
@@ -22,18 +21,69 @@ import { namespaces } from '../../fake_data/namespaces';
 })
 export class MainComponent implements OnInit {
     suggestion$: Observable<string>;
-    namespaces = namespaces;
+    namespaces$: Observable<any[]>;
 
-    constructor(public _store: Store<any>) {}
+    constructor(public _store: Store<any>,
+                private _http: HttpClient,
+                private _dialog: MatDialog,
+                private _router: Router,
+                public _user: UserService
+                ) {}
 
     ngOnInit() {
       setTimeout(() => {
         this._store.dispatch(new browser.SearchOff());
       });
 
+      this.namespaces$ = this._store.select('namespace').pipe(
+        map((v) => values(v.entities))
+      );
+
+      this.namespaces$.subscribe((v) => {console.log(v); });
+
+      this._http.get('/api/namespaces').pipe(
+        map((v: any) => v.data )
+      ).subscribe((data) => {
+        this._store.dispatch(new namespace.AddAll(data));
+      });
+
+
       this.suggestion$ = interval(4000).pipe(
         map( v => suggestion[ v % 3] )
       );
+    }
+
+    edit(ns: any) {
+      this._dialog.open(DialogComponent, {
+        width: '80vw',
+        data: ns
+      }).afterClosed().subscribe((data) => {
+        this._http.put(`/api/namespaces/${data.id}`, {
+          title: data.title,
+          short: data.short,
+          background: data.background
+        }).subscribe((v: {data: Update<Namespace>}) => {
+          this._store.dispatch(new namespace.Update(v.data));
+        });
+      });
+    }
+
+    add() {
+      this._dialog.open(DialogComponent, {
+        width: '80vw'
+      }).afterClosed().subscribe((data) => {
+        this._http.post('/api/namespaces', {
+          title: data.title,
+          short: data.short,
+          background: data.background
+        }).subscribe((v: {data: Namespace}) => {
+          this._store.dispatch(new namespace.Create(v.data));
+        });
+      });
+    }
+
+    navigate(route: string[]) {
+      this._router.navigate(route);
     }
     // list: any[] = [];
     // allBooks: any[] = [];

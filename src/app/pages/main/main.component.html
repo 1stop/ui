@@ -7,19 +7,28 @@
     </div>
 
     <div fxLayout="row" style="width:100%;margin-top:50px">
-        <div fxFlex class="container">
-            <mat-grid-list cols="4" rowHeight="150px" gutterSize="10">
-                <mat-grid-tile *ngFor="let namespace of namespaces">
-                    <mat-card style="width:100%;">
-                        <a [routerLink]="['books', namespace.id]">
-                            <mat-card-header>
-                                <mat-card-title><b>{{ namespace.name }}</b></mat-card-title>
-                                <mat-icon *ngIf="namespace.bookmark">bookmark</mat-icon>
-                            </mat-card-header>
-                        </a>
-                    </mat-card>
-                </mat-grid-tile> 
-            </mat-grid-list>
+        <div fxFlex class="container" fxLayout="row" fxLayoutGap="10px">
+            <mat-card style="width:150px" 
+                      *ngFor="let namespace of ( namespaces$ | async)"
+                      (click)="navigate(['books', namespace.id])">
+                <mat-card-header>
+                    <mat-card-title><b>{{ namespace.title }}</b></mat-card-title>
+                    <mat-icon *ngIf="namespace.bookmark">bookmark</mat-icon>
+                </mat-card-header>
+                <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
+                <mat-card-actions fxLayout="row" 
+                                  fxLayoutAlign="end center"                         
+                                  *ngIf="_user.user | async" > 
+                    <button mat-button (click)="edit(namespace); $event.stopPropagation()">EDIT</button>
+                </mat-card-actions>
+            </mat-card>
         </div>
     </div>
+</div>
+
+<div style="position:absolute;right:10px;bottom:10px"                         
+     *ngIf="_user.user | async" >
+    <button mat-fab (click)="add()">
+        <mat-icon>add</mat-icon>
+    </button>
 </div>

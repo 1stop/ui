@@ -9,9 +9,9 @@ import * as _ from 'lodash';
   styleUrls: ['./dialog.component.css']
 })
 export class DialogComponent implements OnInit {
-  name = new FormControl('', [Validators.required]);
+  id: string;
+  title = new FormControl('', [Validators.required]);
   short = new FormControl('', [Validators.required]);
-  description = new FormControl('', [Validators.required]);
 
   constructor(
     public dialogRef: MatDialogRef<DialogComponent>,
@@ -19,32 +19,30 @@ export class DialogComponent implements OnInit {
 
   ngOnInit() {
     if ( this.data ) {
-        this.name.setValue(this.data.name);
-        this.short.setValue(this.data.short);
-        this.description.setValue(this.data.description);
+        this.id = this.data.id;
+        this.title.setValue(this.data.title);
+        this.short.setValue(this.data.short || 'n/a');
         this.short.disable();
     }
   }
 
   getErrorMessage() {
-    return this.name.hasError('required') ? 'You must enter a Name': '';
+    return this.title.hasError('required') ? 'You must enter a Title' : '';
   }
 
-  submit(){
-    _.every([this.name.valid, this.short.valid, this.description.valid], (f)=>{
-        if (f){
+  submit() {
+    _.every([this.title.valid, this.short.valid], (f) => {
+        if (f) {
             this.dialogRef.close({
                 id: _.get(this.data, 'id'),
-                name: this.name.value,
-                short: this.short.value,
-                description: this.description.value
+                title: this.title.value,
+                short: this.short.value
             });
         }
     });
   }
 
-  close(){
+  close() {
     this.dialogRef.close();
   }
-
 }

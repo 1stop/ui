@@ -11,11 +11,13 @@ import { ListComponent } from './list/list.component';
 import { TextComponent } from './text/text.component';
 import { StoreModule } from '@ngrx/store';
 import { categoryReducer } from '../../state/reducer/category';
+import { namespaceReducer } from '../../state/reducer/namespace';
 import { textReducer } from '../../state/reducer/text';
 import { EffectsModule } from '@ngrx/effects';
 import { CategoryEffects } from '../../state/effects/category';
 import { TextEffects } from '../../state/effects/text';
 import { TextEditorModule } from '../../element/text-editor/text-editor.module';
+import { NamespaceEffects } from '../../state/effects/namespace';
 
 @NgModule({
     imports: [
@@ -41,9 +43,10 @@ import { TextEditorModule } from '../../element/text-editor/text-editor.module';
         SplitModule,
         MatChipsModule,
         MatFormFieldModule,
+        StoreModule.forFeature('namespace', namespaceReducer),
         StoreModule.forFeature('category', categoryReducer),
         StoreModule.forFeature('text', textReducer),
-        EffectsModule.forFeature([CategoryEffects, TextEffects]),
+        EffectsModule.forFeature([CategoryEffects, TextEffects, NamespaceEffects]),
         TextEditorModule
     ],
     declarations: [
