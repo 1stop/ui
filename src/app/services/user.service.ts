@@ -1,10 +1,11 @@
-import { Injectable, Component, OnInit } from '@angular/core';
+// tslint:disable:max-line-length
+import { Injectable, Component } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material';
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebaseui/dist/firebaseui.css';
 import { AngularFireAuth } from 'angularfire2/auth';
-import { BehaviorSubject, ReplaySubject } from 'rxjs';
+import { ReplaySubject } from 'rxjs';
 
 @Injectable()
 export class UserService {
