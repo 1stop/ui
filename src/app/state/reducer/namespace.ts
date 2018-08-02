@@ -19,9 +19,9 @@ export function namespaceReducer(state: NamespaceState = initialState, action: n
     case namespace.ADD_ALL:
         return namespaceAdapter.addAll(action.namespaces, state);
     case namespace.UPDATE:
-        return namespaceAdapter.updateOne({
+        return namespaceAdapter.updateOne(<any>{
             id: action.namespaces.id,
-            changes:  { ...action.namespaces}
+            changes:  {...action.namespaces}
         }, state);
     case namespace.CREATE:
         return namespaceAdapter.addOne(action.namespaces, state);

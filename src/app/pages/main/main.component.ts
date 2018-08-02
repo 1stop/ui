@@ -39,8 +39,6 @@ export class MainComponent implements OnInit {
         map((v) => values(v.entities))
       );
 
-      this.namespaces$.subscribe((v) => {console.log(v); });
-
       this._http.get('/api/namespaces').pipe(
         map((v: any) => v.data )
       ).subscribe((data) => {
