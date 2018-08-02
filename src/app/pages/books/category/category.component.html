@@ -12,7 +12,7 @@
             <button mat-icon-button (click)="delete(category.id, $event)" style="color:lightgray">
                 <mat-icon>close</mat-icon>
             </button>
-            <input class="edit"
+            <input class="edit transparent-background"
                     [(ngModel)]="category.title"
                     placeholder="Name"
                     (ngModelChange)="edit(category)"/>
@@ -22,9 +22,12 @@
     <mat-list-item *ngIf="edit$ | async">
         <button mat-icon-button
                 style="color:lightgray"
-                (click)="add()">
+                (click)="add(new.value); new.value = ''">
             <mat-icon>add</mat-icon>
-            <span>New Category</span>
         </button>
+        <input class="edit tranparent-background"
+                #new
+                placeholder="Category"
+                (keydown.enter)="add(new.value); new.value = ''"/>
     </mat-list-item>
 </mat-list>

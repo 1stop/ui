@@ -2,6 +2,7 @@ import { createEntityAdapter } from '@ngrx/entity';
 import { Category } from '../../model/category';
 import { EntityState } from '@ngrx/entity';
 import * as category from '../actions/category';
+import { Actions } from '../../../../node_modules/@ngrx/effects';
 
 const categoryAdapter = createEntityAdapter<Category>();
 interface CategoryState extends EntityState<Category> {
@@ -18,6 +19,8 @@ export function categoryReducer(state: CategoryState = initialState, action: cat
     switch (action.type) {
     case category.ADD_ALL:
         return categoryAdapter.addAll(action.categories, state);
+    case category.CREATE:
+        return categoryAdapter.addOne(action.payload, state);
     default:
       return state;
     }

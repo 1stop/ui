@@ -22,3 +22,8 @@ mat-list-item {
 .selected input {
     background-color: Cornsilk;
 }
+
+
+.tranparent-background {
+    background-color: rgb(0,0,0,0);
+}

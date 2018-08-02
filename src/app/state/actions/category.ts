@@ -9,6 +9,7 @@ export const QUERY = '[Category] QUERY';
 
 export class Create implements Action {
     readonly type = CREATE;
+    constructor(public payload: Category) {}
 }
 
 export class Update implements Action {
