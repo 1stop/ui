@@ -9,13 +9,24 @@
             {{ category.title }}
         </span>
         <div *ngIf="edit$ | async" fxLayout="rows">
-            <button mat-icon-button (click)="delete(category.id, $event)" style="color:lightgray">
+            <button *ngIf="!edited.isSelected(category.id); else edit_block"
+                    mat-icon-button 
+                    (click)="delete(category.id, $event)" 
+                    style="color:lightgray">
                 <mat-icon>close</mat-icon>
             </button>
+            <ng-template #edit_block>
+                <button mat-icon-button 
+                (click)="edit(category.id, category.title)" 
+                style="color:lightgray">
+                    <mat-icon>done</mat-icon>
+                </button>
+            </ng-template>
             <input class="edit transparent-background"
                     [(ngModel)]="category.title"
-                    placeholder="Name"
-                    (ngModelChange)="edit(category)"/>
+                    placeholder="Category"
+                    (ngModelChange)="edited.select(category.id)"
+                    (keydown.enter)="edit(category.id, category.title)"/>
         </div>
     </mat-list-item>
 
@@ -25,7 +36,7 @@
                 (click)="add(new.value); new.value = ''">
             <mat-icon>add</mat-icon>
         </button>
-        <input class="edit tranparent-background"
+        <input class="edit transparent-background"
                 #new
                 placeholder="Category"
                 (keydown.enter)="add(new.value); new.value = ''"/>

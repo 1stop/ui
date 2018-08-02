@@ -7,6 +7,7 @@ import { Category } from '../../../model/category';
 import { map } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { Namespace } from '../../../model/namespace';
+import { SelectionModel } from '@angular/cdk/collections';
 
 @Component({
   selector: 'app-category',
@@ -17,6 +18,8 @@ export class CategoryComponent implements OnInit, OnDestroy {
   categories$: Observable<Category[]>;
   edit$: Observable<boolean>;
   namespace: string;
+
+  edited = new SelectionModel<number>(true);
 
   constructor(private _route: ActivatedRoute,
               private _store: Store<any>,
@@ -57,11 +60,21 @@ export class CategoryComponent implements OnInit, OnDestroy {
     });
   }
 
-  // edit(category: any) {
+  edit(id: number, title: string) {
+    this._http.put(`/api/categories/${id}`, {
+      title: title
+    }).subscribe((v: {data: Namespace}) => {
+      this._store.dispatch(new category.Create(v.data));
+      this.edited.deselect(id);
+    });
+  }
 
-  // }
-
-  delete(id: string, $event) {
+  delete(id: number, $event) {
+    this._http.delete(`/api/categories/${id}`)
+      .subscribe((v: {data: Namespace}) => {
+        this._store.dispatch(new category.Delete(id));
+        this.edited.deselect(id);
+      });
 
   }
 

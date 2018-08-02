@@ -21,7 +21,13 @@ export function categoryReducer(state: CategoryState = initialState, action: cat
         return categoryAdapter.addAll(action.categories, state);
     case category.CREATE:
         return categoryAdapter.addOne(action.payload, state);
+    case category.UPDATE:
+        return categoryAdapter.updateOne(<any>{
+            id : action.payload.id,
+            changes: {...action.payload}}, state);
+    case category.DELETE:
+        return categoryAdapter.removeOne(action.id.toString(), state);
     default:
-      return state;
+        return state;
     }
 }

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 /**
  * list of default colors
@@ -30,7 +30,7 @@ const defaultColors = [
         />
     </div>`
 })
-export class AvatarComponent implements OnInit {
+export class AvatarComponent {
     @Input() set data(v: any){
         if ( v ) {
             this.background = this.getRandomColor(v.uid);
@@ -40,11 +40,6 @@ export class AvatarComponent implements OnInit {
 
     background = '';
     img = '';
-
-    ngOnInit() {
-        console.log(this.data);
-    }
-
     _calculateAsciiCode(value: string) {
         return value.split('').map(letter => letter.charCodeAt(0))
             .reduce((previous, current) => previous + current);
