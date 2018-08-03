@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import * as category from '../../../state/actions/category';
+import * as text from '../../../state/actions/text';
 import { Observable } from 'rxjs';
 import { Category } from '../../../model/category';
 import { map } from 'rxjs/operators';
@@ -30,14 +31,18 @@ export class CategoryComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this._route.params.subscribe((params) => {
       this.category = +params['category'];
+
       if ( this.namespace !== params['namespace']) {
         this.namespace = params['namespace'];
         this._http.get(`/api/categories?namespace=${this.namespace}`).subscribe((v: {data: Category[]}) => {
           this._store.dispatch(new category.AddAll(v.data));
+          if (!this.category) {
+            this.category = v.data[0].id;
+          }
+          this._store.dispatch(new text.SetCategory(this.category));
         });
       }
     });
-
 
     this.categories$ = this._store.select('category').pipe(
       map( v => Object.values(v.entities))

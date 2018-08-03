@@ -26,7 +26,7 @@ export class AddAll implements Action {
 
 export class SetCategory implements Action {
     readonly type = SET_CATEGORY;
-    constructor(public category: string) {}
+    constructor(public category: number) {}
 }
 
 

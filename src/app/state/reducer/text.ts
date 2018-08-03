@@ -6,7 +6,7 @@ import * as text from '../actions/text';
 const textAdapter = createEntityAdapter<Text>();
 interface TextState {
     loading: boolean;
-    category: string;
+    category: number;
     texts: { [name: string]: EntityState<Text>};
 }
 
@@ -20,6 +20,8 @@ export function textReducer(state: TextState = initialState, action: text.Action
     switch (action.type) {
     case text.ADD_ALL:
         return { ...state, texts: immutableAdd(state.texts, action.category, action.text)};
+    case text.SET_CATEGORY:
+        return { ...state, category: action.category};
     default:
       return state;
     }

@@ -6,7 +6,7 @@ export const CREATE = '[Category] CREATE';
 export const DELETE = '[Category] DELETE';
 export const UPDATE = '[Category] UPDATE';
 export const READ = '[Category] READ';
-export const ADD_ALL = '[Category] ADD ALL';
+export const ADD_ALL = '[Category] ADD_ALL';
 export const QUERY = '[Category] QUERY';
 
 export class Create implements Action {
