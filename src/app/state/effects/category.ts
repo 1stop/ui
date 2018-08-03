@@ -9,13 +9,6 @@ import { category as cat_data} from '../../fake_data/namespaces';
 
 @Injectable()
 export class CategoryEffects {
-  @Effect()
-  login$: Observable<Action> = this.actions$.pipe(
-    ofType('[Category] QUERY'),
-    mergeMap((action) => {
-        return of(new category.AddAll(cat_data));
-    })
-  );
 
   constructor(private http: HttpClient, private actions$: Actions) {}
 }

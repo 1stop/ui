@@ -18,6 +18,7 @@ export class CategoryComponent implements OnInit, OnDestroy {
   categories$: Observable<Category[]>;
   edit$: Observable<boolean>;
   namespace: string;
+  category: number;
 
   edited = new SelectionModel<number>(true);
 
@@ -28,6 +29,7 @@ export class CategoryComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this._route.params.subscribe((params) => {
+      this.category = +params['category'];
       if ( this.namespace !== params['namespace']) {
         this.namespace = params['namespace'];
         this._http.get(`/api/categories?namespace=${this.namespace}`).subscribe((v: {data: Category[]}) => {
