@@ -1,5 +1,5 @@
 // tslint:disable:max-line-length
-import { Injectable, Component } from '@angular/core';
+import { Injectable, Component, ApplicationRef } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material';
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
@@ -12,9 +12,13 @@ export class UserService {
     user: ReplaySubject<any> = new ReplaySubject<any>(1);
     authUI: any;
     constructor(public dialog: MatDialog,
-                public afAuth: AngularFireAuth) {
+                public afAuth: AngularFireAuth,
+                private _ref: ApplicationRef) {
         this.afAuth.auth.onAuthStateChanged((user) => {
             this.user.next(user);
+            setTimeout(() => {
+                this._ref.tick();
+            });
         });
     }
 
