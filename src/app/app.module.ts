@@ -141,8 +141,6 @@ export class RavenErrorHandler implements ErrorHandler {
   providers: [
     AppState,
     UserService,
-    // FireBaseService,
-    // { provide: ErrorHandler, useClass: RavenErrorHandler },
     FirebaseInterceptor,
     AuthService,
     {
@@ -155,7 +153,6 @@ export class RavenErrorHandler implements ErrorHandler {
     }],
   bootstrap: [AppComponent],
   entryComponents: [
-    // DialogComponent,
     LoginDialogComponent
   ]
 })

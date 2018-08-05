@@ -12,6 +12,7 @@ import { Observable } from 'rxjs';
 })
 export class BooksComponent implements OnInit {
     editMode$: Observable<any>;
+    _swipe: string;
 
     constructor(public _store: Store<any>,
                 public _user: UserService,

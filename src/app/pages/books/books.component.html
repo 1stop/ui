@@ -5,8 +5,8 @@
          fxFlex.lt-sm="100"
          class="section"
          [fxHide.lt-sm]="true && _swipe != 'category'"
-         splitArea
-         (swipeleft)="swipe('list')">
+         splitArea>
+         <!-- (swipeleft)="swipe('list')"> -->
         <app-category>
         </app-category>
     </div>
@@ -26,9 +26,9 @@
                   fxFlex.lt-sm="100"
                   [fxHide.lt-sm]="true && _swipe != 'list'"
                   class="section"
-                  splitArea
-                  (swipeleft)="swipe('text')"
-                  (swiperight)="swipe('category')">
+                  splitArea>
+                  <!-- (swipeleft)="swipe('text')"
+                  (swiperight)="swipe('category')"> -->
                  <app-list>
                  </app-list>
                  <!-- <div fxLayout="row"
@@ -52,8 +52,8 @@
                   style="padding:1em"
                   splitArea
                   [ngStyle.gt-sm]="{'width': '33vw'}"
-                  [fxHide.lt-sm]="true && _swipe != 'text'"
-                  (swiperight)="swipe('list')">
+                  [fxHide.lt-sm]="true && _swipe != 'text'">
+                  <!-- (swiperight)="swipe('list')"> -->
                  <app-text #text2
                            *ngIf="listId != undefined"
                            [content]="currentList"
