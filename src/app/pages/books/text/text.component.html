@@ -1,13 +1,16 @@
 <div class="main"
      fxLayout="column">
-    <mat-tab-group *ngIf="(edit$ | async) ; else view" style="height:100%">
+    <mat-tab-group *ngIf="(edit$ | async) ; else view" 
+                   style="height:100%"> 
         <mat-tab>
             <ng-template mat-tab-label>
                 <mat-icon>edit</mat-icon>
                 <span style="margin-left:5px">Edit</span>
             </ng-template>
             <div style="height:100vh">
-                <app-text-editor [code]="text" (change)="text = $event"></app-text-editor>
+                <app-text-editor [code]="text" 
+                                 (change)="text = $event">
+                </app-text-editor>
             </div>
         </mat-tab>
         <mat-tab>
@@ -15,10 +18,10 @@
                 <mat-icon>visibility</mat-icon>
                 <span style="margin-left:5px">View</span>
             </ng-template>
-        
             <div style="margin:10px" [innerHtml]="text"></div>
         </mat-tab>
     </mat-tab-group>
+
     <ng-template #view>
         <div style="margin:10px" [innerHtml]="text"></div>
     </ng-template>
@@ -72,4 +75,9 @@
     <!-- <div style="margin-left:5px">
         {{ content?.data?.text }}
     </div> -->
+</div>
+
+<div style="position:absolute; bottom:10px; margin-left:10px; z-index:100"
+    *ngIf="(edit$ | async)">
+    <button mat-button (click)="save()">Save</button>
 </div>
