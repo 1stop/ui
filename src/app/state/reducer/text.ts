@@ -2,6 +2,7 @@ import { createEntityAdapter } from '@ngrx/entity';
 import { Text } from '../../model/text';
 import { EntityState } from '@ngrx/entity';
 import * as text from '../actions/text';
+import keyBy from 'lodash-es/keyBy';
 
 const textAdapter = createEntityAdapter<Text>();
 interface TextState {
@@ -22,6 +23,12 @@ export function textReducer(state: TextState = initialState, action: text.Action
         return { ...state, texts: immutableAdd(state.texts, action.category, action.text)};
     case text.SET_CATEGORY:
         return { ...state, category: action.category};
+    case text.CREATE:
+        return { ...state, texts: immutableUpdate(state.texts, action.category, action.text)};
+    case text.UPDATE:
+        return { ...state, texts: immutableUpdate(state.texts, action.category, action.text)};
+    case text.DELETE:
+        return { ...state, texts: immutableDelete(state.texts, action.category, action.text)};
     default:
       return state;
     }
@@ -30,6 +37,20 @@ export function textReducer(state: TextState = initialState, action: text.Action
 
 function immutableAdd(obj, key, val) {
     return Object.assign({}, obj, {
-       [key] : val
+       [key] : keyBy(val, (v: any) => v.id)
     });
 }
+
+function immutableUpdate(obj, key, val) {
+    return Object.assign({}, obj, {
+        [key] : { ...obj[key], [val.id]: val}
+    });
+}
+
+function immutableDelete(obj, key, id) {
+    const { [id]: removed, ...remain } = obj[key];
+    return Object.assign({}, obj, {
+        [key] : remain
+    });
+}
+

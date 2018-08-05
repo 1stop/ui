@@ -1,5 +1,5 @@
 export interface Text {
-    id: string;
+    id: number;
     title: string;
     order: number;
     text: string;

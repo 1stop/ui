@@ -1,21 +1,36 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Action } from '@ngrx/store';
+import { Action, Store } from '@ngrx/store';
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import { Observable, of } from 'rxjs';
-import { catchError, map, mergeMap } from 'rxjs/operators';
-import * as category from '../actions/category';
-import { category as cat_data} from '../../fake_data/namespaces';
+import { Observable, zip } from 'rxjs';
+import { map, mergeMap, take } from 'rxjs/operators';
+import * as text from '../actions/text';
+import { Text } from '../../model/text';
 
 @Injectable()
 export class TextEffects {
-  // @Effect()
-  // login$: Observable<Action> = this.actions$.pipe(
-  //   ofType('[Category] QUERY'),
-  //   mergeMap((action) => {
-  //       return of(new category.AddAll(cat_data));
-  //   })
-  // );
+  @Effect()
+  login$: Observable<Action> = this.actions$.pipe(
+    ofType('[Text] SET CATEGORY'),
+    mergeMap((action: any) => {
+      return zip(
+        this._store.select('category'),
+        this._store.select('text')).pipe(
+        take(1),
+        map(([cat, txt]) => {
+          if (txt.texts[action.category] === undefined ) {
+            const textUrl = cat.entities[action.category].textUrl;
+            this.http.get(textUrl).subscribe((v: {data: Text[]}) => {
+              this._store.dispatch(new text.AddAll(action.category, v.data));
+            });
+          }
+        }),
+        map(() => ({type: 'null' }))
+      );
+    })
+  );
 
-  constructor(private http: HttpClient, private actions$: Actions) {}
+  constructor(private http: HttpClient,
+              private actions$: Actions,
+              private _store: Store<any>) {}
 }

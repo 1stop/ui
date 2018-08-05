@@ -1,12 +1,13 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
-import { Subject, Subscription, Observable } from 'rxjs';
-import { each, remove, find, isArray } from 'lodash';
-
-import {MatTableModule} from '@angular/material/table';
-import { debounceTime, map } from 'rxjs/operators';
-import { ActivatedRoute } from '../../../../../node_modules/@angular/router';
+import { Subject, Subscription, Observable, of } from 'rxjs';
+import { debounceTime, map, filter, withLatestFrom } from 'rxjs/operators';
+import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import * as text from '../../../state/actions/text';
+import { SelectionModel } from '@angular/cdk/collections';
+import { HttpClient } from '@angular/common/http';
+import values from 'lodash-es/values';
+import { Text } from '../../../model/text';
 
 @Component({
   selector: 'app-list',
@@ -29,86 +30,65 @@ export class ListComponent implements OnInit {
 
     public completeText = '';
 
-    constructor(private _route: ActivatedRoute, private _store: Store<any>) { }
+
+    list$: Observable<any>;
+    edited = new SelectionModel<number>(true);
+
+    constructor(private _route: ActivatedRoute,
+                private _store: Store<any>,
+                private _http: HttpClient) { }
 
     ngOnInit() {
-      this._route.params.subscribe((params) => {
-        this._store.dispatch(new text.SetCategory(params['category']));
-      });
-
       this.edit$ = this._store.select('browser').pipe(
-        map( v => v.edit)
+        map( v => v.editMode)
       );
 
-      this.change$ = this.change.pipe(
-          debounceTime(1000)
-        ).subscribe(() => {
-        each(this.lists, (list) => {
-          console.log(list);
-          if (list.edit === true ) {
-            // this._list.edit(this.categoryId, list.id, list.name).subscribe(() => {
-            //   list.edit = false;
-            // });
-          }
+      this.list$ = this._store.select('text').pipe(
+        filter( v => v.category ),
+        map( v => values(v.texts[v.category]))
+      );
+    }
 
-          if (list.id === this.selectedId) {
-            list = this.buildComplteText(list);
-          }
+    add(title: string) {
+      of(null).pipe(
+        withLatestFrom(this._store.select('text'))
+      ).subscribe(([_, state]) => {
+        this._http.post('/api/texts', {
+          category: state.category,
+          title: title
+        }).subscribe((v: { data: Text}) => {
+          this._store.dispatch(new text.Create(state.category, v.data));
         });
       });
     }
 
-    add() {
-      // this._list.create(this.categoryId, '').subscribe((v: any) => {
-      //   this.lists.push(v);
-      // });
-    }
-
-    edit(list: any) {
-      list.edit = true;
-      this.change.next(true);
-    }
-
-    delete(id: string, $event){
-      // this._list.delete(this.categoryId, id).subscribe(() => {
-      //   remove(this.lists, (cat) => {
-      //     return cat.id === id;
-      //   });
-      // });
-      // $event.stopPropagation();
-    }
-
-    _select(data: any){
-      console.log('select');
-      if ( this.selectedId !== data.id){
-        this.selectedId = data.id;
-
-        each(this.lists, (item) => {
-          if (item.id === data.id) {
-            item = this.buildComplteText(data);
-            console.log(item);
-            return false;
-          }
-
+    edit(id: number, title: string) {
+      of(null).pipe(
+        withLatestFrom(this._store.select('text'))
+      ).subscribe(([_, state]) => {
+        this._http.put(`/api/texts/${id}`, {
+          category: state.category,
+          title: title
+        }).subscribe((v: {data: Text}) => {
+          this._store.dispatch(new text.Update(state.category, v.data));
+          this.edited.deselect(id);
         });
-
-
-        this.highlight.emit(data);
-      }
+      });
     }
 
-    ngOnDestroy(){
-      this.change$.unsubscribe();
+    delete(id: number) {
+      of(null).pipe(
+        withLatestFrom(this._store.select('text'))
+      ).subscribe(([_, state]) => {
+        this._http.delete(`/api/texts/${id}`)
+          .subscribe((v: {data: Text}) => {
+            this._store.dispatch(new text.Delete(state.category, id));
+            this.edited.deselect(id);
+          });
+      });
     }
 
-    buildComplteText(targetList) {
-      let completeText = '';
-      if (targetList.data && targetList.data.subtext && isArray(targetList.data.subtext)) {
-        each(targetList.data.subtext, (item) => {
-          completeText += item.subtext;
-        });
-      }
-      targetList.data.text = completeText; console.log(targetList);
-      return targetList;
+    _select(data: any) {
+
     }
 }

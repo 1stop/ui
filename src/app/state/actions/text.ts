@@ -6,15 +6,22 @@ export const UPDATE = '[Text] UPDATE';
 export const READ = '[Text] READ';
 export const ADD_ALL = '[Text] ADD ALL';
 export const SET_CATEGORY = '[Text] SET CATEGORY';
+export const DELETE = '[Text] DELETE';
 
 export class Create implements Action {
     readonly type = CREATE;
+    constructor(public category: string, public text: Text) {}
 }
 
 export class Update implements Action {
     readonly type = UPDATE;
+    constructor(public category: string, public text: Text) {}
 }
 
+export class Delete implements Action {
+    readonly type = DELETE;
+    constructor(public category: number, public text: number) {}
+}
 export class Read implements Action {
     readonly type = READ;
 }
@@ -34,4 +41,5 @@ export type Action = Create
     | Update
     | Read
     | AddAll
-    | SetCategory;
+    | SetCategory
+    | Delete;

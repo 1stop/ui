@@ -29,22 +29,16 @@
                   splitArea
                   (swipeleft)="swipe('text')"
                   (swiperight)="swipe('category')">
-                 <app-list #list
-                           *ngIf="catId != undefined"
-                           (highlight)="text_refresh($event)"
-                           [lists]="lists"
-                           [categoryId]="catId"
-                           [selectedId]="listId"
-                           [keyword]="query">
+                 <app-list>
                  </app-list>
-                 <div fxLayout="row"
+                 <!-- <div fxLayout="row"
                       fxLayoutAlign="center center"
                       style="height:100%"
                       *ngIf="catId == undefined">
                      <mat-icon style="font-size:30vh;height:30vh;width:30vh;color:gray">
                          not_interested
                      </mat-icon>
-                 </div>
+                 </div> -->
              </div>
 
              <div class="handle handle-row"
