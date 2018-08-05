@@ -1,8 +1,31 @@
 <div class="main"
      fxLayout="column">
-    <div style="margin-bottom:5px" *ngIf="content?.name">
+    <mat-tab-group *ngIf="(edit$ | async) ; else view" style="height:100%">
+        <mat-tab>
+            <ng-template mat-tab-label>
+                <mat-icon>edit</mat-icon>
+                <span style="margin-left:5px">Edit</span>
+            </ng-template>
+            <div style="height:100vh">
+                <app-text-editor [code]="text" (change)="text = $event"></app-text-editor>
+            </div>
+        </mat-tab>
+        <mat-tab>
+            <ng-template mat-tab-label>
+                <mat-icon>visibility</mat-icon>
+                <span style="margin-left:5px">View</span>
+            </ng-template>
+        
+            <div [innerHtml]="text"></div>
+        </mat-tab>
+    </mat-tab-group>
+    <ng-template #view>
+        <div style="margin:10px" [innerHtml]="text"></div>
+    </ng-template>
+      
+     <!-- <div style="margin-bottom:5px" *ngIf="content?.name">
         <b>{{ content.name }}</b>
-    </div>
+    </div> -->
 
     <!-- <div fxLayout="column"
         fxFlex
@@ -10,14 +33,9 @@
         style="padding:5px;height:100%"> -->
 
 
-    <div fxLayout="column"
+    <!-- <div fxLayout="column"
          fxFlex
          style="height:100%;overflow:auto">
-        <!-- <textarea class="edit"
-                  fxFlex
-                  [(ngModel)]="content.data.text"
-                  (ngModelChange)="edit()">
-        </textarea> -->
         <text-editor [code] ="text"></text-editor>
 
         <mat-form-field>
@@ -49,9 +67,9 @@
             </div>
 
        </div>
-    </div>
+    </div> -->
 
-    <div style="margin-left:5px">
+    <!-- <div style="margin-left:5px">
         {{ content?.data?.text }}
-    </div>
+    </div> -->
 </div>

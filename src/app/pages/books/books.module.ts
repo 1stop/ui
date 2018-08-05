@@ -4,7 +4,7 @@ import { BooksComponent } from './books.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { CategoryComponent } from './category/category.component';
 import { CommonModule } from '@angular/common';
-import { MatIconModule, MatButtonModule, MatListModule, MatChipsModule, MatFormFieldModule } from '@angular/material';
+import { MatIconModule, MatButtonModule, MatListModule, MatChipsModule, MatFormFieldModule, MatTabsModule } from '@angular/material';
 import { FormsModule } from '@angular/forms';
 import { SplitModule } from '../../directive/split/split.module';
 import { ListComponent } from './list/list.component';
@@ -47,7 +47,8 @@ import { NamespaceEffects } from '../../state/effects/namespace';
         StoreModule.forFeature('category', categoryReducer),
         StoreModule.forFeature('text', textReducer),
         EffectsModule.forFeature([CategoryEffects, TextEffects, NamespaceEffects]),
-        TextEditorModule
+        TextEditorModule,
+        MatTabsModule
     ],
     declarations: [
         BooksComponent,
