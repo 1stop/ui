@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { Subject, Subscription, Observable, of } from 'rxjs';
-import { debounceTime, map, filter, withLatestFrom } from 'rxjs/operators';
-import { ActivatedRoute } from '@angular/router';
+import { map, filter, withLatestFrom } from 'rxjs/operators';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import * as text from '../../../state/actions/text';
 import { SelectionModel } from '@angular/cdk/collections';
@@ -33,12 +33,22 @@ export class ListComponent implements OnInit {
 
     list$: Observable<any>;
     edited = new SelectionModel<number>(true);
+    lst_id: number;
+    namespace: number;
+    category: number;
 
     constructor(private _route: ActivatedRoute,
                 private _store: Store<any>,
-                private _http: HttpClient) { }
+                private _http: HttpClient,
+                private _router: Router) { }
 
     ngOnInit() {
+      this._route.params.subscribe((params) => {
+        this.namespace = +params['namespace'];
+        this.category = +params['category'];
+        this.lst_id = +params['list'];
+      });
+
       this.edit$ = this._store.select('browser').pipe(
         map( v => v.editMode)
       );
@@ -88,7 +98,7 @@ export class ListComponent implements OnInit {
       });
     }
 
-    _select(data: any) {
-
+    select(id: string) {
+      this._router.navigate(['books', this.namespace, this.category, id]);
     }
-}
+  }

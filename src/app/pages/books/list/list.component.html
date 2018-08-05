@@ -1,10 +1,11 @@
 <mat-list style="padding-top:0px">
     <mat-list-item *ngFor="let list of (list$ | async)"
-                   (click)="_select(list)"
-                   [class.selected]="selectedId == list.id"
+                   (click)="select(list.id)"
+                   [class.selected]="lst_id == list.id"
                    style="height:auto;min-height:48px"
                    fxLayout="column"
                    fxLayoutAlign="center none">
+
 
         <div *ngIf="!(edit$ | async)" class="item">
             <span>{{ list.title }}</span>
@@ -34,7 +35,7 @@
         </div>
 
     </mat-list-item>
-    
+
     <mat-list-item *ngIf="edit$ | async">
         <button mat-icon-button
                 style="color:lightgray"

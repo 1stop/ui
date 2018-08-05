@@ -29,7 +29,7 @@ import { NamespaceEffects } from '../../state/effects/namespace';
                 data: { reuse: true }
             },
             {
-                path: 'books/:namespace/:category/:listid',
+                path: 'books/:namespace/:category/:list',
                 component: BooksComponent,
                 data: { reuse: true }
             }

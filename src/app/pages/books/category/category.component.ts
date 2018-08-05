@@ -41,6 +41,8 @@ export class CategoryComponent implements OnInit, OnDestroy {
           }
           this._store.dispatch(new text.SetCategory(this.category));
         });
+      } else {
+        this._store.dispatch(new text.SetCategory(this.category));
       }
     });
 
@@ -82,7 +84,6 @@ export class CategoryComponent implements OnInit, OnDestroy {
         this._store.dispatch(new category.Delete(id));
         this.edited.deselect(id);
       });
-
   }
 
   select(id: string) {
