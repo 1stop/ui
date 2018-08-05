@@ -16,9 +16,7 @@ export class UserService {
                 private _ref: ApplicationRef) {
         this.afAuth.auth.onAuthStateChanged((user) => {
             this.user.next(user);
-            setTimeout(() => {
-                this._ref.tick();
-            });
+            this._ref.tick();
         });
     }
 

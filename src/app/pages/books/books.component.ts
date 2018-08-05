@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ApplicationRef } from '@angular/core';
 import { Store } from '@ngrx/store';
 import * as browser from '../../state/actions/browser';
 import { UserService } from '../../services/user.service';
@@ -14,7 +14,8 @@ export class BooksComponent implements OnInit {
     editMode$: Observable<any>;
 
     constructor(public _store: Store<any>,
-                public _user: UserService) {}
+                public _user: UserService,
+                private _ref: ApplicationRef) {}
 
     listId = 1;
 
@@ -31,5 +32,6 @@ export class BooksComponent implements OnInit {
         } else {
             this._store.dispatch( new browser.EditOff());
         }
+        this._ref.tick();
     }
 }
