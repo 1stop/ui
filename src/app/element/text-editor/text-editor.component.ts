@@ -1,12 +1,10 @@
 import { Component, Input, OnInit, ElementRef, Output, EventEmitter, OnDestroy } from '@angular/core';
-
-// import '../../../public/vendor/codemirror/codemirror.css'; // codemirror
 import 'tui-editor/dist/tui-editor.css'; // editor ui
 import 'tui-editor/dist/tui-editor-contents.css'; // editor content
-// import '../../../public/vendor/highlight.js/github.css'; // code block highlight
 import 'tui-editor/dist/tui-editor-extTable.js';
-
 import Editor from 'tui-editor/dist/tui-editor-Editor';
+import { AngularFireStorage } from 'angularfire2/storage';
+import { finalize } from '../../../../node_modules/rxjs/operators';
 
 @Component({
     selector: 'app-text-editor',
@@ -19,7 +17,8 @@ export class TextEditorComponent implements OnInit, OnDestroy {
 
     editor: any;
 
-    constructor(public _myElement: ElementRef) {}
+    constructor(public _myElement: ElementRef,
+                private storage: AngularFireStorage) {}
 
     ngOnInit() {
         this.editor = Editor.factory({
@@ -35,6 +34,21 @@ export class TextEditorComponent implements OnInit, OnDestroy {
             events: {
                 'change': (v) => {
                     this.change.emit(this.editor.getHtml());
+                }
+            },
+            hooks: {
+                addImageBlobHook: (blob, callback) => {
+                    const filePath = `${Math.random().toString(36).substr(2, 5)}_${blob.name}`;
+                    const fileRef = this.storage.ref(filePath);
+                    const task = this.storage.upload(filePath, blob);
+                    task.snapshotChanges().pipe(
+                        finalize(() => {
+                            fileRef.getDownloadURL().subscribe((url) => {
+                                callback(url, blob.name);
+                            });
+                        })
+                     )
+                    .subscribe();
                 }
             }
         });
