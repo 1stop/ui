@@ -1,6 +1,6 @@
 <mat-list style="padding-top:0px">
     <mat-list-item *ngFor="let cat of (categories$ | async)"
-                   (click)="select(cat.id)"
+                   (click)="select.emit(cat.id)"
                    [class.selected]="category == cat.id"
                    style="height:auto;min-height:48px"
                    fxLayout="column"

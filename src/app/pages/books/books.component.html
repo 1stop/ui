@@ -7,7 +7,7 @@
          [fxHide.lt-sm]="true && _swipe != 'category'"
          splitArea>
          <!-- (swipeleft)="swipe('list')"> -->
-        <app-category>
+        <app-category (select)="navigate($event, 'category')">
         </app-category>
     </div>
 
@@ -29,7 +29,7 @@
                   splitArea>
                   <!-- (swipeleft)="swipe('text')"
                   (swiperight)="swipe('category')"> -->
-                 <app-list>
+                 <app-list (select)="navigate($event, 'list')">
                  </app-list>
                  <!-- <div fxLayout="row"
                       fxLayoutAlign="center center"
@@ -54,8 +54,7 @@
                   [ngStyle.gt-sm]="{'width': '33vw'}"
                   [fxHide.lt-sm]="true && _swipe != 'text'">
                   <!-- (swiperight)="swipe('list')"> -->
-                 <app-text #text2
-                           *ngIf="listId != undefined"
+                 <app-text *ngIf="listId != undefined"
                            [content]="currentList"
                            (update)="update($event)">
                  </app-text>

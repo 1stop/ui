@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Action, Store } from '@ngrx/store';
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import { Observable, zip } from 'rxjs';
+import { Observable, zip, of } from 'rxjs';
 import { map, mergeMap, take } from 'rxjs/operators';
 import * as text from '../actions/text';
 import { Text } from '../../model/text';
@@ -17,15 +17,17 @@ export class TextEffects {
         this._store.select('category'),
         this._store.select('text')).pipe(
         take(1),
-        map(([cat, txt]) => {
+        mergeMap(([cat, txt]) => {
           if (txt.texts[action.category] === undefined ) {
             const textUrl = cat.entities[action.category].textUrl;
-            this.http.get(textUrl).subscribe((v: {data: Text[]}) => {
-              this._store.dispatch(new text.AddAll(action.category, v.data));
-            });
+            return this.http.get(textUrl).pipe(
+              map((v: {data: Text[]}) => {
+                return new text.AddAll(action.category, v.data);
+              })
+            );
           }
-        }),
-        map(() => ({type: 'null' }))
+          return of({type: 'null'});
+        })
       );
     })
   );

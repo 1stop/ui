@@ -1,6 +1,6 @@
 <mat-list style="padding-top:0px">
     <mat-list-item *ngFor="let list of (list$ | async)"
-                   (click)="select(list.id)"
+                   (click)="select.emit(list.id)"
                    [class.selected]="lst_id == list.id"
                    style="height:auto;min-height:48px"
                    fxLayout="column"
