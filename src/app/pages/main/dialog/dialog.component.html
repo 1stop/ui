@@ -9,6 +9,15 @@
         <input matInput placeholder="Short Name" [formControl]="short" required>
     </mat-form-field>
 
+    <div>
+        <span *ngIf="uploading; else image">Loading ... </span>
+        <ng-template #image>
+            <img style="height:150px;width:150px" 
+                 [attr.src]="background || 'http://via.placeholder.com/150x150'" />
+        </ng-template>
+    </div>
+    <input mat-button type="file" (change)="upload($event)"/>    
+
     <div fxLayoutGap="10px" fxLayout="row" fxLayoutAlign="end center">
         <button mat-raised-button (click)="close()">Cancel</button>
         <button mat-raised-button color="primary" (click)="submit()">

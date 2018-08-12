@@ -15,7 +15,8 @@
                     <mat-card-title><b>{{ namespace.title }}</b></mat-card-title>
                     <mat-icon *ngIf="namespace.bookmark">bookmark</mat-icon>
                 </mat-card-header>
-                <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
+                <img mat-card-image 
+                     [attr.src]="namespace.background">
                 <mat-card-actions fxLayout="row" 
                                   fxLayoutAlign="end center"                         
                                   *ngIf="_user.user | async" > 
