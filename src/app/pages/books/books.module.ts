@@ -19,6 +19,8 @@ import { TextEffects } from '../../state/effects/text';
 import { TextEditorModule } from '../../element/text-editor/text-editor.module';
 import { NamespaceEffects } from '../../state/effects/namespace';
 
+import { CodemirrorModule } from '@ctrl/ngx-codemirror';
+
 @NgModule({
     imports: [
         RouterModule.forChild([
@@ -48,7 +50,8 @@ import { NamespaceEffects } from '../../state/effects/namespace';
         StoreModule.forFeature('text', textReducer),
         EffectsModule.forFeature([CategoryEffects, TextEffects, NamespaceEffects]),
         TextEditorModule,
-        MatTabsModule
+        MatTabsModule,
+        CodemirrorModule
     ],
     declarations: [
         BooksComponent,

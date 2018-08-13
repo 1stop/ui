@@ -15,6 +15,18 @@
         </mat-tab>
         <mat-tab>
             <ng-template mat-tab-label>
+                <mat-icon>code</mat-icon>
+                <span style="margin-left:5px">Edit</span>
+            </ng-template>
+            <div style="height:100%">
+                <ngx-codemirror 
+                    [(ngModel)]="text" 
+                    [options]="config"
+                    ></ngx-codemirror>
+            </div>
+        </mat-tab>
+        <mat-tab> 
+            <ng-template mat-tab-label>
                 <mat-icon>visibility</mat-icon>
                 <span style="margin-left:5px">View</span>
             </ng-template>

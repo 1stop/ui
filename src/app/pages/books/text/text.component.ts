@@ -11,6 +11,14 @@ import { HttpClient } from '@angular/common/http';
 import * as text from '../../../state/actions/text';
 import { Text } from '../../../model/text';
 
+import 'codemirror/addon/display/autorefresh.js';
+import 'codemirror/addon/edit/closebrackets.js';
+import 'codemirror/addon/edit/matchbrackets.js';
+//import 'codemirror/addon/lint/javascript-lint.js';
+//import 'codemirror/addon/lint/lint.js';
+import 'codemirror/mode/javascript/javascript.js';
+import 'codemirror/mode/htmlmixed/htmlmixed';
+
 @Component({
   selector: 'app-text',
   templateUrl: './text.component.html',
@@ -32,6 +40,17 @@ export class TextComponent implements OnInit {
   namespace: number;
   category: number;
   lst_id: number;
+
+  readonly config: any = {
+    mode: 'htmlmixed',
+    lineNumbers: true,
+    indentUnit: 4,
+    autoCloseBrackets: true,
+    matchBrackets: true,
+    autoRefresh: true,
+    autofocus: true,
+    //gutter: ['CodeMirror-lint-markers']
+  };
 
   constructor(public snackBar: MatSnackBar,
               private _store: Store<any>,
