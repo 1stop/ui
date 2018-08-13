@@ -19,7 +19,7 @@
                      [attr.src]="namespace.background">
                 <mat-card-actions fxLayout="row" 
                                   fxLayoutAlign="end center"                         
-                                  *ngIf="_user.user | async" > 
+                                  *ngIf="_user.auth | async" > 
                     <button mat-button (click)="edit(namespace); $event.stopPropagation()">EDIT</button>
                 </mat-card-actions>
             </mat-card>
@@ -28,7 +28,7 @@
 </div>
 
 <div style="position:absolute;right:10px;bottom:10px"                         
-     *ngIf="_user.user | async" >
+     *ngIf="_user.auth | async" >
     <button mat-fab (click)="add()">
         <mat-icon>add</mat-icon>
     </button>

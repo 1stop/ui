@@ -4,7 +4,7 @@ import 'tui-editor/dist/tui-editor-contents.css'; // editor content
 import 'tui-editor/dist/tui-editor-extTable.js';
 import Editor from 'tui-editor/dist/tui-editor-Editor';
 import { AngularFireStorage } from 'angularfire2/storage';
-import { finalize } from '../../../../node_modules/rxjs/operators';
+import { finalize } from 'rxjs/operators';
 
 @Component({
     selector: 'app-text-editor',

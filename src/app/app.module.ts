@@ -56,6 +56,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { AvatarComponent } from './element/avatar/avatar.component';
 import { FirebaseInterceptor } from './services/http-interceptor.service';
 import { AngularFireStorageModule } from 'angularfire2/storage';
+import { SearchService } from './element/search-bar/search-bar.service';
 
 export class MyHammerConfig extends HammerGestureConfig  {
   overrides = {
@@ -153,7 +154,8 @@ export class RavenErrorHandler implements ErrorHandler {
     {
         provide: RouteReuseStrategy,
         useClass: CustomRouteReuseStrategy
-    }],
+    },
+    SearchService],
   bootstrap: [AppComponent],
   entryComponents: [
     LoginDialogComponent

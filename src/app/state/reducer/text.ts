@@ -29,6 +29,8 @@ export function textReducer(state: TextState = initialState, action: text.Action
         return { ...state, texts: immutableUpdate(state.texts, action.category, action.text)};
     case text.DELETE:
         return { ...state, texts: immutableDelete(state.texts, action.category, action.text)};
+    case text.CLEAR:
+        return initialState;
     default:
       return state;
     }

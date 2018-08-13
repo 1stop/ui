@@ -8,6 +8,7 @@ export const UPDATE = '[Category] UPDATE';
 export const READ = '[Category] READ';
 export const ADD_ALL = '[Category] ADD_ALL';
 export const QUERY = '[Category] QUERY';
+export const CLEAR = '[Category] CLEAR';
 
 export class Create implements Action {
     readonly type = CREATE;
@@ -38,10 +39,14 @@ export class AddAll implements Action {
     constructor(public categories: Category[]) {}
 }
 
+export class Clear implements Action {
+    readonly type = CLEAR;
+}
 
 export type Action = Create
     | Update
     | Read
     | AddAll
     | Query
-    | Delete;
+    | Delete
+    | Clear
