@@ -56,13 +56,16 @@ export class MainComponent implements OnInit {
         width: '80vw',
         data: ns
       }).afterClosed().subscribe((data) => {
-        this._http.put(`/api/namespaces/${data.id}`, {
-          title: data.title,
-          short: data.short,
-          background: data.background
-        }).subscribe((v: {data: Update<Namespace>}) => {
-          this._store.dispatch(new namespace.Update(v.data));
-        });
+        console.log('close', data);
+        if ( data ) {
+          this._http.put(`/api/namespaces/${data.id}`, {
+            title: data.title,
+            short: data.short,
+            background: data.background
+          }).subscribe((v: {data: Update<Namespace>}) => {
+            this._store.dispatch(new namespace.Update(v.data));
+          });
+        }
       });
     }
 
@@ -70,13 +73,15 @@ export class MainComponent implements OnInit {
       this._dialog.open(DialogComponent, {
         width: '80vw'
       }).afterClosed().subscribe((data) => {
-        this._http.post('/api/namespaces', {
-          title: data.title,
-          short: data.short,
-          background: data.background
-        }).subscribe((v: {data: Namespace}) => {
-          this._store.dispatch(new namespace.Create(v.data));
-        });
+        if ( data ) {
+          this._http.post('/api/namespaces', {
+            title: data.title,
+            short: data.short,
+            background: data.background
+          }).subscribe((v: {data: Namespace}) => {
+            this._store.dispatch(new namespace.Create(v.data));
+          });
+        }
       });
     }
 

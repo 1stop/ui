@@ -2,7 +2,7 @@ import { createEntityAdapter } from '@ngrx/entity';
 import { Category } from '../../model/category';
 import { EntityState } from '@ngrx/entity';
 import * as category from '../actions/category';
-import { Actions } from '../../../../node_modules/@ngrx/effects';
+import { Actions } from '@ngrx/effects';
 
 const categoryAdapter = createEntityAdapter<Category>();
 interface CategoryState extends EntityState<Category> {
@@ -27,6 +27,8 @@ export function categoryReducer(state: CategoryState = initialState, action: cat
             changes: {...action.payload}}, state);
     case category.DELETE:
         return categoryAdapter.removeOne(action.id.toString(), state);
+    case category.CLEAR:
+        return initialState;
     default:
         return state;
     }

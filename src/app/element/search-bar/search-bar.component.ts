@@ -1,4 +1,7 @@
-import { Component, EventEmitter, Output, ViewChild, OnInit, ElementRef, Input } from '@angular/core';
+import { Component, ViewChild, OnInit, ElementRef, Input, HostListener } from '@angular/core';
+import { SearchService } from './search-bar.service';
+import { ActivatedRoute } from '../../../../node_modules/@angular/router';
+import { take } from 'rxjs/operators';
 
 @Component({
     selector: 'app-search-bar',
@@ -10,20 +13,32 @@ export class SearchBarComponent implements OnInit {
     query = '';
     @Input() shouldFocus = false;
     @Input() placeholder: string;
-    @Output() search: EventEmitter<string> = new EventEmitter();
     @ViewChild('input') searchbar: ElementRef;
+
+    constructor(private _s: SearchService,
+                private _route: ActivatedRoute) { }
 
     ngOnInit() {
         if ( this.shouldFocus ) {
             this.searchbar.nativeElement.focus();
         }
+
+        this._route.queryParams.pipe(
+            take(2)
+        ).subscribe((q) => {
+            this.query = q['query'];
+        });
     }
 
     commit() {
-        this.search.emit(this.query);
+        this._s.search.next(this.query);
     }
 
+    @HostListener('document:keydown.escape')
     clear() {
-        this.query = '';
+        if ( this.query ) {
+            this._s.search.next(null);
+            this.query = '';
+        }
     }
 }

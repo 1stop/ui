@@ -22,6 +22,7 @@ export class ListComponent implements OnInit {
     change: Subject<boolean> = new Subject();
     change$: Subscription;
     @Output() highlight: EventEmitter<any> = new EventEmitter<any>();
+    @Output() select: EventEmitter<number> = new EventEmitter<number>();
     @Input() keyword: string;
     @Input() categoryId: string;
     @Input() selectedId: string;
@@ -96,9 +97,5 @@ export class ListComponent implements OnInit {
             this.edited.deselect(id);
           });
       });
-    }
-
-    select(id: string) {
-      this._router.navigate(['books', this.namespace, this.category, id]);
     }
   }

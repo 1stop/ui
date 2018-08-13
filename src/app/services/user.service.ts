@@ -5,17 +5,22 @@ import * as firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebaseui/dist/firebaseui.css';
 import { AngularFireAuth } from 'angularfire2/auth';
-import { ReplaySubject } from 'rxjs';
+import { ReplaySubject, BehaviorSubject } from 'rxjs';
 
 @Injectable()
 export class UserService {
     user: ReplaySubject<any> = new ReplaySubject<any>(1);
+    auth: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+
     authUI: any;
     constructor(public dialog: MatDialog,
                 public afAuth: AngularFireAuth,
                 private _ref: ApplicationRef) {
         this.afAuth.auth.onAuthStateChanged((user) => {
             this.user.next(user);
+            if ( ['sindrosa.24@gmail.com', 'chyeap89@gmail.com'].indexOf(user.email) !== -1) {
+                this.auth.next(true);
+            }
             this._ref.tick();
         });
     }

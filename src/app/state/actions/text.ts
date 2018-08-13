@@ -7,6 +7,7 @@ export const READ = '[Text] READ';
 export const ADD_ALL = '[Text] ADD ALL';
 export const SET_CATEGORY = '[Text] SET CATEGORY';
 export const DELETE = '[Text] DELETE';
+export const CLEAR = '[Text] CLEAR';
 
 export class Create implements Action {
     readonly type = CREATE;
@@ -36,10 +37,14 @@ export class SetCategory implements Action {
     constructor(public category: number) {}
 }
 
+export class Clear implements Action {
+    readonly type = CLEAR;
+}
 
 export type Action = Create
     | Update
     | Read
     | AddAll
     | SetCategory
-    | Delete;
+    | Delete
+    | Clear;

@@ -55,6 +55,8 @@ import { BooksModule } from './pages/books/books.module';
 import { EffectsModule } from '@ngrx/effects';
 import { AvatarComponent } from './element/avatar/avatar.component';
 import { FirebaseInterceptor } from './services/http-interceptor.service';
+import { AngularFireStorageModule } from 'angularfire2/storage';
+import { SearchService } from './element/search-bar/search-bar.service';
 
 export class MyHammerConfig extends HammerGestureConfig  {
   overrides = {
@@ -136,13 +138,13 @@ export class RavenErrorHandler implements ErrorHandler {
     StoreModule.forRoot({ browser: browserReducer}),
     EffectsModule.forRoot([]),
     SearchBarModule,
-    BooksModule
+    BooksModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireStorageModule
   ],
   providers: [
     AppState,
     UserService,
-    // FireBaseService,
-    // { provide: ErrorHandler, useClass: RavenErrorHandler },
     FirebaseInterceptor,
     AuthService,
     {
@@ -152,10 +154,10 @@ export class RavenErrorHandler implements ErrorHandler {
     {
         provide: RouteReuseStrategy,
         useClass: CustomRouteReuseStrategy
-    }],
+    },
+    SearchService],
   bootstrap: [AppComponent],
   entryComponents: [
-    // DialogComponent,
     LoginDialogComponent
   ]
 })

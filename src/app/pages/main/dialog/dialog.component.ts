@@ -1,7 +1,10 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
-import * as _ from 'lodash';
+import every from 'lodash-es/every';
+import get from 'lodash-es/get';
+import { AngularFireStorage } from 'angularfire2/storage';
+import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-dialog',
@@ -12,10 +15,12 @@ export class DialogComponent implements OnInit {
   id: string;
   title = new FormControl('', [Validators.required]);
   short = new FormControl('', [Validators.required]);
-
+  background: string;
+  uploading = false;
   constructor(
     public dialogRef: MatDialogRef<DialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any) { }
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private storage: AngularFireStorage) { }
 
   ngOnInit() {
     if ( this.data ) {
@@ -30,13 +35,31 @@ export class DialogComponent implements OnInit {
     return this.title.hasError('required') ? 'You must enter a Title' : '';
   }
 
+  upload($event) {
+    this.uploading = true;
+    const blob = $event.target.files[0];
+    const filePath = `${Math.random().toString(36).substr(2, 5)}_${blob.name}`;
+    const fileRef = this.storage.ref(filePath);
+    const task = this.storage.upload(filePath, blob);
+    task.snapshotChanges().pipe(
+        finalize(() => {
+            fileRef.getDownloadURL().subscribe((url) => {
+                this.uploading = false;
+                this.background = url;
+            });
+        })
+      )
+    .subscribe();
+  }
+
   submit() {
-    _.every([this.title.valid, this.short.valid], (f) => {
+    every([this.title.valid, this.short.valid], (f) => {
         if (f) {
             this.dialogRef.close({
-                id: _.get(this.data, 'id'),
+                id: get(this.data, 'id'),
                 title: this.title.value,
-                short: this.short.value
+                short: this.short.value,
+                background: this.background
             });
         }
     });

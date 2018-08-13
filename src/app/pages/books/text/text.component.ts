@@ -71,62 +71,8 @@ export class TextComponent implements OnInit {
       this.category = +params['category'];
       this.lst_id = +params['list'];
 
-      this.text = get(state.texts[state.category][this.lst_id], 'text', '');
+      this.text = get(state.texts, `[${state.category}][${this.lst_id}].text`, '');
     });
-
-    // this.change$ = merge(
-    //     this.change.pipe(debounceTime(1000)),
-    //     this.save
-    // ).pipe(
-    //   distinct((v: any) => {
-    //     return `${v.id}${v.text}${get(v, 'tags', []).join('')}`;
-    //   })
-    // ).subscribe((v) => {
-    //   this._save(v.id, v.text, v.tags);
-    // });
-  }
-
-  // edit() {
-  //   this.cache = {
-  //     text: get(this.content, 'data.text' , ''),
-  //     tags: get(this.content, 'data.tag' , []),
-  //     id: this.content.id
-  //   };
-
-  //   this.change.next(this.cache);
-  // }
-
-  // addTag(event: MatChipInputEvent): void {
-  //   const input = event.input;
-  //   const value = event.value;
-  //   const tags = get(this.content, 'data.tag' , []);
-
-  //   if ((value || '').trim()) {
-  //     tags.push(value.trim());
-  //   }
-
-  //   if (input) {
-  //     input.value = '';
-  //   }
-
-  //   set(this.content, 'data.tag', tags);
-  //   this.edit();
-  // }
-
-  // removeTag(tag: any): void {
-  //   const tags = get(this.content, 'data.tag' , []);
-  //   const index = tags.indexOf(tag);
-
-  //   if (index >= 0) {
-  //     tags.splice(index, 1);
-  //   }
-
-  //   set(this.content, 'data.tag', tags);
-  //   this.edit();
-  // }
-
-  log() {
-    console.log('asdas');
   }
 
   save() {

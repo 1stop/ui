@@ -29,19 +29,6 @@ export class AppComponent implements OnInit {
                       );
   }
 
-  @HostListener('document:keydown.escape')
-  clear() {
-    if ( this.query ) {
-        this.state.search.next(undefined);
-    }
-    this.query = '';
-    this.searching = false;
-  }
-
-  search() {
-    this.state.search.next(this.query);
-  }
-
   toggle() {
     this.state.edit.next(!this.state.edit.value);
   }

@@ -5,7 +5,9 @@ import { RouterModule } from '@angular/router';
 import { SearchBarModule } from '../../element/search-bar/search-bar.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { CommonModule } from '@angular/common';
-import { MatGridListModule, MatCardModule, MatIconModule, MatButtonModule, MatFormFieldModule, MatInputModule } from '@angular/material';
+import { MatCardModule,
+         MatIconModule, MatButtonModule, MatFormFieldModule,
+         MatInputModule, MatProgressSpinnerModule } from '@angular/material';
 import { ExcerptPipe } from '../../pipe/excerpt.pipe';
 import { StoreModule } from '@ngrx/store';
 import { namespaceReducer } from '../../state/reducer/namespace';
@@ -34,7 +36,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
         MatFormFieldModule,
         FormsModule,
         ReactiveFormsModule,
-        MatInputModule
+        MatInputModule,
+        MatProgressSpinnerModule
     ],
     providers: [],
     entryComponents: [
