@@ -18,12 +18,12 @@
                 <mat-icon>visibility</mat-icon>
                 <span style="margin-left:5px">View</span>
             </ng-template>
-            <div style="margin:10px" [innerHtml]="text"></div>
+            <div style="margin:10px" (click)="handleClick($event)" [innerHtml]="text"></div>
         </mat-tab>
     </mat-tab-group>
 
     <ng-template #view>
-        <div style="margin:10px" [innerHtml]="text"></div>
+        <div (click)="handleClick($event)" style="margin:10px" [innerHtml]="text"></div>
     </ng-template>
       
      <!-- <div style="margin-bottom:5px" *ngIf="content?.name">

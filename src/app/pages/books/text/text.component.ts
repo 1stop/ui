@@ -1,15 +1,15 @@
-import { Component, OnInit, Input, ElementRef, SimpleChanges,
-         Output, EventEmitter, OnChanges } from '@angular/core';
-import { Subject, Subscription, Observable, merge, combineLatest, of } from 'rxjs';
+import { Component, OnInit, Input,
+         Output, EventEmitter } from '@angular/core';
+import { Subject, Subscription, Observable, combineLatest, of } from 'rxjs';
 import { ENTER, COMMA, SPACE } from '@angular/cdk/keycodes';
-import { MatChipInputEvent, MatSnackBar } from '@angular/material';
-import { isEmpty, get, set } from 'lodash';
-import { debounceTime, distinct, map, filter, withLatestFrom } from 'rxjs/operators';
+import { MatSnackBar } from '@angular/material';
+import { map, filter, withLatestFrom } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import * as text from '../../../state/actions/text';
 import { Text } from '../../../model/text';
+import get from 'lodash-es/get';
 
 @Component({
   selector: 'app-text',
@@ -36,7 +36,8 @@ export class TextComponent implements OnInit {
   constructor(public snackBar: MatSnackBar,
               private _store: Store<any>,
               private _route: ActivatedRoute,
-              private _http: HttpClient) { }
+              private _http: HttpClient,
+              private _router: Router) { }
 
   ngOnInit() {
     this.edit$ = this._store.select('browser').pipe(
@@ -69,5 +70,17 @@ export class TextComponent implements OnInit {
         this._store.dispatch(new text.Update(state.category, v.data));
       });
     });
+  }
+
+  handleClick($event) {
+    const tag = get($event, 'target.tagName');
+    if ( tag === 'A') {
+      const href = get($event, 'target.href', '');
+      if ( href.indexOf(window.location.origin) !== -1) {
+        const url = href.replace(window.location.origin, '');
+        this._router.navigateByUrl(url);
+        $event.preventDefault();
+      }
+    }
   }
 }
