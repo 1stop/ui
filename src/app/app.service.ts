@@ -12,15 +12,15 @@ export class AppState {
 
     public user: any;
 
-    constructor(){
-        if ( environment.production ){
-            ga((tracker) => {
-              this.sessionId = tracker.get('clientId');
-            });
+    constructor() {
+        if ( environment.production ) {
+            // ga((tracker) => {
+            //   this.sessionId = tracker.get('clientId');
+            // });
         }
     }
 
-    load_user(user: any){
+    load_user(user: any) {
         this.user = user;
     }
 }

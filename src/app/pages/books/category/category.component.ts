@@ -18,7 +18,7 @@ export class CategoryComponent implements OnInit {
   @Output() select: EventEmitter<number> = new EventEmitter<number>();
   categories$: Observable<Category[]>;
   edit$: Observable<boolean>;
-  namespace: string;
+  namespace: number;
   category: number;
 
   edited = new SelectionModel<number>(true);
@@ -31,6 +31,8 @@ export class CategoryComponent implements OnInit {
   ngOnInit() {
     this._route.params.subscribe((params) => {
       this.category = +params['category'];
+      this.namespace = +params['namespace'];
+
     });
 
     this.categories$ = this._store.select('category').pipe(
