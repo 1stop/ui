@@ -5,7 +5,7 @@
                      color="primary"
                      class="mat-elevation-z2"
                      [class.fullTopbar]="searching">
-            <div *ngIf="!searching">1 Stop</div>
+            <button mat-button *ngIf="!searching" (click)="navigateToHome()">1 Stop</button>
             <div fxFlex fxLayout="row" 
                  *ngIf="searchbar$ | async"
                  fxLayoutAlign="center center" 

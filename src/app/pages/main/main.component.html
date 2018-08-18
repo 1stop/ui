@@ -6,7 +6,7 @@
         <app-search-bar [shouldFocus]="true" [placeholder]="suggestion$ | async"></app-search-bar>
     </div>
 
-    <div fxLayout="row" style="width:100%;margin-top:50px">
+    <div fxLayout="row" style="width:80%;margin-top:50px">
         <div fxFlex class="container" fxLayout="row" fxLayoutGap="10px">
             <mat-card style="width:150px" 
                       *ngFor="let namespace of ( namespaces$ | async)"

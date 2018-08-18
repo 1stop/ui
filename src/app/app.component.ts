@@ -7,6 +7,7 @@ import { get, findIndex } from 'lodash';
 import { UserService } from './services/user.service';
 import { Store } from '@ngrx/store';
 import { map } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -21,7 +22,8 @@ export class AppComponent implements OnInit {
   constructor(public state: AppState,
               private _auth: AuthService,
               public _user: UserService,
-              public _store: Store<any> ) {}
+              public _store: Store<any>,
+              private _router: Router ) {}
 
   ngOnInit() {
     this.searchbar$ = this._store.select('browser').pipe(
@@ -31,5 +33,10 @@ export class AppComponent implements OnInit {
 
   toggle() {
     this.state.edit.next(!this.state.edit.value);
+  }
+
+  navigateToHome() {
+    if (this._router.url !== '/')
+      this._router.navigate(['']);
   }
 }
