@@ -46,7 +46,8 @@ export class BooksComponent implements OnInit {
                 'namespace': this.namespace,
                 'category': this.category,
                 'list': this.list,
-                'query': v
+                'query': v,
+                'page': this.page
             });
         });
 
@@ -69,6 +70,10 @@ export class BooksComponent implements OnInit {
                 this.category = +params['category'];
                 this.list = +params['list'];
                 this.page = params['page'];
+                if ( this._media.isActive('lt-sm') && !this.page ) {
+                    this.page = 'category';
+                }
+
                 if ( this.namespace !== +params['namespace'] ||
                      this.query !== params['query']) {
                     this.query = params['query'];
