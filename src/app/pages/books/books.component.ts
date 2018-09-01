@@ -12,6 +12,7 @@ import { Category } from '../../model/category';
 import get from 'lodash-es/get';
 import compact from 'lodash-es/compact';
 import { SearchService } from '../../element/search-bar/search-bar.service';
+import { ObservableMedia } from '@angular/flex-layout';
 
 @Component({
     selector: 'app-books',
@@ -20,8 +21,8 @@ import { SearchService } from '../../element/search-bar/search-bar.service';
 })
 export class BooksComponent implements OnInit {
     editMode$: Observable<any>;
-    _swipe: string;
 
+    page: string;
     namespace: number;
     category: number;
     list: number;
@@ -34,7 +35,8 @@ export class BooksComponent implements OnInit {
                 private _route: ActivatedRoute,
                 private _http: HttpClient,
                 private _router: Router,
-                private _search: SearchService) {}
+                private _search: SearchService,
+                private _media: ObservableMedia) {}
 
     listId = 1;
 
@@ -56,7 +58,8 @@ export class BooksComponent implements OnInit {
                         'category': +params['category'],
                         'namespace': +params['namespace'],
                         'list': +params['list'],
-                        'query': q['query']
+                        'query': q['query'],
+                        'page': q['page']
                     };
                 })
             ),
@@ -65,10 +68,12 @@ export class BooksComponent implements OnInit {
             mergeMap((params) => {
                 this.category = +params['category'];
                 this.list = +params['list'];
+                this.page = params['page'];
                 if ( this.namespace !== +params['namespace'] ||
                      this.query !== params['query']) {
                     this.query = params['query'];
                     this.namespace = +params['namespace'];
+
                     const query = {'namespace': this.namespace};
                     if ( this.query ) {
                         query['query'] = this.query;
@@ -128,7 +133,8 @@ export class BooksComponent implements OnInit {
                     this.list
                 ]), {
                     queryParams: {
-                        query: this.query
+                        query: this.query,
+                        page: this.page
                     }
                 });
         });
@@ -155,7 +161,8 @@ export class BooksComponent implements OnInit {
                     'namespace': this.namespace,
                     'category': id,
                     'list': undefined,
-                    'query': this.query
+                    'query': this.query,
+                    'page': this._media.isActive('lt-sm') ? 'list' : undefined
                 });
                 break;
             case 'list':
@@ -163,9 +170,20 @@ export class BooksComponent implements OnInit {
                     'namespace': this.namespace,
                     'category': this.category,
                     'list': id,
-                    'query': this.query
+                    'query': this.query,
+                    'page': this._media.isActive('lt-sm') ? 'text' : undefined
                 });
                 break;
         }
+    }
+
+    swipe(page: string) {
+        this.change$.next({
+            'namespace': this.namespace,
+            'category': this.category,
+            'list': this.list,
+            'query': this.query,
+            'page': page
+        });
     }
 }
