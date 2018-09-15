@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { Subject, Subscription, Observable, of } from 'rxjs';
-import { map, filter, withLatestFrom } from 'rxjs/operators';
+import { map as o_map, filter, withLatestFrom } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import * as text from '../../../state/actions/text';
@@ -8,6 +8,7 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { HttpClient } from '@angular/common/http';
 import values from 'lodash-es/values';
 import { Text } from '../../../model/text';
+import map from 'lodash-es/map';
 
 @Component({
   selector: 'app-list',
@@ -51,14 +52,14 @@ export class ListComponent implements OnInit {
       });
 
       this.edit$ = this._store.select('browser').pipe(
-        map( v => v.editMode)
+        o_map( v => v.editMode)
       );
 
       this.list$ = this._store.select('text').pipe(
         filter( v => v.category ),
-        map( v => values(v.texts[v.category]))
+        o_map( v => v.texts[v.category])
       );
-    }
+   }
 
     add(title: string) {
       of(null).pipe(

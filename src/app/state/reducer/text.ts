@@ -39,7 +39,7 @@ export function textReducer(state: TextState = initialState, action: text.Action
 
 function immutableAdd(obj, key, val) {
     return Object.assign({}, obj, {
-       [key] : keyBy(val, (v: any) => v.id)
+       [key] : val
     });
 }
 

@@ -3,11 +3,12 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { Category } from '../../../model/category';
-import { map } from 'rxjs/operators';
+import { map as o_map } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { Namespace } from '../../../model/namespace';
 import { SelectionModel } from '@angular/cdk/collections';
 import * as category from '../../../state/actions/category';
+import map from 'lodash-es/map';
 
 @Component({
   selector: 'app-category',
@@ -36,11 +37,13 @@ export class CategoryComponent implements OnInit {
     });
 
     this.categories$ = this._store.select('category').pipe(
-      map( v => Object.values(v.entities))
+      o_map( v => {
+        return map(v.ids, id => v.entities[id]);
+      })
     );
 
     this.edit$ = this._store.select('browser').pipe(
-      map( v => v.editMode )
+      o_map( v => v.editMode )
     );
   }
 
