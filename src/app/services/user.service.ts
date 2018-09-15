@@ -18,7 +18,8 @@ export class UserService {
                 private _ref: ApplicationRef) {
         this.afAuth.auth.onAuthStateChanged((user) => {
             this.user.next(user);
-            if ( ['sindrosa.24@gmail.com', 'chyeap89@gmail.com', 'greatspirit828@gmail.com'].indexOf(user.email) !== -1) {
+
+            if ( user && ['sindrosa.24@gmail.com', 'chyeap89@gmail.com', 'greatspirit828@gmail.com'].indexOf(user.email) !== -1) {
                 this.auth.next(true);
             }
             this._ref.tick();
