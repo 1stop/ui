@@ -52,8 +52,9 @@ export class TextComponent implements OnInit {
       this.namespace = +params['namespace'];
       this.category = +params['category'];
       this.lst_id = +params['list'];
-
-      this.text = get(state.texts, `[${state.category}][${this.lst_id}].text`, '');
+      if ( this.lst_id ) {
+        this.text = get(state.texts, `${state.category}.entities.${this.lst_id}.text`, '');
+      }
     });
   }
 
@@ -61,13 +62,13 @@ export class TextComponent implements OnInit {
     of(null).pipe(
       withLatestFrom(this._store.select('text'))
     ).subscribe(([_, state]) => {
-      const txt = state.texts[state.category][this.lst_id];
+      const txt = state.texts[state.category].entities[this.lst_id];
       this._http.put(`/api/texts/${this.lst_id}`, {
         category: state.category,
         title: txt.title,
         text: this.text
       }).subscribe((v: {data: Text}) => {
-        this._store.dispatch(new text.Update(state.category, v.data));
+        this._store.dispatch(new text.Update(state.category, <any>v.data));
       });
     });
   }

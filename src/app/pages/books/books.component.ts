@@ -2,8 +2,8 @@ import { Component, OnInit, ApplicationRef } from '@angular/core';
 import { Store } from '@ngrx/store';
 import * as browser from '../../state/actions/browser';
 import { UserService } from '../../services/user.service';
-import { map, mergeMap, takeUntil, skipUntil, filter, first, combineLatest } from 'rxjs/operators';
-import { Observable, of, merge, BehaviorSubject, ReplaySubject } from 'rxjs';
+import { map as o_map, mergeMap, filter, first, combineLatest } from 'rxjs/operators';
+import { Observable, of, merge, ReplaySubject } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import * as category from '../../state/actions/category';
@@ -13,6 +13,7 @@ import get from 'lodash-es/get';
 import compact from 'lodash-es/compact';
 import { SearchService } from '../../element/search-bar/search-bar.service';
 import { ObservableMedia } from '@angular/flex-layout';
+import map from 'lodash-es/map';
 
 @Component({
     selector: 'app-books',
@@ -54,7 +55,7 @@ export class BooksComponent implements OnInit {
         merge(
             this._route.params.pipe(
                 combineLatest(this._route.queryParams),
-                map(([params, q]) => {
+                o_map(([params, q]) => {
                     return {
                         'category': +params['category'],
                         'namespace': +params['namespace'],
@@ -88,7 +89,7 @@ export class BooksComponent implements OnInit {
                     const requestOpts: any = {params: query};
                     return this._http.get('/api/categories', requestOpts)
                                 .pipe(
-                                    map((v: {data: Category[]}) => {
+                                    o_map((v: {data: Category[]}) => {
                                         this._store.dispatch(new category.Clear());
                                         this._store.dispatch(new category.AddAll(v.data));
                                         const cat_ids = v.data.map(d => d.id);
@@ -104,7 +105,7 @@ export class BooksComponent implements OnInit {
                                 );
                 } else {
                     return this._store.select('category').pipe(
-                        map((state) => {
+                       o_map((state) => {
                             if (this.category && state.ids.indexOf(this.category) !== -1) {
                                 this._store.dispatch(new text.SetCategory(this.category));
                                 return true;
@@ -118,8 +119,8 @@ export class BooksComponent implements OnInit {
                     return this._store.select('text').pipe(
                         filter(state => state.texts[state.category] !== undefined ),
                         first(),
-                        map((state) => {
-                            const ids = Object.keys(state.texts[state.category]).map(v => +v);
+                        o_map((state) => {
+                            const ids = state.texts[state.category].ids;
                             if ( !this.list || ids.indexOf(this.list) === -1) {
                                 this.list = ids[0];
                             }
@@ -145,7 +146,7 @@ export class BooksComponent implements OnInit {
         });
 
         this.editMode$ = this._store.select('browser').pipe(
-            map ( v => v.editMode )
+            o_map ( v => v.editMode )
         );
         this._store.dispatch( new browser.SearchOn());
     }

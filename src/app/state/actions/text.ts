@@ -1,5 +1,6 @@
 import { Action } from '@ngrx/store';
 import { Text } from '../../model/text';
+import { Update as upt} from '@ngrx/entity';
 
 export const CREATE = '[Text] CREATE';
 export const UPDATE = '[Text] UPDATE';
@@ -16,12 +17,12 @@ export class Create implements Action {
 
 export class Update implements Action {
     readonly type = UPDATE;
-    constructor(public category: string, public text: Text) {}
+    constructor(public category: string, public text: upt<Text>) {}
 }
 
 export class Delete implements Action {
     readonly type = DELETE;
-    constructor(public category: number, public text: number) {}
+    constructor(public category: number, public id: number) {}
 }
 export class Read implements Action {
     readonly type = READ;
