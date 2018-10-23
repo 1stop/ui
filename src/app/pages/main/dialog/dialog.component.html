@@ -20,7 +20,7 @@
 
     <div fxLayoutGap="10px" fxLayout="row" fxLayoutAlign="end center">
         <button mat-raised-button (click)="close()">Cancel</button>
-        <button mat-raised-button color="primary" (click)="submit()">
+        <button mat-raised-button style="background-color:#273636; color:white" (click)="submit()">
             <span *ngIf="!data">Add</span>
             <span *ngIf="data">Update</span>
         </button>

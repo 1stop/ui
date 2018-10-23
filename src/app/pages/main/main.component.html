@@ -1,14 +1,18 @@
-<div class="main" 
+<div
      style="height:100%" 
-     fxLayout="column" 
-     fxLayoutAlign="center center">
-    <div style="width:80%">
-        <app-search-bar [shouldFocus]="true" [placeholder]="suggestion$ | async"></app-search-bar>
+     fxLayout="column"
+     fxLayoutAlign=" center">
+     
+    <div fxFlex="40" class="search-panel" fxLayout="column" fxLayoutAlign="center center">
+
+        <div style="width:80%">
+            <app-search-bar [shouldFocus]="true" [placeholder]="suggestion$ | async"></app-search-bar>
+        </div>
     </div>
 
-    <div fxLayout="row" style="width:80%;margin-top:50px">
-        <div fxFlex class="container" fxLayout="row" fxLayoutGap="10px">
-            <mat-card style="width:150px" 
+    <div fxLayout="row" style="width:80%;">
+        <div fxFlex class="container" fxLayout="row wrap" fxLayoutAlign=" start" fxLayoutGap="10px">
+            <mat-card class="book"
                       *ngFor="let namespace of ( namespaces$ | async)"
                       (click)="navigate(['books', namespace.id])">
                 <mat-card-header>
@@ -20,16 +24,16 @@
                 <mat-card-actions fxLayout="row" 
                                   fxLayoutAlign="end center"                         
                                   *ngIf="_user.auth | async" > 
-                    <button mat-button (click)="edit(namespace); $event.stopPropagation()">EDIT</button>
+                    <button mat-button class="edit-book-btn" (click)="edit(namespace); $event.stopPropagation()">EDIT</button>
                 </mat-card-actions>
             </mat-card>
         </div>
     </div>
 </div>
 
-<div style="position:absolute;right:10px;bottom:10px"                         
+<div style="position:fixed;right:20px;bottom:10px"                         
      *ngIf="_user.auth | async" >
-    <button mat-fab (click)="add()">
+    <button mat-fab (click)="add()" class="add-btn">
         <mat-icon>add</mat-icon>
     </button>
 </div>

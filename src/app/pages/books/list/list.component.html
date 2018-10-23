@@ -1,42 +1,34 @@
-<mat-list style="padding-top:0px">
-    <mat-list-item *ngFor="let list of (list$ | async)"
-                   (click)="select.emit(list.id)"
-                   [class.selected]="lst_id == list.id"
-                   style="height:auto;min-height:48px"
-                   fxLayout="column"
-                   fxLayoutAlign="center none">
-
-
-        <div *ngIf="!(edit$ | async)" class="item">
-            <span>{{ list.title }}</span>
-            <!-- <span mat-line class="excerpt" [innerHtml]="list.data?.text | stipMarkdown | highlight: keyword | excerpt"> -->
-            <!-- <span mat-line class="excerpt" [innerHtml]="list.data?.completeText | stipMarkdown | highlight: keyword | excerpt"> -->
-            <!-- </span> -->
-        </div>
-        <div *ngIf="edit$ | async" fxLayout="rows">
+<div fxLayout="column">
+    <ng-template ngFor let-list [ngForOf]= "(list$ | async)" let-i="text-idx">
+        <div *ngIf="!(edit$ | async)"
+            (click)="select.emit({id: list.id, type: 'list'})"
+            [class.selected]="lst_id == list.id" 
+            class="item">
+            <div class="hightlight-box"></div>
+            {{ list.title }}</div>
+        <div *ngIf="edit$ | async" fxLayout="rows" style="padding: 0 0;">
             <button *ngIf="!edited.isSelected(list.id); else edit_block"
                     mat-icon-button 
-                    (click)="delete(list.id, $event)" 
-                    style="color:lightgray">
+                    (click)="delete('list', list.id, $event)" 
+                    style="color:lightgray;">
                 <mat-icon>close</mat-icon>
             </button>
             <ng-template #edit_block>
                 <button mat-icon-button 
-                (click)="edit(list.id, list.title)" 
+                (click)="edit('list', list.id, list.title)" 
                 style="color:lightgray">
                     <mat-icon>done</mat-icon>
                 </button>
             </ng-template>
-            <input class="edit transparent-background"
+            <input class="edit transparent-background" style="margin:0 0"
                     [(ngModel)]="list.title"
                     placeholder="List"
+                    [class.selected]="lst_id == list.id"
                     (ngModelChange)="edited.select(list.id)"
                     (keydown.enter)="edit(list.id, list.title)"/>
-        </div>
-
-    </mat-list-item>
-
-    <mat-list-item *ngIf="edit$ | async">
+            </div>
+    </ng-template>
+    <div fxLayout="rows" *ngIf="edit$ | async">
         <button mat-icon-button
                 style="color:lightgray"
                 (click)="add(new.value); new.value = ''">
@@ -46,5 +38,5 @@
                 #new
                 placeholder="Category"
                 (keydown.enter)="add(new.value); new.value = ''"/>
-    </mat-list-item>
-</mat-list>
+    </div>
+</div>

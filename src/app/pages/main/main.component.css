@@ -19,3 +19,33 @@
 mat-card {
     cursor: pointer;
 }
+
+.search-panel {
+    background-color: #273636;
+    width: 100%;
+}
+
+.book{
+    width:150px;
+    margin-bottom: 1em;
+}
+
+.book:hover {
+    background-color:#273636;
+    color:white;
+}
+
+.edit-book-btn:hover {
+    background-color: white;
+    color: black;
+}
+
+.add-btn {
+    background-color:#273636;
+    color:white;
+}
+
+.add-btn:hover {
+    background-color:white;
+    color:#273636;
+}

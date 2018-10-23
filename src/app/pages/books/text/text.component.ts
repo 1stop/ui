@@ -9,6 +9,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import * as text from '../../../state/actions/text';
 import { Text } from '../../../model/text';
+import { BooksService } from './../books.service';
+import each from 'lodash-es/each';
 import get from 'lodash-es/get';
 
 @Component({
@@ -27,6 +29,7 @@ export class TextComponent implements OnInit {
   cache: any = {};
 
   text = ``;
+  texts = [];
   edit$: Observable<boolean>;
 
   namespace: number;
@@ -37,7 +40,8 @@ export class TextComponent implements OnInit {
               private _store: Store<any>,
               private _route: ActivatedRoute,
               private _http: HttpClient,
-              private _router: Router) { }
+              private _router: Router,
+              private _books: BooksService) { }
 
   ngOnInit() {
     this.edit$ = this._store.select('browser').pipe(
@@ -52,8 +56,15 @@ export class TextComponent implements OnInit {
       this.namespace = +params['namespace'];
       this.category = +params['category'];
       this.lst_id = +params['list'];
+      this.texts = []; //clear previous texts
       if ( this.lst_id ) {
-        this.text = get(state.texts, `${state.category}.entities.${this.lst_id}.text`, '');
+        each(get(state.texts, `${state.category}.entities`), (item)=>{
+          if (item.text !== '')
+            this.texts.push(item);
+        });
+
+        this._books.triggerScrollTo(this.lst_id);
+        //this.text = get(state.texts, `${state.category}.entities.${this.lst_id}.text`, '');
       }
     });
   }

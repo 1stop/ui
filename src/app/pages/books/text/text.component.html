@@ -25,56 +25,13 @@
     <ng-template #view>
         <div (click)="handleClick($event)" style="margin:10px" [innerHtml]="text"></div>
     </ng-template>
-      
-     <!-- <div style="margin-bottom:5px" *ngIf="content?.name">
-        <b>{{ content.name }}</b>
-    </div> -->
 
-    <!-- <div fxLayout="column"
-        fxFlex
-        *ngIf="state.edit | async"
-        style="padding:5px;height:100%"> -->
-
-
-    <!-- <div fxLayout="column"
-         fxFlex
-         style="height:100%;overflow:auto">
-        <text-editor [code] ="text"></text-editor>
-
-        <mat-form-field>
-            <mat-chip-list #chipList>
-                <mat-chip *ngFor="let tag of content?.data?.tag"
-                          [removable]="true"
-                          (remove)="removeTag(tag)">
-                 {{ tag }}
-                 <mat-icon matChipRemove>cancel</mat-icon>
-            </mat-chip>
-            <input placeholder="New Tags..."
-               [matChipInputFor]="chipList"
-               [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-               [matChipInputAddOnBlur]="true"
-               (matChipInputTokenEnd)="addTag($event)" />
-           </mat-chip-list>
-       </mat-form-field>
-       <div style="height:30vh;overflow:auto" *ngIf="content?.meta">
-            <div>
-              Score: {{ content?.meta?.score }}
-            </div>
-            <div>text:</div>
-            <div *ngFor="let t of content?.meta?.highlight?.text">
-                {{ t }}
-            </div>
-            <div>tag:</div>
-            <div *ngFor="let t of content?.meta?.highlight?.tag">
-                {{ t }}
-            </div>
-
-       </div>
-    </div> -->
-
-    <!-- <div style="margin-left:5px">
-        {{ content?.data?.text }}
-    </div> -->
+    <ng-template *ngIf="!(edit$ | async)" ngFor let-txt [ngForOf]= "texts">
+        <div [id]="txt.id" *ngIf="txt.id != lst_id" class="text-card" (click)="handleClick($event)"
+            [innerHtml]="txt.text"></div>
+        <div [id]="txt.id" *ngIf="txt.id == lst_id" class="text-card selected" (click)="handleClick($event)" 
+            [innerHtml]="txt.text"></div>
+    </ng-template>
 </div>
 
 <div style="position:absolute; bottom:10px; margin-left:10px; z-index:100"

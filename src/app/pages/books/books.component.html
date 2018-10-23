@@ -3,12 +3,11 @@
      split="row">
     <div fxFlex="20"
          fxFlex.lt-sm="100"
-         fxHide
-         fxShow.gt-sm
-         [fxShow.lt-sm]="page == 'category'"
+         [fxShow.gt-sm]="true"
+         [fxShow.lt-sm]="page == 'category' || page == 'list'"
          splitArea
-         (swipeleft)="swipe('list')">
-         <app-category (select)="navigate($event, 'category')">
+         (swipeleft)="swipe('text')">
+        <app-category (select)="navigate($event)">
         </app-category>
     </div>
 
@@ -19,75 +18,53 @@
     </div>
 
     <div fxFlex
-         splitArea>
-        <div style="height:100%;width:100%"
-             fxLayout="rows"
-             split="row">
-             <div fxFlex="40"
-                  fxFlex.lt-sm="100"
-                  fxHide
-                  fxShow.gt-sm
-                  [fxShow.lt-sm]="page == 'list'"
-                  class="section"
-                  splitArea
-                  (swipeleft)="swipe('text')"
-                  (swiperight)="swipe('category')">
-                 <app-list (select)="navigate($event, 'list')">
-                 </app-list>
-                 <!-- <div fxLayout="row"
-                      fxLayoutAlign="center center"
-                      style="height:100%"
-                      *ngIf="catId == undefined">
-                     <mat-icon style="font-size:30vh;height:30vh;width:30vh;color:gray">
-                         not_interested
-                     </mat-icon>
-                 </div> -->
-             </div>
-
-             <div class="handle handle-row"
-                  splitHandler
-                  [fxHide.lt-sm]="true"
-                  style="background-color:lightgray;width:3px;height:100%;cursor:col-resize">
-             </div>
-
-             <div fxFlex
-                  class="section"
-                  style="padding:1em"
-                  splitArea
-                  [ngStyle.gt-sm]="{'width': '33vw'}"
-                  fxHide
-                  fxShow.gt-sm
-                  [fxShow.lt-sm]="page == 'text'"
-                  (swiperight)="swipe('list')">
-                 <app-text *ngIf="listId != undefined"
-                           [content]="currentList"
-                           (update)="update($event)">
-                 </app-text>
-                 <div fxLayout="row"
-                      fxLayoutAlign="center center"
-                      style="height:100%"
-                      *ngIf="listId == undefined">
-                     <mat-icon style="font-size:30vh;height:30vh;width:30vh;color:gray">
-                         not_interested
-                     </mat-icon>
-                 </div>
-             </div>
-
+        splitArea>
+        <div style="height:100%;width:100%">
+            <div
+                style="padding:1em"
+                [fxShow.gt-sm]="true"
+                [fxShow.lt-sm]="page == 'text' || page == undefined"
+                (swiperight)="swipe('category')">
+                <app-text *ngIf="listId != undefined"
+                        [content]="currentList"
+                        (update)="update($event)">
+                </app-text>
+                <div fxLayout="row"
+                    fxLayoutAlign="center center"
+                    style="height:100%"
+                    *ngIf="listId == undefined">
+                    <mat-icon style="font-size:30vh;height:30vh;width:30vh;color:gray">
+                        not_interested
+                    </mat-icon>
+                </div>
+            </div>
         </div>
     </div>
+
+    <div [fxHide.lt-sm]="true"
+        style="background-color:lightgray;width:3px;height:100%;">
+    </div>
+
+    <div fxFlex="20"
+        [fxShow.gt-sm]="true"
+        [fxHide.lt-sm]="true"
+        style="padding:1em"
+        splitArea
+        [ngStyle.gt-sm]="{'width': '10vw'}"></div> 
+
 </div>
 
-<div style="position:absolute;bottom:10px;right:10px;z-index:100" 
+<div style="position:fixed;bottom:10px;right:20px;z-index:100" 
      *ngIf="_user.auth | async" 
      fxLayout="column">
     <!-- *ngIf="user?.email == 'chyeap89@gmail.com' || user?.email == 'sindrosa.24@gmail.com'" > -->
 
-    <button mat-fab  *ngIf="editMode$ | async; else edit" (click)="toggle(false)">
+    <button mat-fab  *ngIf="editMode$ | async; else edit" (click)="toggle(false)" class="edit-toggle-btn">
         <mat-icon>visibility</mat-icon>
     </button>
         
     <ng-template #edit>
-        <button mat-fab (click)="toggle(true)">
+        <button mat-fab (click)="toggle(true)" class="edit-toggle-btn">
             <mat-icon>edit</mat-icon>
         </button>
     </ng-template>

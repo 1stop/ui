@@ -1,0 +1,9 @@
+.edit-toggle-btn {
+    background-color:#273636;
+    color:white;
+}
+
+.edit-toggle-btn:hover {
+    background-color:white;
+    color:#273636;
+}

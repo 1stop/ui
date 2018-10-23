@@ -1,44 +1,62 @@
-<mat-list style="padding-top:0px">
-    <mat-list-item *ngFor="let cat of (categories$ | async)"
-                   (click)="select.emit(cat.id)"
-                   [class.selected]="category == cat.id"
-                   style="height:auto;min-height:48px"
-                   fxLayout="column"
-                   fxLayoutAlign="center none">
-        <span *ngIf="!(edit$ | async)" class="item">
-            {{ cat.title }} 
-        </span>
-        <div *ngIf="edit$ | async" fxLayout="rows">
-            <button *ngIf="!edited.isSelected(cat.id); else edit_block"
-                    mat-icon-button 
-                    (click)="delete(cat.id, $event)" 
-                    style="color:lightgray">
-                <mat-icon>close</mat-icon>
-            </button>
-            <ng-template #edit_block>
-                <button mat-icon-button 
-                (click)="edit(cat.id, cat.title)" 
-                style="color:lightgray">
-                    <mat-icon>done</mat-icon>
-                </button>
-            </ng-template>
-            <input class="edit transparent-background"
-                    [(ngModel)]="cat.title"
-                    placeholder="Category"
-                    (ngModelChange)="edited.select(cat.id)"
-                    (keydown.enter)="edit(cat.id, cat.title)"/>
-        </div>
-    </mat-list-item>
+<div style="margin-top:15px;"></div>
 
-    <mat-list-item *ngIf="edit$ | async">
-        <button mat-icon-button
-                style="color:lightgray"
-                (click)="add(new.value); new.value = ''">
-            <mat-icon>add</mat-icon>
-        </button>
-        <input class="edit transparent-background"
-                #new
-                placeholder="Category"
-                (keydown.enter)="add(new.value); new.value = ''"/>
-    </mat-list-item>
-</mat-list>
+<mat-accordion>
+    <ng-template ngFor let-cat [ngForOf]= "(categories$ | async)" let-i="category-idx">
+
+        <mat-expansion-panel (opened)="select.emit({id: cat.id, type: 'category'})"
+            [class.selected]="category == cat.id">
+            <!-- <div (keyDown)="preventButton($event)"> -->
+            <mat-expansion-panel-header style="font-size:16px"
+                [style.padding]="(edit$ | async) ? '0 24px 0 10px' : '0 24px'">
+
+                <span *ngIf="!(edit$ | async)">
+                    {{ cat.title }} 
+                </span>
+
+                <div *ngIf="edit$ | async" fxLayout="rows" style="padding:0 24px 0 2px">
+
+                    <button *ngIf="!edited.isSelected(cat.id); else edit_block"
+                            mat-icon-button 
+                            (click)="delete('category', cat.id, $event)" 
+                            style="color:lightgray">
+                        <mat-icon>close</mat-icon>
+                    </button>
+
+                    <ng-template #edit_block>
+                        <button mat-icon-button 
+                        (click)="edit('category', cat.id, cat.title)" 
+                        style="color:lightgray">
+                            <mat-icon>done</mat-icon>
+                        </button>
+                    </ng-template>
+
+                    <input class="edit transparent-background" 
+                            [(ngModel)]="cat.title"
+                            placeholder="Category"
+                            (ngModelChange)="edited.select(cat.id)"
+                            (keydown.enter)="edit(cat.id, cat.title)"/>
+                </div>
+            </mat-expansion-panel-header>
+
+            <app-list (select)="select.emit($event)">
+            </app-list>
+
+        </mat-expansion-panel>
+    </ng-template>  
+</mat-accordion>
+
+<div style="margin-top:15px"></div>
+
+<div fxLayout="rows" *ngIf="edit$ | async" style="padding:0 24px 0 10px">
+
+    <button mat-icon-button
+            style="color:lightgray"
+            (click)="add(new.value); new.value = ''">
+        <mat-icon>add</mat-icon>
+    </button>
+
+    <input class="edit transparent-background"
+            #new
+            placeholder="Category"
+            (keydown.enter)="add(new.value); new.value = ''"/>
+</div>

@@ -13,6 +13,8 @@ import { MatDialogModule } from '@angular/material/dialog';
 
 import { RouterModule, Routes, RouteReuseStrategy } from '@angular/router';
 
+import { ScrollToService } from '@nicky-lenaers/ngx-scroll-to';
+
 import { AppState } from './app.service';
 
 import { AppComponent } from './app.component';
@@ -155,7 +157,9 @@ export class RavenErrorHandler implements ErrorHandler {
         provide: RouteReuseStrategy,
         useClass: CustomRouteReuseStrategy
     },
-    SearchService],
+    SearchService,
+    ScrollToService
+  ],
   bootstrap: [AppComponent],
   entryComponents: [
     LoginDialogComponent

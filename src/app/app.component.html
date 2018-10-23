@@ -2,12 +2,12 @@
     <div style="height:100%;width:100%">
         <mat-toolbar fxLayout="row"
                      fxLayoutAlign="space-between center"
-                     color="primary"
                      class="mat-elevation-z2"
                      [class.fullTopbar]="searching">
-            <button mat-button *ngIf="!searching" (click)="navigateToHome()">1 Stop</button>
-            <div fxFlex fxLayout="row" 
-                 *ngIf="searchbar$ | async"
+            <button mat-button class="home-btn" *ngIf="!searching" (click)="navigateToHome()">1 Stop</button>
+            <div fxFlex fxLayout="row"
+                 *ngIf="(searchbar$ | async)"
+                 [fxHide.lt-sm]="true"
                  fxLayoutAlign="center center" 
                  style="height:100%">
                 <app-search-bar></app-search-bar>

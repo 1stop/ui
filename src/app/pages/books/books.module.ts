@@ -1,15 +1,18 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { BooksComponent } from './books.component';
+import { BooksService } from './books.service';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { CategoryComponent } from './category/category.component';
 import { CommonModule } from '@angular/common';
 import { MatIconModule, MatButtonModule, MatListModule, MatChipsModule, MatFormFieldModule, MatTabsModule } from '@angular/material';
+import { MatExpansionModule } from '@angular/material/expansion';
 import { FormsModule } from '@angular/forms';
 import { SplitModule } from '../../directive/split/split.module';
 import { ListComponent } from './list/list.component';
 import { TextComponent } from './text/text.component';
 import { StoreModule } from '@ngrx/store';
+import { ScrollToModule } from '@nicky-lenaers/ngx-scroll-to';
 import { categoryReducer } from '../../state/reducer/category';
 import { namespaceReducer } from '../../state/reducer/namespace';
 import { textReducer } from '../../state/reducer/text';
@@ -48,13 +51,18 @@ import { NamespaceEffects } from '../../state/effects/namespace';
         StoreModule.forFeature('text', textReducer),
         EffectsModule.forFeature([CategoryEffects, TextEffects, NamespaceEffects]),
         TextEditorModule,
-        MatTabsModule
+        MatTabsModule,
+        MatExpansionModule,
+        ScrollToModule
     ],
     declarations: [
         BooksComponent,
         CategoryComponent,
         ListComponent,
         TextComponent
+    ],
+    providers: [
+        BooksService
     ]
 })
 export class BooksModule {}

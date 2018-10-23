@@ -160,12 +160,12 @@ export class BooksComponent implements OnInit {
         this._ref.tick();
     }
 
-    navigate(id: number, type: 'category' | 'list') {
-        switch (type) {
+    navigate(item: any) {
+        switch (item.type) {
             case 'category':
                 this.change$.next({
                     'namespace': this.namespace,
-                    'category': id,
+                    'category': item.id,
                     'list': undefined,
                     'query': this.query,
                     'page': this._media.isActive('lt-sm') ? 'list' : undefined
@@ -175,7 +175,7 @@ export class BooksComponent implements OnInit {
                 this.change$.next({
                     'namespace': this.namespace,
                     'category': this.category,
-                    'list': id,
+                    'list': item.id,
                     'query': this.query,
                     'page': this._media.isActive('lt-sm') ? 'text' : undefined
                 });

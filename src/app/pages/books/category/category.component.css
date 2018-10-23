@@ -15,12 +15,13 @@ mat-list-item {
 }
 
 .selected {
-    background-color: Cornsilk;
-
+    background-color: #273636;
+    color: white;
 }
 
 .selected input {
-    background-color: Cornsilk;
+    background-color: #273636;
+    color: white;
 }
 
 

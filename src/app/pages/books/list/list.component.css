@@ -3,27 +3,34 @@ mat-list-item {
 }
 
 .item {
-    padding-top: 10px;
-    padding-bottom: 10px;
-    width: 100%;
+    font-size: 14px;
+    height:40px;
+    padding:10px 0 0 10px;
+}
+
+.item:hover {
+    margin-left: 10px
+}
+
+.hightlight-box {
+    display: none;
+    width: 20px;
+    height: 20px;
+    background-color:white;
 }
 
 .edit {
     border: none;
     outline: none;
-    font-size: 16px;
+    font-size: 14px;
     width: 100%;
+    color: white;
 }
 
 .selected {
-    background-color: Cornsilk;
-
+    border-bottom: 2px solid white;
+    color: gray;
 }
-
-.selected input {
-    background-color: Cornsilk;
-}
-
 
 .excerpt {
     font-size:0.7em !important;
