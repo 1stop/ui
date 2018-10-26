@@ -1,12 +1,16 @@
-<div style="margin-top:15px;"></div>
+<div style="margin-top:1rem"></div>
 
 <mat-accordion>
     <ng-template ngFor let-cat [ngForOf]= "(categories$ | async)" let-i="category-idx">
 
         <mat-expansion-panel (opened)="select.emit({id: cat.id, type: 'category'})"
+            style="padding: 1.5em 0 1.5em 0;"
             [class.selected]="category == cat.id">
             <!-- <div (keyDown)="preventButton($event)"> -->
-            <mat-expansion-panel-header style="font-size:16px"
+            <mat-expansion-panel-header
+                style="font-size:16px;"
+                [expandedHeight]="'auto'"
+                [collapsedHeight]="'auto'"
                 [style.padding]="(edit$ | async) ? '0 24px 0 10px' : '0 24px'">
 
                 <span *ngIf="!(edit$ | async)">
@@ -45,7 +49,7 @@
     </ng-template>  
 </mat-accordion>
 
-<div style="margin-top:15px"></div>
+<div style="margin-top:1rem"></div>
 
 <div fxLayout="rows" *ngIf="edit$ | async" style="padding:0 24px 0 10px">
 

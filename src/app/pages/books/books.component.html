@@ -21,22 +21,33 @@
         splitArea>
         <div style="height:100%;width:100%">
             <div
-                style="padding:1em"
+                style="padding:0 1rem 0 1rem"
                 [fxShow.gt-sm]="true"
                 [fxShow.lt-sm]="page == 'text' || page == undefined"
-                (swiperight)="swipe('category')">
-                <app-text *ngIf="listId != undefined"
+                (swiperight)="swipe('category')"
+                style="height:100%;width:100%">
+                <app-text *ngIf="listId != undefined && (query === '' || !query)"
                         [content]="currentList"
                         (update)="update($event)">
                 </app-text>
-                <div fxLayout="row"
+                <div fxLayout="column"
                     fxLayoutAlign="center center"
-                    style="height:100%"
-                    *ngIf="listId == undefined">
-                    <mat-icon style="font-size:30vh;height:30vh;width:30vh;color:gray">
-                        not_interested
+                    style="height:100%;color:gray"
+                    *ngIf="listId == undefined && (query === '' || !query)">
+                    <mat-icon style="font-size:30vh;height:30vh;width:30vh;">
+                        library_books
                     </mat-icon>
+                    <p style="font-size:20px">Oops, the book is empty.</p>
                 </div>
+                <!-- <div fxLayout="column"
+                    fxLayoutAlign="center center"
+                    style="height:100%;color:gray"
+                    *ngIf="query">
+                    <mat-icon style="font-size:30vh;height:30vh;width:30vh;">
+                        search
+                    </mat-icon>
+                    <p style="font-size:20px">No result found.</p>
+                </div> -->
             </div>
         </div>
     </div>

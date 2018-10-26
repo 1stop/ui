@@ -39,7 +39,7 @@ export class BooksComponent implements OnInit {
                 private _search: SearchService,
                 private _media: ObservableMedia) {}
 
-    listId = 1;
+    listId = undefined;
 
     ngOnInit() {
         this._search.search.subscribe((v) => {
@@ -56,6 +56,7 @@ export class BooksComponent implements OnInit {
             this._route.params.pipe(
                 combineLatest(this._route.queryParams),
                 o_map(([params, q]) => {
+                    this.listId = +params['list'] || undefined;
                     return {
                         'category': +params['category'],
                         'namespace': +params['namespace'],

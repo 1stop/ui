@@ -4,7 +4,6 @@
             (click)="select.emit({id: list.id, type: 'list'})"
             [class.selected]="lst_id == list.id" 
             class="item">
-            <div class="hightlight-box"></div>
             {{ list.title }}</div>
         <div *ngIf="edit$ | async" fxLayout="rows" style="padding: 0 0;">
             <button *ngIf="!edited.isSelected(list.id); else edit_block"

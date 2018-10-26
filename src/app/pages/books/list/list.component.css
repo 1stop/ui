@@ -4,19 +4,11 @@ mat-list-item {
 
 .item {
     font-size: 14px;
-    height:40px;
-    padding:10px 0 0 10px;
+    padding:10px;
 }
 
 .item:hover {
     margin-left: 10px
-}
-
-.hightlight-box {
-    display: none;
-    width: 20px;
-    height: 20px;
-    background-color:white;
 }
 
 .edit {
@@ -28,8 +20,8 @@ mat-list-item {
 }
 
 .selected {
-    border-bottom: 2px solid white;
-    color: gray;
+    color: black;
+    background-color: white;
 }
 
 .excerpt {
