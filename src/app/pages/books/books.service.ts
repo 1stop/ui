@@ -11,7 +11,9 @@ export class BooksService {
     const config: ScrollToConfigOptions = {
       target: id
     };
- 
-    this._scrollToService.scrollTo(config);
+    
+    setTimeout(()=>{
+      this._scrollToService.scrollTo(config);
+    })
   }
 }
