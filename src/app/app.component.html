@@ -4,7 +4,7 @@
                      fxLayoutAlign="space-between center"
                      class="mat-elevation-z2"
                      [class.fullTopbar]="searching">
-            <button mat-button class="home-btn" *ngIf="!searching" (click)="navigateToHome()">1 Stop</button>
+            <button mat-button class="home-btn" *ngIf="!searching" (click)="navigateToHome()">Proatoz</button>
             <div fxFlex fxLayout="row"
                  *ngIf="(searchbar$ | async)"
                  [fxHide.lt-sm]="true"
@@ -13,12 +13,29 @@
                 <app-search-bar></app-search-bar>
             </div>
 
-            <button mat-icon-button fxHide
+            <div fxHide fxFlex="60" *ngIf="!searching" [fxShow.lt-sm]="true">
+                <button mat-icon-button (click)="searching=true"
+                    style="float:right">
+                    <mat-icon>search</mat-icon>
+                </button>
+            </div>
+
+            <div fxFlex fxHide fxLayout="row"
+                *ngIf="searching && (searchbar$ | async)"
+                fxLayoutAlign="space-between" 
+                [fxShow.lt-sm]="true">
+                <app-search-bar fxFlex></app-search-bar>
+                <button mat-icon-button fxFlex=10 (click)="searching=false">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+
+            <!-- <button mat-icon-button fxHide
                     *ngIf="!searching"
                     (click)="searching=true"
                     [fxShow.lt-sm]="true">
                 <mat-icon>search</mat-icon>
-            </button>
+            </button> -->
 
             <!-- <mat-spinner
                 *ngIf="(state.load | async) && !searching"
