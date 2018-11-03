@@ -34,10 +34,14 @@
                     fxLayoutAlign="center center"
                     style="height:100%;color:gray"
                     *ngIf="listId == undefined">
-                    <mat-icon style="font-size:30vh;height:30vh;width:30vh;">
+                    <mat-icon *ngIf="query && query !== ''" style="font-size:30vh;height:30vh;width:30vh;">
+                        search
+                    </mat-icon>
+                    <p *ngIf="query && query !== ''" style="font-size:20px">No result found.</p>
+                    <mat-icon *ngIf="!query || query === ''" style="font-size:30vh;height:30vh;width:30vh;">
                         library_books
                     </mat-icon>
-                    <p style="font-size:20px">Oops, the book is empty.</p>
+                    <p *ngIf="!query || query === ''" style="font-size:20px">The book is empty.</p>
                 </div>
                 <!-- <div fxLayout="column"
                     fxLayoutAlign="center center"

@@ -185,12 +185,13 @@ export class BooksComponent implements OnInit {
     }
 
     swipe(page: string) {
-        this.change$.next({
-            'namespace': this.namespace,
-            'category': this.category,
-            'list': this.list,
-            'query': this.query,
-            'page': page
-        });
+        if (this._media.isActive('lt-sm')) //only work when at mobile phone screen size
+            this.change$.next({
+                'namespace': this.namespace,
+                'category': this.category,
+                'list': this.list,
+                'query': this.query,
+                'page': page
+            });
     }
 }
