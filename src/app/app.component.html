@@ -44,7 +44,7 @@
                 [color]="warn">
             </mat-spinner> -->
 
-            <div *ngIf="!searching">
+            <!-- <div *ngIf="!searching">
                 <button mat-button 
                         *ngIf="(_user.user | async) == null" 
                         (click)="_user.login()">
@@ -53,7 +53,7 @@
                 <app-avatar   
                     *ngIf="_user.user | async" 
                     [data]="_user.user | async"></app-avatar>
-            </div>
+            </div> -->
         </mat-toolbar>
         <div style="height:calc(100% - 64px)">
             <router-outlet></router-outlet>
