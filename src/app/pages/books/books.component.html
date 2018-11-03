@@ -26,14 +26,14 @@
                 [fxShow.lt-sm]="page == 'text' || page == undefined"
                 (swiperight)="swipe('category')"
                 style="height:100%;width:100%">
-                <app-text *ngIf="listId != undefined && (query === '' || !query)"
+                <app-text *ngIf="listId != undefined"
                         [content]="currentList"
                         (update)="update($event)">
                 </app-text>
                 <div fxLayout="column"
                     fxLayoutAlign="center center"
                     style="height:100%;color:gray"
-                    *ngIf="listId == undefined && (query === '' || !query)">
+                    *ngIf="listId == undefined">
                     <mat-icon style="font-size:30vh;height:30vh;width:30vh;">
                         library_books
                     </mat-icon>

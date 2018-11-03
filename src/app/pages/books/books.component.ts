@@ -76,8 +76,8 @@ export class BooksComponent implements OnInit {
                     this.page = 'category';
                 }
 
-                if ( this.namespace !== +params['namespace'] ||
-                     this.query !== params['query']) {
+                if ( params['namespace'] && (this.namespace !== +params['namespace'] ||
+                     this.query !== params['query'])) {
                     this.query = params['query'];
                     this.namespace = +params['namespace'];
 
