@@ -190,7 +190,8 @@ export class BooksComponent implements OnInit {
     }
 
     swipe(page: string) {
-        if (this._media.isActive('lt-sm')) // only work when at mobile phone screen size
+        // only work when at mobile phone screen size
+        if (this._media.isActive('lt-sm')) {
             this.change$.next({
                 'namespace': this.namespace,
                 'category': this.category,
@@ -198,5 +199,6 @@ export class BooksComponent implements OnInit {
                 'query': this.query,
                 'page': page
             });
+        }
     }
 }
