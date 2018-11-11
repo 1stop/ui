@@ -14,6 +14,7 @@ import compact from 'lodash-es/compact';
 import { SearchService } from '../../element/search-bar/search-bar.service';
 import { ObservableMedia } from '@angular/flex-layout';
 import map from 'lodash-es/map';
+declare var ga;
 
 @Component({
     selector: 'app-books',
@@ -132,6 +133,10 @@ export class BooksComponent implements OnInit {
                 }
             })
         ).subscribe(() => {
+            if ( this.namespace ) {
+                ga('set', 'page', `/${this.namespace}l`);
+                ga('send', 'pageview');
+            }
             this._router.navigate(
                 compact([
                     'books',
@@ -185,7 +190,7 @@ export class BooksComponent implements OnInit {
     }
 
     swipe(page: string) {
-        if (this._media.isActive('lt-sm')) //only work when at mobile phone screen size
+        if (this._media.isActive('lt-sm')) // only work when at mobile phone screen size
             this.change$.next({
                 'namespace': this.namespace,
                 'category': this.category,
