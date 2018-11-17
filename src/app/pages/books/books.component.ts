@@ -1,11 +1,11 @@
-import { Component, OnInit, ApplicationRef } from '@angular/core';
+import { Component, OnInit, ApplicationRef, PLATFORM_ID, Inject } from '@angular/core';
 import { Store } from '@ngrx/store';
 import * as browser from '../../state/actions/browser';
 import { UserService } from '../../services/user.service';
 import { map as o_map, mergeMap, filter, first, combineLatest } from 'rxjs/operators';
 import { Observable, of, merge, ReplaySubject } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import * as category from '../../state/actions/category';
 import * as text from '../../state/actions/text';
 import { Category } from '../../model/category';
@@ -14,6 +14,8 @@ import compact from 'lodash-es/compact';
 import { SearchService } from '../../element/search-bar/search-bar.service';
 import { ObservableMedia } from '@angular/flex-layout';
 import map from 'lodash-es/map';
+import { isPlatformBrowser } from '@angular/common';
+
 declare var ga;
 
 @Component({
@@ -38,7 +40,8 @@ export class BooksComponent implements OnInit {
                 private _http: HttpClient,
                 private _router: Router,
                 private _search: SearchService,
-                private _media: ObservableMedia) {}
+                private _media: ObservableMedia,
+                @Inject(PLATFORM_ID) private platformId: Object) {}
 
     listId = undefined;
 
@@ -82,29 +85,31 @@ export class BooksComponent implements OnInit {
                     this.query = params['query'];
                     this.namespace = +params['namespace'];
 
-                    const query = {'namespace': this.namespace};
+                    const query = {'namespace': `${this.namespace}`};
                     if ( this.query ) {
                         query['query'] = this.query;
                     }
                     this._store.dispatch(new category.Clear());
                     this._store.dispatch(new text.Clear());
-                    const requestOpts: any = {params: query};
-                    return this._http.get('/api/categories', requestOpts)
-                                .pipe(
-                                    o_map((v: {data: Category[]}) => {
-                                        this._store.dispatch(new category.Clear());
-                                        this._store.dispatch(new category.AddAll(v.data));
-                                        const cat_ids = v.data.map(d => d.id);
-                                        if (!this.category || cat_ids.indexOf(this.category) === -1) {
-                                            this.category = get(v.data, '[0].id');
-                                        }
-                                        if ( this.category ) {
-                                            this._store.dispatch(new text.SetCategory(this.category));
-                                            return true;
-                                        }
-                                        return false;
-                                    })
-                                );
+                    return this._http.get('/api/categories', {
+                            params: query,
+                            observe: 'body'
+                        })
+                        .pipe(
+                            o_map((v: {data: Category[]}) => {
+                                this._store.dispatch(new category.Clear());
+                                this._store.dispatch(new category.AddAll(v.data));
+                                const cat_ids = v.data.map(d => d.id);
+                                if (!this.category || cat_ids.indexOf(this.category) === -1) {
+                                    this.category = get(v.data, '[0].id');
+                                }
+                                if ( this.category ) {
+                                    this._store.dispatch(new text.SetCategory(this.category));
+                                    return true;
+                                }
+                                return false;
+                            })
+                        );
                 } else {
                     return this._store.select('category').pipe(
                        o_map((state) => {
@@ -133,7 +138,7 @@ export class BooksComponent implements OnInit {
                 }
             })
         ).subscribe(() => {
-            if ( this.namespace ) {
+            if ( this.namespace && isPlatformBrowser(this.platformId)) {
                 ga('set', 'page', `/${this.namespace}l`);
                 ga('send', 'pageview');
             }

@@ -14,6 +14,7 @@ import { namespaceReducer } from '../../state/reducer/namespace';
 import { EffectsModule } from '@ngrx/effects';
 import { NamespaceEffects } from '../../state/effects/namespace';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FirebaseInterceptor } from '../../services/http-interceptor.service';
 
 @NgModule({
     declarations: [

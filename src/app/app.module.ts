@@ -22,7 +22,7 @@ import { AppComponent } from './app.component';
 import { environment } from '../environments/environment';
 import { Autosize } from 'ng-autosize/src/autosize.directive';
 import { AuthService } from './services/auth.service';
-import { AngularFireModule } from 'angularfire2';
+import { AngularFireModule } from '@angular/fire';
 
 import * as Raven from 'raven-js';
 import { SplitAreaDirective } from './directive/split/split-area.directive';
@@ -47,8 +47,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule} from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { UserService, LoginDialogComponent } from './services/user.service';
-import { AngularFireAuthModule } from 'angularfire2/auth';
-import { HttpClientModule } from '@angular/common/http';
+import { AngularFireAuthModule } from '@angular/fire/auth';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MainModule } from './pages/main/main.module';
 import { browserReducer } from './state/reducer/browser';
 import { StoreModule } from '@ngrx/store';
@@ -57,8 +57,9 @@ import { BooksModule } from './pages/books/books.module';
 import { EffectsModule } from '@ngrx/effects';
 import { AvatarComponent } from './element/avatar/avatar.component';
 import { FirebaseInterceptor } from './services/http-interceptor.service';
-import { AngularFireStorageModule } from 'angularfire2/storage';
+import { AngularFireStorageModule } from '@angular/fire/storage';
 import { SearchService } from './element/search-bar/search-bar.service';
+import { ORIGIN_HOST } from './app.token';
 
 export class MyHammerConfig extends HammerGestureConfig  {
   overrides = {
@@ -108,7 +109,6 @@ export class RavenErrorHandler implements ErrorHandler {
     AvatarComponent
   ],
   imports: [
-    MainModule,
     BrowserModule.withServerTransition({appId: 'my-app'}),
     BrowserAnimationsModule,
     FlexLayoutModule,
@@ -137,25 +137,34 @@ export class RavenErrorHandler implements ErrorHandler {
     MatDividerModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
+    AngularFireStorageModule,
     StoreModule.forRoot({ browser: browserReducer}),
     EffectsModule.forRoot([]),
     SearchBarModule,
-    BooksModule,
-    AngularFireModule.initializeApp(environment.firebase),
-    AngularFireStorageModule
+
+    MainModule,
+    BooksModule
   ],
   providers: [
     AppState,
     UserService,
-    FirebaseInterceptor,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: FirebaseInterceptor,
+      multi: true
+    },
     AuthService,
     {
-        provide: HAMMER_GESTURE_CONFIG,
-        useClass: MyHammerConfig
+      provide: HAMMER_GESTURE_CONFIG,
+      useClass: MyHammerConfig
     },
     {
-        provide: RouteReuseStrategy,
-        useClass: CustomRouteReuseStrategy
+      provide: RouteReuseStrategy,
+      useClass: CustomRouteReuseStrategy
+    },
+    {
+      provide: ORIGIN_HOST,
+      useValue: environment.base_url
     },
     SearchService,
     ScrollToService

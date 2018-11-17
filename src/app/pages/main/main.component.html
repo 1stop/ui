@@ -14,7 +14,7 @@
         <div fxFlex class="container" fxLayout="row wrap" fxLayoutAlign=" start" fxLayoutGap="10px">
             <mat-card class="book"
                       *ngFor="let namespace of ( namespaces$ | async)"
-                      (click)="navigate(['books', namespace.id])">
+                      [routerLink]="['books', namespace.id]">
                 <mat-card-header>
                     <mat-card-title><b>{{ namespace.title }}</b></mat-card-title>
                     <mat-icon *ngIf="namespace.bookmark">bookmark</mat-icon>
@@ -24,7 +24,9 @@
                 <mat-card-actions fxLayout="row" 
                                   fxLayoutAlign="end center"                         
                                   *ngIf="_user.auth | async" > 
-                    <button mat-button class="edit-book-btn" (click)="edit(namespace); $event.stopPropagation()">EDIT</button>
+                    <button mat-button 
+                            class="edit-book-btn" 
+                            (click)="edit(namespace); $event.stopPropagation()">EDIT</button>
                 </mat-card-actions>
             </mat-card>
         </div>

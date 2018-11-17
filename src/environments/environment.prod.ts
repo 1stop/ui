@@ -1,6 +1,6 @@
 export const environment = {
     production: true,
-    url: 'https://api.yeong-khang.me',
+    base_url: 'http://localhost/',
     firebase: {
       apiKey: 'AIzaSyA1Xia725799awT7BTMZBVDQN0EW09VDRA',
       authDomain: 'osha-b65ae.firebaseapp.com',

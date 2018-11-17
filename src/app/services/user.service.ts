@@ -3,7 +3,7 @@ import { Injectable, Component, ApplicationRef } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material';
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
-import { AngularFireAuth } from 'angularfire2/auth';
+import { AngularFireAuth } from '@angular/fire/auth';
 import { ReplaySubject, BehaviorSubject } from 'rxjs';
 
 @Injectable()

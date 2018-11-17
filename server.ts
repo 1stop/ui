@@ -6,6 +6,9 @@ import { enableProdMode } from '@angular/core';
 
 import * as express from 'express';
 import { join } from 'path';
+import { XMLHttpRequest } from 'xmlhttprequest';
+
+(<any>global).XMLHttpRequest = XMLHttpRequest;
 
 // Faster server renders w/ Prod mode (dev mode never needed)
 enableProdMode();

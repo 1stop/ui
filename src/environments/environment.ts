@@ -13,5 +13,5 @@ export const environment = {
     storageBucket: 'osha-b65ae.appspot.com',
     messagingSenderId: '536860153158'
   },
-  url: ''
+  base_url: 'http://localhost:8000'
 };
