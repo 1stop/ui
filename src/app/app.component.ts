@@ -8,6 +8,7 @@ import { map } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { isPlatformBrowser } from '@angular/common';
 import { environment } from '../environments/environment';
+import { Title } from '@angular/platform-browser';
 declare var ga;
 
 @Component({

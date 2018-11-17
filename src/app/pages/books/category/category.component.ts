@@ -17,7 +17,7 @@ import { isPlatformServer } from '@angular/common';
   styleUrls: ['./category.component.css']
 })
 export class CategoryComponent implements OnInit {
-  @Output() select: EventEmitter<number> = new EventEmitter<number>();
+  @Output() select: EventEmitter<any> = new EventEmitter<any>();
   categories$: Observable<Category[]>;
   edit$: Observable<boolean>;
   namespace: number;
@@ -78,5 +78,9 @@ export class CategoryComponent implements OnInit {
         this._store.dispatch(new category.Delete(id));
         this.edited.deselect(id);
       });
+  }
+
+  opend(id: string) {
+    this.select.emit({id: id, type: 'category'});
   }
 }

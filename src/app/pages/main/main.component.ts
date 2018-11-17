@@ -14,6 +14,7 @@ import { UserService } from '../../services/user.service';
 import { Namespace } from '../../model/namespace';
 import { Update } from '@ngrx/entity';
 import { isPlatformBrowser, isPlatformServer } from '@angular/common';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-main',
@@ -29,14 +30,14 @@ export class MainComponent implements OnInit {
               private _dialog: MatDialog,
               private _router: Router,
               public _user: UserService,
-              @Inject(PLATFORM_ID) private platformId: Object
-              ) {}
+              @Inject(PLATFORM_ID) private platformId: Object,
+              private _title: Title) {}
 
   ngOnInit() {
     setTimeout(() => {
       this._store.dispatch(new browser.SearchOff());
     });
-
+    this._title.setTitle('ProAToZ');
     this.namespaces$ = this._store.select('namespace').pipe(
       map((v) => values(v.entities))
     );

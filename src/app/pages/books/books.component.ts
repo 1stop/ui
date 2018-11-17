@@ -43,8 +43,6 @@ export class BooksComponent implements OnInit {
                 private _media: ObservableMedia,
                 @Inject(PLATFORM_ID) private platformId: Object) {}
 
-    listId = undefined;
-
     ngOnInit() {
         this._search.search.subscribe((v) => {
             this.change$.next({
@@ -60,7 +58,6 @@ export class BooksComponent implements OnInit {
             this._route.params.pipe(
                 combineLatest(this._route.queryParams),
                 o_map(([params, q]) => {
-                    this.listId = +params['list'] || undefined;
                     return {
                         'category': +params['category'],
                         'namespace': +params['namespace'],
@@ -75,6 +72,7 @@ export class BooksComponent implements OnInit {
             mergeMap((params) => {
                 this.category = +params['category'];
                 this.list = +params['list'];
+
                 this.page = params['page'];
                 if ( this._media.isActive('lt-sm') && !this.page ) {
                     this.page = 'category';
@@ -142,6 +140,7 @@ export class BooksComponent implements OnInit {
                 ga('set', 'page', `/${this.namespace}l`);
                 ga('send', 'pageview');
             }
+
             this._router.navigate(
                 compact([
                     'books',
@@ -174,10 +173,14 @@ export class BooksComponent implements OnInit {
     navigate(item: any) {
         switch (item.type) {
             case 'category':
+                let listId: number = this.list;
+                if ( this.category !== item.id ) {
+                    listId = undefined;
+                }
                 this.change$.next({
                     'namespace': this.namespace,
                     'category': item.id,
-                    'list': undefined,
+                    'list': listId,
                     'query': this.query,
                     'page': this._media.isActive('lt-sm') ? 'list' : undefined
                 });

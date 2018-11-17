@@ -113,7 +113,10 @@ export class RavenErrorHandler implements ErrorHandler {
     BrowserAnimationsModule,
     FlexLayoutModule,
     HttpClientModule,
-    RouterModule.forRoot( appRoutes, {enableTracing: false}),
+    RouterModule.forRoot( appRoutes, {
+      // enableTracing: !environment.production
+      enableTracing: false
+    }),
     MatListModule,
     MatIconModule,
     FormsModule,

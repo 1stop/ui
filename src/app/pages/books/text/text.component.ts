@@ -1,5 +1,5 @@
 import { Component, OnInit, Input,
-         Output, EventEmitter } from '@angular/core';
+         Output, EventEmitter, PLATFORM_ID, Inject } from '@angular/core';
 import { Subject, Subscription, Observable, combineLatest, of } from 'rxjs';
 import { ENTER, COMMA, SPACE } from '@angular/cdk/keycodes';
 import { MatSnackBar } from '@angular/material';
@@ -12,6 +12,9 @@ import { Text } from '../../../model/text';
 import { BooksService } from './../books.service';
 import each from 'lodash-es/each';
 import get from 'lodash-es/get';
+import join from 'lodash-es/join';
+import { isPlatformServer } from '@angular/common';
+import { Title, Meta } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-text',
@@ -41,7 +44,10 @@ export class TextComponent implements OnInit {
               private _route: ActivatedRoute,
               private _http: HttpClient,
               private _router: Router,
-              private _books: BooksService) { }
+              private _books: BooksService,
+              @Inject(PLATFORM_ID) private platformId: Object,
+              private _title: Title,
+              private _meta: Meta) { }
 
   ngOnInit() {
     this.edit$ = this._store.select('browser').pipe(
@@ -58,9 +64,32 @@ export class TextComponent implements OnInit {
       this.lst_id = +params['list'];
       this.texts = []; // clear previous texts
       if ( this.lst_id ) {
+        const isServer = isPlatformServer(this.platformId);
+        // const isServer = true;
+
         each(get(state.texts, `${state.category}.entities`), (item) => {
-          if (item.text !== '') {
-            this.texts.push(item);
+          if ( item.text !== '' ) {
+            if ( item.id === this.lst_id ) {
+              this._title.setTitle(`${item.title}| ProAToZ`);
+              this._meta.updateTag({
+                name: 'description',
+                content: item.text,
+              });
+              this._meta.updateTag({
+                name: 'keywords',
+                content: join(item.tags, ',')
+              });
+            }
+
+            if ( isServer
+                 && item.id === this.lst_id) {
+              this.texts.push(item);
+              return false;
+            }
+
+            if (!isServer) {
+              this.texts.push(item);
+            }
           }
         });
 
