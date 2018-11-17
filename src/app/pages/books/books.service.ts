@@ -7,14 +7,9 @@ export class BooksService {
   constructor(private _scrollToService: ScrollToService) { }
 
   public triggerScrollTo(id) {
-
     const config: ScrollToConfigOptions = {
       target: id
     };
-
-    // HACK, restore it !!
-    // setTimeout(()=>{
-    //   this._scrollToService.scrollTo(config);
-    // })
+    this._scrollToService.scrollTo(config);
   }
 }

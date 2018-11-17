@@ -56,15 +56,16 @@ export class TextComponent implements OnInit {
       this.namespace = +params['namespace'];
       this.category = +params['category'];
       this.lst_id = +params['list'];
-      this.texts = []; //clear previous texts
+      this.texts = []; // clear previous texts
       if ( this.lst_id ) {
-        each(get(state.texts, `${state.category}.entities`), (item)=>{
-          if (item.text !== '')
+        each(get(state.texts, `${state.category}.entities`), (item) => {
+          if (item.text !== '') {
             this.texts.push(item);
+          }
         });
 
         this._books.triggerScrollTo(this.lst_id);
-        //this.text = get(state.texts, `${state.category}.entities.${this.lst_id}.text`, '');
+        // this.text = get(state.texts, `${state.category}.entities.${this.lst_id}.text`, '');
       }
     });
   }

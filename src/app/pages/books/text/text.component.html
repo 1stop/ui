@@ -28,13 +28,10 @@
 
     <ng-template *ngIf="!(edit$ | async)" ngFor let-txt [ngForOf]= "texts">
         <div class="text-card" [class.selected]="txt.id == lst_id">
-            <h3><b>{{txt.title}}</b></h3>
-            <div [id]="txt.id" (click)="handleClick($event)" [innerHtml]="txt.text"></div>
+            <h3 [id]="txt.id"><b>{{txt.title}}</b></h3>
+            <div (click)="handleClick($event)" 
+                 [innerHtml]="txt.text"></div>
         </div>
-        <!-- <div [id]="txt.id" *ngIf="txt.id != lst_id" class="text-card" (click)="handleClick($event)"
-            [innerHtml]="txt.text"></div>
-        <div [id]="txt.id" *ngIf="txt.id == lst_id" class="text-card selected" (click)="handleClick($event)" 
-            [innerHtml]="txt.text"></div> -->
     </ng-template>
 </div>
 
