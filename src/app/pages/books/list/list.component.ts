@@ -23,15 +23,10 @@ export class ListComponent implements OnInit {
   change: Subject<boolean> = new Subject();
   change$: Subscription;
   @Output() highlight: EventEmitter<any> = new EventEmitter<any>();
-  @Output() select: EventEmitter<number> = new EventEmitter<number>();
   @Input() keyword: string;
   @Input() categoryId: string;
+  @Input() namespaceId: string;
   @Input() selectedId: string;
-
-  t = '';
-
-  public completeText = '';
-
 
   list$: Observable<any>;
   edited = new SelectionModel<number>(true);

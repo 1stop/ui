@@ -1,3 +1,8 @@
+a {
+    color: inherit; 
+    text-decoration: inherit;
+}
+
 mat-list-item {
     border-bottom: 1px lightgray solid
 }
@@ -7,9 +12,9 @@ mat-list-item {
     padding:10px;
 }
 
-.item:hover {
+/* .item:hover {
     margin-left: 10px
-}
+} */
 
 .edit {
     border: none;

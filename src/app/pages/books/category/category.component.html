@@ -5,20 +5,20 @@
 
         <mat-expansion-panel (opened)="select.emit({id: cat.id, type: 'category'})"
             style="padding: 1.5em 0 1.5em 0;"
-            [class.selected]="category == cat.id">
-            <!-- <div (keyDown)="preventButton($event)"> -->
+            [class.selected]="category == cat.id"
+            [expanded]="category == cat.id">
             <mat-expansion-panel-header
                 style="font-size:16px;background-color:transparent"
                 [expandedHeight]="'auto'"
                 [collapsedHeight]="'auto'"
                 [style.padding]="(edit$ | async) ? '0 24px 0 10px' : '0 24px'">
 
-                <span *ngIf="!(edit$ | async)">
-                    {{ cat.title }} 
-                </span>
-
+                <span *ngIf="!isSSR; else ssr" >{{ cat.title }}</span>
+                <ng-template #ssr>
+                    <a [routerLink]="['/books', namespace, cat.id]">{{ cat.title }}</a>
+                </ng-template>
+                
                 <div *ngIf="edit$ | async" fxLayout="rows" style="padding:0 24px 0 2px">
-
                     <button *ngIf="!edited.isSelected(cat.id); else edit_block"
                             mat-icon-button 
                             (click)="delete('category', cat.id, $event)" 
@@ -42,7 +42,9 @@
                 </div>
             </mat-expansion-panel-header>
 
-            <app-list (select)="select.emit($event)">
+            <app-list [namespaceId]="namespace"
+                      [categoryId]="category"
+                      (select)="select.emit($event)">
             </app-list>
 
         </mat-expansion-panel>

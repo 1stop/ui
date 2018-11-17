@@ -1,10 +1,11 @@
 <div fxLayout="column">
     <ng-template ngFor let-list [ngForOf]= "(list$ | async)" let-i="text-idx">
-        <div *ngIf="!(edit$ | async)"
-            (click)="select.emit({id: list.id, type: 'list'})"
+        <!-- (click)="select.emit({id: list.id, type: 'list'})" -->
+        <a *ngIf="!(edit$ | async)"
             [class.selected]="lst_id == list.id" 
-            class="item">
-            {{ list.title }}</div>
+            class="item"
+            [routerLink]="['/books', namespaceId, categoryId, list.id]">{{ list.title }}</a>
+
         <div *ngIf="edit$ | async" fxLayout="rows" style="padding: 0 0;">
             <button *ngIf="!edited.isSelected(list.id); else edit_block"
                     mat-icon-button 

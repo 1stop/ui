@@ -24,7 +24,6 @@ export class AppComponent implements OnInit {
               private _auth: AuthService,
               public _user: UserService,
               public _store: Store<any>,
-              private _router: Router,
               @Inject(PLATFORM_ID) private platformId: Object) {}
 
   ngOnInit() {

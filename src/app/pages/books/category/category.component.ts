@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, PLATFORM_ID, Inject } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
@@ -9,6 +9,7 @@ import { Namespace } from '../../../model/namespace';
 import { SelectionModel } from '@angular/cdk/collections';
 import * as category from '../../../state/actions/category';
 import map from 'lodash-es/map';
+import { isPlatformServer } from '@angular/common';
 
 @Component({
   selector: 'app-category',
@@ -23,17 +24,19 @@ export class CategoryComponent implements OnInit {
   category: number;
 
   edited = new SelectionModel<number>(true);
+  isSSR = false;
 
   constructor(private _store: Store<any>,
-              private _router: Router,
               private _http: HttpClient,
-              private _route: ActivatedRoute) { }
+              private _route: ActivatedRoute,
+              @Inject(PLATFORM_ID) private platformId: Object) { }
 
   ngOnInit() {
+    this.isSSR = isPlatformServer(this.platformId);
+
     this._route.params.subscribe((params) => {
       this.category = +params['category'];
       this.namespace = +params['namespace'];
-
     });
 
     this.categories$ = this._store.select('category').pipe(
