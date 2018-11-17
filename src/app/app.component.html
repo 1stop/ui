@@ -4,7 +4,9 @@
                      fxLayoutAlign="space-between center"
                      class="mat-elevation-z2"
                      [class.fullTopbar]="searching">
-            <button mat-button class="home-btn" *ngIf="!searching" (click)="navigateToHome()">Proatoz</button>
+            <a mat-button class="home-btn" 
+                    *ngIf="!searching" 
+                    [routerLink]="['']">Proatoz</a>
             <div fxFlex fxLayout="row"
                  *ngIf="(searchbar$ | async)"
                  [fxHide.lt-sm]="true"

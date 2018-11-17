@@ -1,3 +1,8 @@
+a {
+    color: inherit; 
+    text-decoration: inherit;
+}
+
 .container {
     padding: 10px;
     height: calc(100% - 64px);

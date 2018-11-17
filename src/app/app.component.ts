@@ -40,10 +40,4 @@ export class AppComponent implements OnInit {
   toggle() {
     this.state.edit.next(!this.state.edit.value);
   }
-
-  navigateToHome() {
-    if (this._router.url !== '/') {
-      this._router.navigate(['']);
-    }
-  }
 }

@@ -11,16 +11,20 @@
     </div>
 
     <div fxLayout="row" style="width:80%;">
-        <div fxFlex class="container" fxLayout="row wrap" fxLayoutAlign=" start" fxLayoutGap="10px">
+        <div fxFlex class="container" 
+             fxLayout="row wrap" 
+             fxLayoutAlign=" start" 
+             fxLayoutGap="10px">
             <mat-card class="book"
-                      *ngFor="let namespace of ( namespaces$ | async)"
-                      [routerLink]="['books', namespace.id]">
-                <mat-card-header>
-                    <mat-card-title><b>{{ namespace.title }}</b></mat-card-title>
-                    <mat-icon *ngIf="namespace.bookmark">bookmark</mat-icon>
-                </mat-card-header>
-                <img mat-card-image 
-                     [attr.src]="namespace.background">
+                      *ngFor="let namespace of ( namespaces$ | async)">
+                <a [routerLink]="['books', namespace.id]">
+                    <mat-card-header>
+                        <mat-card-title><b>{{ namespace.title }}</b></mat-card-title>
+                        <mat-icon *ngIf="namespace.bookmark">bookmark</mat-icon>
+                    </mat-card-header>
+                    <img mat-card-image 
+                            [attr.src]="namespace.background">
+                </a>
                 <mat-card-actions fxLayout="row" 
                                   fxLayoutAlign="end center"                         
                                   *ngIf="_user.auth | async" > 
