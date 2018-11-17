@@ -109,7 +109,7 @@ export class RavenErrorHandler implements ErrorHandler {
   ],
   imports: [
     MainModule,
-    BrowserModule,
+    BrowserModule.withServerTransition({appId: 'my-app'}),
     BrowserAnimationsModule,
     FlexLayoutModule,
     HttpClientModule,

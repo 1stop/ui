@@ -1,9 +1,7 @@
-import { Component, ViewChild, HostListener, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AppState } from './app.service';
-import { BehaviorSubject, Observable } from 'rxjs';
-import * as firebase from 'firebase';
+import { Observable } from 'rxjs';
 import { AuthService } from './services/auth.service';
-import { get, findIndex } from 'lodash';
 import { UserService } from './services/user.service';
 import { Store } from '@ngrx/store';
 import { map } from 'rxjs/operators';
@@ -36,7 +34,8 @@ export class AppComponent implements OnInit {
   }
 
   navigateToHome() {
-    if (this._router.url !== '/')
+    if (this._router.url !== '/') {
       this._router.navigate(['']);
+    }
   }
 }

@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, ElementRef, Output, EventEmitter, OnDestroy } from '@angular/core';
-import 'tui-editor/dist/tui-editor.css'; // editor ui
-import 'tui-editor/dist/tui-editor-contents.css'; // editor content
+// import 'tui-editor/dist/tui-editor.css'; // editor ui
+// import 'tui-editor/dist/tui-editor-contents.css'; // editor content
 import 'tui-editor/dist/tui-editor-extTable.js';
 import Editor from 'tui-editor/dist/tui-editor-Editor';
 import { AngularFireStorage } from 'angularfire2/storage';
