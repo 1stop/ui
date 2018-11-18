@@ -1,6 +1,6 @@
 export const environment = {
     production: true,
-    base_url: 'http://localhost/',
+    base_url: 'https://proatoz.com/',
     firebase: {
       apiKey: 'AIzaSyA1Xia725799awT7BTMZBVDQN0EW09VDRA',
       authDomain: 'osha-b65ae.firebaseapp.com',

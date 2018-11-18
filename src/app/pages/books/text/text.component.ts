@@ -73,7 +73,7 @@ export class TextComponent implements OnInit {
               this._title.setTitle(`${item.title}| ProAToZ`);
               this._meta.updateTag({
                 name: 'description',
-                content: item.text,
+                content: item.text.replace(/<[^>]*>/g, ''),
               });
               this._meta.updateTag({
                 name: 'keywords',

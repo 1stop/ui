@@ -2,7 +2,7 @@ import { Component, OnInit, ApplicationRef, PLATFORM_ID, Inject } from '@angular
 import { Store } from '@ngrx/store';
 import * as browser from '../../state/actions/browser';
 import { UserService } from '../../services/user.service';
-import { map as o_map, mergeMap, filter, first, combineLatest } from 'rxjs/operators';
+import { map as o_map, mergeMap, filter, first, combineLatest, take } from 'rxjs/operators';
 import { Observable, of, merge, ReplaySubject } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient, HttpParams } from '@angular/common/http';
@@ -123,7 +123,7 @@ export class BooksComponent implements OnInit {
                 if ( cat ) {
                     return this._store.select('text').pipe(
                         filter(state => state.texts[state.category] !== undefined ),
-                        first(),
+                        take(1),
                         o_map((state) => {
                             const ids = state.texts[state.category].ids;
                             if ( !this.list || ids.indexOf(this.list) === -1) {
@@ -150,8 +150,9 @@ export class BooksComponent implements OnInit {
                 ]), {
                     queryParams: {
                         query: this.query,
-                        page: this.page
-                    }
+                        page: this.page,
+                    },
+                    queryParamsHandling: 'merge'
                 });
         });
 
