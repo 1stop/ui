@@ -93,7 +93,9 @@ export class TextComponent implements OnInit {
           }
         });
 
-        this._books.triggerScrollTo(this.lst_id);
+        setTimeout(()=>{
+          this._books.triggerScrollTo(this.lst_id);
+        });
         // this.text = get(state.texts, `${state.category}.entities.${this.lst_id}.text`, '');
       }
     });
