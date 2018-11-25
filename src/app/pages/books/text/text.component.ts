@@ -68,7 +68,7 @@ export class TextComponent implements OnInit {
         // const isServer = true;
 
         each(get(state.texts, `${state.category}.entities`), (item) => {
-          if ( item.text !== '' ) {
+          //if ( item.text !== '' ) {
             if ( item.id === this.lst_id ) {
               this._title.setTitle(`${item.title}| ProAToZ`);
               this._meta.updateTag({
@@ -90,13 +90,13 @@ export class TextComponent implements OnInit {
             if (!isServer) {
               this.texts.push(item);
             }
-          }
+          //}
         });
 
         setTimeout(()=>{
           this._books.triggerScrollTo(this.lst_id);
         });
-        // this.text = get(state.texts, `${state.category}.entities.${this.lst_id}.text`, '');
+        this.text = get(state.texts, `${state.category}.entities.${this.lst_id}.text`, '');
       }
     });
   }
