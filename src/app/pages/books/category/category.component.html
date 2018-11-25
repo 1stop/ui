@@ -13,11 +13,13 @@
                 [collapsedHeight]="'auto'"
                 [style.padding]="(edit$ | async) ? '0 24px 0 10px' : '0 24px'">
 
-                <span *ngIf="!isSSR; else ssr" >{{ cat.title }}</span>
-                <ng-template #ssr>
-                    <a [routerLink]="['/books', namespace, cat.id]"
-                        [attr.title]="cat.title">{{ cat.title }}</a>
-                </ng-template>
+                <div *ngIf="!(edit$ | async)">
+                    <span *ngIf="!isSSR; else ssr" >{{ cat.title }}</span>
+                    <ng-template #ssr>
+                        <a [routerLink]="['/books', namespace, cat.id]"
+                            [attr.title]="cat.title">{{ cat.title }}</a>
+                    </ng-template>
+                </div>
                 
                 <div *ngIf="edit$ | async" fxLayout="rows" style="padding:0 24px 0 2px">
                     <button *ngIf="!edited.isSelected(cat.id); else edit_block"
