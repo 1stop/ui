@@ -66,9 +66,11 @@ export class TextComponent implements OnInit {
       if ( this.lst_id ) {
         const isServer = isPlatformServer(this.platformId);
         // const isServer = true;
-
-        each(get(state.texts, `${state.category}.entities`), (item) => {
+        //each(get(state.texts, `${state.category}.entities`), (item) => {
+        each(get(state.texts, `${state.category}.ids`), (id) => {
+          let item = get(state.texts, `${state.category}.entities[${id}]`, null);
           //if ( item.text !== '' ) {
+          if (item) {
             if ( item.id === this.lst_id ) {
               this._title.setTitle(`${item.title}| ProAToZ`);
               this._meta.updateTag({
@@ -90,7 +92,7 @@ export class TextComponent implements OnInit {
             if (!isServer) {
               this.texts.push(item);
             }
-          //}
+          }
         });
 
         setTimeout(()=>{
