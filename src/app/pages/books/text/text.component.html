@@ -36,9 +36,16 @@
                  [innerHtml]="txt.text"></div>
         </div>
     </ng-template>
+    <div *ngIf="(edit$ | async)" fxFlex="10" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="10px" 
+        style="border-top: 1px solid gray;">
+        <!-- <button mat-raised-button (click)="clear()">Clear</button> -->
+        <button mat-raised-button 
+            style="background-color:#273636; color:white;" (click)="save()">Save</button>
+        <span fxFlex="2"></span>
+    </div>
 </div>
 
-<div style="position:absolute; bottom:10px; margin-left:10px; z-index:100"
+<!-- <div style="position:absolute; bottom:10px; margin-left:10px; z-index:100"
     *ngIf="(edit$ | async)">
     <button mat-button (click)="save()">Save</button>
-</div>
+</div> -->
