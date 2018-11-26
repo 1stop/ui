@@ -60,7 +60,6 @@ export class MainComponent implements OnInit {
       width: '80vw',
       data: ns
     }).afterClosed().subscribe((data) => {
-      console.log('close', data);
       if ( data ) {
         this._http.put(`/api/namespaces/${data.id}`, {
           title: data.title,

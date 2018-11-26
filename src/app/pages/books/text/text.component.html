@@ -7,19 +7,19 @@
                 <mat-icon>edit</mat-icon>
                 <span style="margin-left:5px">Edit</span>
             </ng-template>
-            <div style="height:100vh">
+            <div style="height:100%">
                 <app-text-editor [code]="text" 
-                                 (change)="text = $event">
+                    (change)="updateText($event)">
                 </app-text-editor>
             </div>
         </mat-tab>
         <mat-tab>
             <ng-template mat-tab-label>
                 <mat-icon>visibility</mat-icon>
-                <span style="margin-left:5px">View</span>
+                <span style="margin-left:5px;">View</span>
             </ng-template>
             <!-- <div style="margin:10px" (click)="handleClick($event)" style="word-break: break-word;" [innerHtml]="text"></div -->
-            <div style="margin:10px" (click)="handleClick($event)" style="overflow-x: auto;" [innerHtml]="text"></div>
+            <div style="margin:10px;padding:5px;overflow-x:auto;" (click)="handleClick($event)" [innerHtml]="text"></div>
         </mat-tab>
     </mat-tab-group>
 
@@ -32,16 +32,16 @@
             <h1 [id]="txt.id"><b>{{txt.title}}</b></h1>
             <!-- <div (click)="handleClick($event)" style="word-break: break-word;"
                  [innerHtml]="txt.text"></div> -->
-            <div (click)="handleClick($event)" style="overflow-x: auto;"
+            <div (click)="handleClick($event)" style="overflow-x:auto;"
                  [innerHtml]="txt.text"></div>
         </div>
     </ng-template>
-    <div *ngIf="(edit$ | async)" fxFlex="10" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="10px" 
+    <div *ngIf="(edit$ | async)" fxFlex="64px" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px" 
         style="border-top: 1px solid gray;">
         <!-- <button mat-raised-button (click)="clear()">Clear</button> -->
+        <span fxFlex="2"></span>
         <button mat-raised-button 
             style="background-color:#273636; color:white;" (click)="save()">Save</button>
-        <span fxFlex="2"></span>
     </div>
 </div>
 

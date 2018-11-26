@@ -1,1 +1,6 @@
-<div id="text-editor"></div>
+<!-- <div id="text-editor"></div> -->
+<editor 
+    style="height:100%;width:100%" 
+    [init]="config" 
+    [ngModel]="text" 
+    (onChange)="recordChange($event)"></editor>

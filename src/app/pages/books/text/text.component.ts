@@ -129,4 +129,8 @@ export class TextComponent implements OnInit {
       }
     }
   }
+
+  updateText(text) {
+    this.text = text;
+  }
 }

@@ -36,6 +36,7 @@
     "@nguniversal/express-engine": "^7.0.2",
     "@nguniversal/module-map-ngfactory-loader": "^7.0.2",
     "@nicky-lenaers/ngx-scroll-to": "^1.1.1",
+    "@tinymce/tinymce-angular": "^2.3.1",
     "core-js": "^2.4.1",
     "firebase": "^5.5.8",
     "firebaseui": "^3.1.1",
