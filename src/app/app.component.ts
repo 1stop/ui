@@ -33,7 +33,6 @@ export class AppComponent implements OnInit {
     this.searchbar$ = this._store.select('browser').pipe(
                         map(state => state.searchbar )
                       );
-    console.log('search-bar', this._router);
     if (isPlatformBrowser(this.platformId) && environment.production) {
       ga('create', 'UA-113077174-1', 'auto');
       ga('send', 'pageview');
