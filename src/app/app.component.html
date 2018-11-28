@@ -15,7 +15,7 @@
                 <app-search-bar></app-search-bar>
             </div>
 
-            <div fxHide fxFlex="60" *ngIf="!searching" [fxShow.lt-sm]="true">
+            <div fxHide fxFlex="60" *ngIf="!searching && (_router.url !== '/')" [fxShow.lt-sm]="true">
                 <button mat-icon-button (click)="searching=true"
                     style="float:right">
                     <mat-icon>search</mat-icon>
