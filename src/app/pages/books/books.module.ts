@@ -21,6 +21,7 @@ import { CategoryEffects } from '../../state/effects/category';
 import { TextEffects } from '../../state/effects/text';
 import { TextEditorModule } from '../../element/text-editor/text-editor.module';
 import { NamespaceEffects } from '../../state/effects/namespace';
+import { SafehtmlPipe } from './../../pipe/safehtml.pipe';
 
 @NgModule({
     imports: [
@@ -59,7 +60,8 @@ import { NamespaceEffects } from '../../state/effects/namespace';
         BooksComponent,
         CategoryComponent,
         ListComponent,
-        TextComponent
+        TextComponent,
+        SafehtmlPipe
     ],
     providers: [
         BooksService

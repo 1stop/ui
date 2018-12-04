@@ -33,7 +33,7 @@
             <!-- <div (click)="handleClick($event)" style="word-break: break-word;"
                  [innerHtml]="txt.text"></div> -->
             <div (click)="handleClick($event)" style="overflow-x:auto;"
-                 [innerHtml]="txt.text"></div>
+                 [innerHtml]="(txt.text | safehtml)"></div>
         </div>
     </ng-template>
     <div *ngIf="(edit$ | async)" fxFlex="64px" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px" 
