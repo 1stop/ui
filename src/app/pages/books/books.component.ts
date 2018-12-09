@@ -2,10 +2,10 @@ import { Component, OnInit, ApplicationRef, PLATFORM_ID, Inject } from '@angular
 import { Store } from '@ngrx/store';
 import * as browser from '../../state/actions/browser';
 import { UserService } from '../../services/user.service';
-import { map as o_map, mergeMap, filter, first, combineLatest, take } from 'rxjs/operators';
+import { map as o_map, mergeMap, filter, combineLatest, take } from 'rxjs/operators';
 import { Observable, of, merge, ReplaySubject } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import * as category from '../../state/actions/category';
 import * as text from '../../state/actions/text';
 import { Category } from '../../model/category';
@@ -13,8 +13,8 @@ import get from 'lodash-es/get';
 import compact from 'lodash-es/compact';
 import { SearchService } from '../../element/search-bar/search-bar.service';
 import { ObservableMedia } from '@angular/flex-layout';
-import map from 'lodash-es/map';
 import { isPlatformBrowser } from '@angular/common';
+import { environment } from '../../../environments/environment';
 
 declare var ga;
 
@@ -136,7 +136,9 @@ export class BooksComponent implements OnInit {
                 }
             })
         ).subscribe(() => {
-            if ( this.namespace && isPlatformBrowser(this.platformId)) {
+            if ( this.namespace
+                && isPlatformBrowser(this.platformId)
+                && environment.production ) {
                 ga('set', 'page', `/${this.namespace}l`);
                 ga('send', 'pageview');
             }
