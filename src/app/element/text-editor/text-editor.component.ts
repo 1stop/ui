@@ -44,6 +44,7 @@ export class TextEditorComponent {
           '//www.tinymce.com/css/codepen.min.css'
         ],
         branding: false,
+        relative_urls: false,
         // autoresize_on_init: true,
         // autoresize_bottom_margin: 50,
         /*images_upload_handler: function (blobInfo, success, failure) {
