@@ -5,7 +5,7 @@
             [class.selected]="lst_id == list.id" 
             class="item"
             [routerLink]="['/books', namespaceId, categoryId, list.id]"
-            [queryParams]="{title: list.title, page: 'text'}"
+            [queryParams]="{title: list.title, page: 'text', query: query}"
             [attr.title]="list.title">{{ list.title }}</a>
 
         <div *ngIf="edit$ | async" fxLayout="rows" style="padding: 0 0;">

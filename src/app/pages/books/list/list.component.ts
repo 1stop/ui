@@ -33,6 +33,7 @@ export class ListComponent implements OnInit {
   lst_id: number;
   namespace: number;
   category: number;
+  query: any;
 
   constructor(private _route: ActivatedRoute,
               private _store: Store<any>,
@@ -44,6 +45,10 @@ export class ListComponent implements OnInit {
       this.namespace = +params['namespace'];
       this.category = +params['category'];
       this.lst_id = +params['list'];
+    });
+
+    this._route.queryParams.subscribe((params) => {
+      this.query = params['query'];
     });
 
     this.edit$ = this._store.select('browser').pipe(
