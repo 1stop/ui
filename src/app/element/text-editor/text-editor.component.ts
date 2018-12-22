@@ -57,41 +57,25 @@ export class TextEditorComponent {
         relative_urls: false,
         // autoresize_on_init: true,
         // autoresize_bottom_margin: 50,
-        /*images_upload_handler: function (blobInfo, success, failure) {
-
-            var xhr, formData;
-        
-            xhr = new XMLHttpRequest();
-            xhr.withCredentials = false;
-            xhr.open('POST', 'postAcceptor.php');
-        
-            xhr.onload = function() {
-              var json;
-        
-              if (xhr.status != 200) {
-                failure('HTTP Error: ' + xhr.status);
-                return;
-              }
-        
-              json = JSON.parse(xhr.responseText);
-        
-              if (!json || typeof json.location != 'string') {
-                failure('Invalid JSON: ' + xhr.responseText);
-                return;
-              }
-        
-              success(json.location);
-            };
-        
-            formData = new FormData();
-            formData.append('file', blobInfo.blob(), blobInfo.filename());
-        
-            xhr.send(formData);
-          }*/
+        images_upload_handler: (blobInfo, success)=> {
+            
+            let blob = blobInfo.blob();
+            const filePath = `${Math.random().toString(36).substr(2, 5)}_${blob.name}`;
+                const fileRef = this.storage.ref(filePath);
+                const task = this.storage.upload(filePath, blob);
+                task.snapshotChanges().pipe(
+                    finalize(() => {
+                        fileRef.getDownloadURL().subscribe((url) => {
+                            success(url, blob.name);
+                        });
+                    })
+                    )
+                .subscribe();
+          }
     };
 
-    // constructor(public _myElement: ElementRef,
-    //             private storage: AngularFireStorage) {}
+    constructor(public _myElement: ElementRef,
+                private storage: AngularFireStorage) {}
 
     ngOnInit() {
         this.text = cloneDeep(this.code);
