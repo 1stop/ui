@@ -8,6 +8,8 @@ import { finalize } from 'rxjs/operators';
 import { EditorModule } from '@tinymce/tinymce-angular';
 import cloneDeep from 'lodash-es/cloneDeep';
 
+// import './../../../public/vendor/ckeditor/ckeditor.js';
+
 @Component({
     selector: 'app-text-editor',
     templateUrl: './text-editor.component.html',
@@ -21,6 +23,12 @@ export class TextEditorComponent {
 
     text: string;
 
+    // public readonly ckconfig = {
+    //     // extraPlugins : 'autogrow'
+    //     width : '100%',
+    //     height: 'calc(100vh - 330px)',
+    // }
+
     public readonly config: any = {
         height: 'calc(100vh - 330px)',
         theme: 'modern',
@@ -33,6 +41,8 @@ export class TextEditorComponent {
         // toolbar: ['formatselect | bold italic strikethrough forecolor backcolor',
         //  'link | alignleft aligncenter alignright alignjustify  | numlist bullist outdent indent  | removeformat',
         // ],
+        toolbar: `undo redo | styleselect | bold italic | fontselect | fontsizeselect |
+            alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image`,
         image_advtab: true,
         imagetools_toolbar: 'rotateleft rotateright | flipv fliph | editimage imageoptions',
         templates: [
@@ -127,4 +137,8 @@ export class TextEditorComponent {
         //this.editor.remove();
         //console.log('destroy');
     }
+
+    // onChange(change) {
+    //     this.change.emit(change);
+    // }
 }
