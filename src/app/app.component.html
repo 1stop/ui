@@ -3,10 +3,14 @@
         <mat-toolbar fxLayout="row"
                      fxLayoutAlign="space-between center"
                      class="mat-elevation-z2"
+                     style="background:white"
                      [class.fullTopbar]="searching">
-            <a mat-button class="home-btn" 
-                    *ngIf="!searching" 
-                    [routerLink]="['']">Proatoz</a>
+            <a *ngIf="!searching" 
+               [routerLink]="['']">
+                <img src="https://firebasestorage.googleapis.com/v0/b/osha-b65ae.appspot.com/o/WhatsApp%20Image%202018-12-23%20at%201.07.21%20PM.jpeg?alt=media&token=0d62cd5e-9c33-40db-a720-65c253437d93" 
+                style="height: 36px" />
+            </a>
+            
             <div fxFlex fxLayout="row"
                  *ngIf="(searchbar$ | async)"
                  [fxHide.lt-sm]="true"
