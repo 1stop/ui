@@ -32,7 +32,7 @@
             <div fxLayout="row" fxLayoutAlign="space-between">
                 <h1 [id]="txt.id"><b>{{txt.title}}</b></h1>
                 <div fxLayoutGap="10px">
-                    <mat-icon matTooltip="Report" (click)="openReportDialog(txt.id, txt.title)" class="text-card-icon">error_outline</mat-icon>
+                    <mat-icon *ngIf="_user.auth | async" matTooltip="Report" (click)="openReportDialog(txt.id, txt.title)" class="text-card-icon">error_outline</mat-icon>
                     <mat-icon matTooltip="Copy" (click)="copyText(txt)" class="text-card-icon">content_copy</mat-icon>
                 </div>
             </div>

@@ -11,6 +11,7 @@ import { HttpClient } from '@angular/common/http';
 import * as text from '../../../state/actions/text';
 import { Text } from '../../../model/text';
 import { BooksService } from './../books.service';
+import { UserService } from '../../../services/user.service';
 import { ReportTextDialogComponent } from './report-text-dialog/report-text-dialog.component';
 import each from 'lodash-es/each';
 import get from 'lodash-es/get';
@@ -50,7 +51,8 @@ export class TextComponent implements OnInit {
               @Inject(PLATFORM_ID) private platformId: Object,
               private _title: Title,
               private _meta: Meta,
-              private _dialog: MatDialog) { }
+              private _dialog: MatDialog,
+              public _user: UserService ) { }
 
   ngOnInit() {
     this.edit$ = this._store.select('browser').pipe(
