@@ -79,8 +79,4 @@ export class CategoryComponent implements OnInit {
         this.edited.deselect(id);
       });
   }
-
-  opend(id: string) {
-    this.select.emit({id: id, type: 'category'});
-  }
 }

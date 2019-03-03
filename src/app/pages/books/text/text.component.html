@@ -28,12 +28,18 @@
     </ng-template> -->
 
     <ng-template *ngIf="!(edit$ | async)" ngFor let-txt [ngForOf]= "texts">
-        <div class="text-card" [class.selected]="txt.id == lst_id">
-            <h1 [id]="txt.id"><b>{{txt.title}}</b></h1>
+        <div class="text-card" [id]="txt.id" [class.selected]="txt.id == lst_id">
+            <div fxLayout="row" fxLayoutAlign="space-between">
+                <h1 [id]="txt.id"><b>{{txt.title}}</b></h1>
+                <div fxLayoutGap="10px">
+                    <mat-icon matTooltip="Report" (click)="openReportDialog(txt.id, txt.title)" class="text-card-icon">error_outline</mat-icon>
+                    <mat-icon matTooltip="Copy" (click)="copyText(txt)" class="text-card-icon">content_copy</mat-icon>
+                </div>
+            </div>
             <!-- <div (click)="handleClick($event)" style="word-break: break-word;"
                  [innerHtml]="txt.text"></div> -->
             <div (click)="handleClick($event)" style="overflow-x:auto;"
-                 [innerHtml]="(txt.text | safehtml)"></div>
+                    [innerHtml]="(txt.text | safehtml)"></div>
         </div>
     </ng-template>
     <div *ngIf="(edit$ | async)" fxFlex="64px" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px" 

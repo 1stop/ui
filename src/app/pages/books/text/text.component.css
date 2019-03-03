@@ -32,3 +32,12 @@
     box-shadow: 5px 5px 8px #888888;
     border: 0.5px solid gray;
 }
+
+.text-card-icon {
+    visibility: hidden;
+    cursor: pointer;
+}
+
+.text-card:hover .text-card-icon {
+    visibility: visible;
+}

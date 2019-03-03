@@ -1,0 +1,19 @@
+<!-- <h1 mat-dialog-title>Report {{textTitle}}</h1> -->
+<h1 mat-dialog-title>Report</h1>
+<div mat-dialog-content>
+  <mat-form-field>
+    <textarea matInput 
+        type="text"
+        [(ngModel)]="msg"
+        matAutosizeMaxRows="5" 
+        matAutosizeMinRows="5"
+        matTextareaAutosize="true"
+        placeholder="Message"></textarea>
+        <input matInput #message maxlength="256" placeholder="Message">
+        <mat-hint align="end">{{msg.length}} / 256</mat-hint>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button style="background-color:#273636; color:white;" 
+    (click)=submit()>Submit</button>
+</div>

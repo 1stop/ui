@@ -6,11 +6,14 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { CategoryComponent } from './category/category.component';
 import { CommonModule } from '@angular/common';
 import { MatIconModule, MatButtonModule, MatListModule, MatChipsModule, MatFormFieldModule, MatTabsModule } from '@angular/material';
+import { MatInputModule } from '@angular/material/input';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { FormsModule } from '@angular/forms';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { SplitModule } from '../../directive/split/split.module';
 import { ListComponent } from './list/list.component';
 import { TextComponent } from './text/text.component';
+import { ReportTextDialogComponent } from './text/report-text-dialog/report-text-dialog.component';
 import { StoreModule } from '@ngrx/store';
 import { ScrollToModule } from '@nicky-lenaers/ngx-scroll-to';
 import { categoryReducer } from '../../state/reducer/category';
@@ -54,17 +57,22 @@ import { SafehtmlPipe } from './../../pipe/safehtml.pipe';
         TextEditorModule,
         MatTabsModule,
         MatExpansionModule,
-        ScrollToModule
+        MatTooltipModule,
+        MatInputModule
     ],
     declarations: [
         BooksComponent,
         CategoryComponent,
         ListComponent,
         TextComponent,
-        SafehtmlPipe
+        SafehtmlPipe,
+        ReportTextDialogComponent
     ],
     providers: [
         BooksService
+    ],
+    entryComponents: [
+        ReportTextDialogComponent
     ]
 })
 export class BooksModule {}

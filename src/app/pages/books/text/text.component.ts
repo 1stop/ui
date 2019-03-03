@@ -1,5 +1,6 @@
 import { Component, OnInit, Input,
          Output, EventEmitter, PLATFORM_ID, Inject } from '@angular/core';
+import { MatDialog } from '@angular/material';
 import { Subject, Subscription, Observable, combineLatest, of } from 'rxjs';
 import { ENTER, COMMA, SPACE } from '@angular/cdk/keycodes';
 import { MatSnackBar } from '@angular/material';
@@ -10,6 +11,7 @@ import { HttpClient } from '@angular/common/http';
 import * as text from '../../../state/actions/text';
 import { Text } from '../../../model/text';
 import { BooksService } from './../books.service';
+import { ReportTextDialogComponent } from './report-text-dialog/report-text-dialog.component';
 import each from 'lodash-es/each';
 import get from 'lodash-es/get';
 import join from 'lodash-es/join';
@@ -47,7 +49,8 @@ export class TextComponent implements OnInit {
               private _books: BooksService,
               @Inject(PLATFORM_ID) private platformId: Object,
               private _title: Title,
-              private _meta: Meta) { }
+              private _meta: Meta,
+              private _dialog: MatDialog) { }
 
   ngOnInit() {
     this.edit$ = this._store.select('browser').pipe(
@@ -132,5 +135,33 @@ export class TextComponent implements OnInit {
 
   updateText(text) {
     this.text = text;
+  }
+
+  copyText(item) {
+    let doc = new DOMParser().parseFromString(item.text || '', 'text/html');
+    var text = doc.body.textContent;
+
+    let el = document.createElement('textarea');
+    el.value = text;
+    document.body.appendChild(el);
+    el.select();
+    document.execCommand('copy');
+    document.body.removeChild(el);
+  }
+
+  openReportDialog(id, title) {
+    this._dialog.open(ReportTextDialogComponent, {
+      data: {
+        id: id, 
+        title: title
+      }
+    }).afterClosed().subscribe((data) => {
+      if ( data.id && data.message ) {
+        this._http.post('/api/reports', {
+          text: data.id,
+          message: data.message,
+        });
+      }
+    });
   }
 }
