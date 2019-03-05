@@ -144,7 +144,7 @@ export class TextComponent implements OnInit {
     var text = doc.body.textContent;
 
     let el = document.createElement('textarea');
-    el.value = text;
+    el.value = `${item.title}\n${text}`;
     document.body.appendChild(el);
     el.select();
     document.execCommand('copy');
