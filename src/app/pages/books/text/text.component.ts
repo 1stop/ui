@@ -158,7 +158,7 @@ export class TextComponent implements OnInit {
         title: title
       }
     }).afterClosed().subscribe((data) => {
-      if ( data.id && data.message ) {
+      if ( data && data.id && data.message ) {
         this._http.post('/api/reports', {
           text: data.id,
           message: data.message,

@@ -1,0 +1,115 @@
+<div id="firebaseui-auth-container">
+    <div id="firebaseui-auth-container" lang="en">
+        <mat-tab-group (selectedTabChange)="clearFieldsContentAndMessage()">
+            <mat-tab label="Login">
+                <div fxLayout="column">
+                    <br>
+
+                    <mat-form-field>
+                        <input matInput placeholder="Email" [formControl]="email" required>
+                    </mat-form-field>
+
+                    <mat-form-field>
+                        <input matInput type="password" placeholder="Password" [formControl]="password" required>
+                    </mat-form-field>
+
+                    <div class="message-container">
+                        <span class="error-message">
+                            {{errorMessage}}
+                        </span>
+
+                        <span>
+                            {{statusMessage}}
+                        </span>
+                    </div>
+
+                    <br>
+
+                    <div fxLayoutGap="10px" fxLayout="row" fxLayoutAlign="center center">
+
+                        <button mat-raised-button style="background-color:#273636; color:white" (click)="login('password')">
+                            Login
+                        </button>
+
+                        <button mat-raised-button (click)="resetPassword()">Reset</button>
+                        
+                    </div>
+                </div>
+
+                <br>
+
+                <div fxLayout="row" fxLayoutAlign="center center"><span>or</span></div>
+
+                <div class="firebaseui-container firebaseui-page-provider-sign-in firebaseui-id-page-provider-sign-in">
+                    <div class="firebaseui-card-content">
+                        <form onsubmit="return false;">
+                            <ul class="firebaseui-idp-list">
+                                <li class="firebaseui-list-item">
+                                    <button (click)="login('google')" class="firebaseui-idp-button mdl-button mdl-js-button mdl-button--raised firebaseui-idp-google firebaseui-id-idp-button" data-provider-id="google.com" data-upgraded=",MaterialButton"><span class="firebaseui-idp-icon-wrapper"><img class="firebaseui-idp-icon" alt="" src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"></span><span class="firebaseui-idp-text firebaseui-idp-text-long">Sign in with Google</span><span class="firebaseui-idp-text firebaseui-idp-text-short">Google</span></button>
+                                </li>
+                                <li class="firebaseui-list-item">
+                                    <button (click)="login('facebook')" class="firebaseui-idp-button mdl-button mdl-js-button mdl-button--raised firebaseui-idp-facebook firebaseui-id-idp-button" data-provider-id="facebook.com" data-upgraded=",MaterialButton"><span class="firebaseui-idp-icon-wrapper"><img class="firebaseui-idp-icon" alt="" src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/facebook.svg"></span><span class="firebaseui-idp-text firebaseui-idp-text-long">Sign in with Facebook</span><span class="firebaseui-idp-text firebaseui-idp-text-short">Facebook</span></button>
+                                </li>
+                                <!-- <li class="firebaseui-list-item">
+                                    <button (click)="login('email')" class="firebaseui-idp-button mdl-button mdl-js-button mdl-button--raised firebaseui-idp-password firebaseui-id-idp-button" data-provider-id="password" data-upgraded=",MaterialButton"><span class="firebaseui-idp-icon-wrapper"><img class="firebaseui-idp-icon" alt="" src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/mail.svg"></span><span class="firebaseui-idp-text firebaseui-idp-text-long">Sign in with email</span><span class="firebaseui-idp-text firebaseui-idp-text-short">Email</span></button>
+                                </li> -->
+                            </ul>
+                        </form>
+                    </div>
+                    <div class="firebaseui-card-footer firebaseui-provider-sign-in-footer">
+                        <p class="firebaseui-tos firebaseui-tospp-full-message">By continuing, you are indicating that you accept our <a href="https://en.wikipedia.org/wiki/Terms_of_service" class="firebaseui-link firebaseui-tos-link" target="_blank">Terms of Service</a> and <a href="https://www.google.com" class="firebaseui-link firebaseui-pp-link" target="_blank">Privacy Policy</a>.</p>
+                    </div>
+                </div>
+            </mat-tab>
+
+            <mat-tab label="Sign Up">
+                <div fxLayout="column">
+                    <br>
+
+                    <form [formGroup]="userDetailsForm" (ngSubmit)="register(userDetailsForm.value)">
+                        <mat-form-field class="full-width">
+                            <input matInput placeholder="Email" formControlName="email" required>
+                            <!-- <mat-error *ngFor="let validation of account_validation_messages.email">
+                                <mat-error class="error-message" *ngIf="userDetailsForm.get('email').hasError(validation.type) && (userDetailsForm.get('email').dirty || userDetailsForm.get('email').touched)">{{validation.message}}</mat-error>
+                            </mat-error> -->
+                        </mat-form-field>
+
+                        <div formGroupName="matching_passwords">
+                            <mat-form-field class="full-width">
+                                <input matInput type="password" placeholder="Password" formControlName="password" required>
+                                <mat-icon matSuffix matTooltip="At least 6 characters which contain uppercase letter, lowercase letter and number">info</mat-icon>
+                                <!-- <mat-error *ngFor="let validation of account_validation_messages.password">
+                                    <mat-error class="error-message" *ngIf="userDetailsForm.get('matching_passwords').get('password').hasError(validation.type) && (userDetailsForm.get('matching_passwords').get('password').dirty || userDetailsForm.get('matching_passwords').get('password').touched)">{{validation.message}}</mat-error>
+                                </mat-error> -->
+                            </mat-form-field>
+                            
+                            <mat-form-field class="full-width">
+                                <input matInput type="password" placeholder="Confirm Password" formControlName="confirm_password"  [errorStateMatcher]="parentErrorStateMatcher" required>
+                                <!-- <mat-error *ngFor="let validation of account_validation_messages.confirm_password">
+                                    <mat-error class="error-message" *ngIf="(userDetailsForm.get('matching_passwords').get('confirm_password').hasError(validation.type)|| userDetailsForm.get('matching_passwords').hasError(validation.type)) && (userDetailsForm.get('matching_passwords').get('confirm_password').dirty || userDetailsForm.get('matching_passwords').get('confirm_password').touched)">{{validation.message}}</mat-error>
+                                </mat-error> -->
+                                <mat-icon matSuffix matTooltip="Password Matched"
+                                    *ngIf="userDetailsForm.get('matching_passwords').get('password').valid && userDetailsForm.get('matching_passwords').get('password').value === userDetailsForm.get('matching_passwords').get('confirm_password').value">done</mat-icon>
+                            </mat-form-field>
+                            
+                        </div>
+                        <!-- <button class="submit-btn" color="primary" mat-raised-button type="submit" [disabled]="!userDetailsForm.get('matching_passwords').valid">Create</button> -->
+                        <div class="message-container">
+                            <span class="error-message">
+                                {{errorMessage}}
+                            </span>
+                        </div>
+
+                        <br>
+    
+                        <div fxLayoutGap="10px" fxLayout="row" fxLayoutAlign="end center">
+                            <button class="submit-btn" mat-raised-button type="submit" [ngClass]="{'btn': !disabled}" [disabled]="!userDetailsForm.get('matching_passwords').valid">
+                                Create
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </mat-tab>
+        </mat-tab-group>
+    </div>
+</div>

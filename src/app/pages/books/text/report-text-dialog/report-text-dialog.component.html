@@ -5,11 +5,11 @@
     <textarea matInput 
         type="text"
         [(ngModel)]="msg"
+        [maxLength]="256"
         matAutosizeMaxRows="5" 
         matAutosizeMinRows="5"
         matTextareaAutosize="true"
         placeholder="Message"></textarea>
-        <input matInput #message maxlength="256" placeholder="Message">
         <mat-hint align="end">{{msg.length}} / 256</mat-hint>
   </mat-form-field>
 </div>

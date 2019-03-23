@@ -46,10 +46,12 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule} from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
-import { UserService, LoginDialogComponent } from './services/user.service';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { UserService, UserDetailsComponent } from './services/user.service';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MainModule } from './pages/main/main.module';
+import { LoginDialogModule } from './login/login.module';
 import { browserReducer } from './state/reducer/browser';
 import { StoreModule } from '@ngrx/store';
 import { SearchBarModule } from './element/search-bar/search-bar.module';
@@ -105,8 +107,8 @@ export class RavenErrorHandler implements ErrorHandler {
     // ExcerptPipe,
     // MainComponent,
     // DialogComponent,
-    LoginDialogComponent,
-    AvatarComponent
+    AvatarComponent,
+    UserDetailsComponent
   ],
   imports: [
     BrowserModule.withServerTransition({appId: 'my-app'}),
@@ -144,9 +146,10 @@ export class RavenErrorHandler implements ErrorHandler {
     StoreModule.forRoot({ browser: browserReducer}),
     EffectsModule.forRoot([]),
     SearchBarModule,
-
+    LoginDialogModule,
     MainModule,
-    BooksModule
+    BooksModule,
+    MatTooltipModule
   ],
   providers: [
     AppState,
@@ -174,7 +177,7 @@ export class RavenErrorHandler implements ErrorHandler {
   ],
   bootstrap: [AppComponent],
   entryComponents: [
-    LoginDialogComponent
+    UserDetailsComponent
   ]
 })
 export class AppModule { }

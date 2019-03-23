@@ -8,7 +8,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 })
 export class ReportTextDialogComponent implements OnInit {
     
-    textId: string;
+    // textId: string;
     // textTitle: string;
     // message: FormControl = new FormControl();
     msg: string = '';
@@ -18,14 +18,15 @@ export class ReportTextDialogComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit() {
-    if ( this.data ) {
-        this.textId = this.data.id;
-    }
+    // if ( this.data ) {
+    //     this.textId = this.data.id;
+    // }
   }
 
   submit() {
     this.dialogRef.close({
-        id: this.textId,
+        // id: this.textId,
+        id: this.data.id,
         message: this.msg
     });
   }

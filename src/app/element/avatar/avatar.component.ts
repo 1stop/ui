@@ -21,23 +21,34 @@ const defaultColors = [
         height:48px;
         width:48px;
         border-radius: 50%;
+        text-align: center;
+        color: white;
+    }
+    .img:hover {
+        cursor: pointer;
     }
     `],
     template: `
-    <div class='img'>
+    <div class='img' [ngStyle]="{'background-color': background}">
         <img *ngIf="img"
         [src]="img"
         />
+        <div *ngIf="!img" style="padding-top: 8px;">
+            {{name | uppercase}}</div>
     </div>`
 })
 export class AvatarComponent {
     @Input() set data(v: any){
         if ( v ) {
             this.background = this.getRandomColor(v.uid);
-            this.img = v.photoURL;
+            if (v.photoURL)
+                this.img = v.photoURL;
+            else
+                this.name = v.email[0];
         }
     }
 
+    name = '';
     background = '';
     img = '';
     _calculateAsciiCode(value: string) {

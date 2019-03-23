@@ -1,0 +1,21 @@
+.error-message {
+    color: red;
+}
+
+.message-container {
+    text-align: center;
+    font-size: 12px;
+}
+
+mat-icon {
+    cursor: pointer;
+}
+
+.full-width {
+    width:100%;
+}
+
+.btn {
+    background-color:#273636; 
+    color:white
+}
