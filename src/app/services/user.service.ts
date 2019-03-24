@@ -20,12 +20,15 @@ export class UserService {
                 public afAuth: AngularFireAuth,
                 private _ref: ApplicationRef) {
         this.afAuth.auth.onAuthStateChanged((user) => {
+            this._ref.tick();
             this.user.next(user);
 
             if ( user && ['sindrosa.24@gmail.com', 'chyeap89@gmail.com', 'greatspirit828@gmail.com', 'info@proatoz.com', 'ericyong96@gmail.com'].indexOf(user.email) !== -1) {
                 this.auth.next(true);
+            } else {
+                this.auth.next(false);
             }
-            this._ref.tick();
+            // this._ref.tick();
         });
     }
 
