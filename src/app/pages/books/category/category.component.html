@@ -24,14 +24,14 @@
                 <div *ngIf="edit$ | async" fxLayout="rows" style="padding:0 24px 0 2px">
                     <button *ngIf="!edited.isSelected(cat.id); else edit_block"
                             mat-icon-button 
-                            (click)="delete('category', cat.id, $event)" 
+                            (click)="delete(cat.id)" 
                             style="color:lightgray">
                         <mat-icon>close</mat-icon>
                     </button>
 
                     <ng-template #edit_block>
                         <button mat-icon-button 
-                        (click)="edit('category', cat.id, cat.title)" 
+                        (click)="edit(cat.id, cat.title)" 
                         style="color:lightgray">
                             <mat-icon>done</mat-icon>
                         </button>

@@ -72,7 +72,7 @@ export class CategoryComponent implements OnInit {
     });
   }
 
-  delete(id: number, $event) {
+  delete(id: number) {
     this._http.delete(`/api/categories/${id}`)
       .subscribe((v: {data: Namespace}) => {
         this._store.dispatch(new category.Delete(id));
