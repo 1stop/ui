@@ -104,7 +104,8 @@
                         <br>
     
                         <div fxLayoutGap="10px" fxLayout="row" fxLayoutAlign="end center">
-                            <button class="submit-btn" mat-raised-button type="submit" [ngClass]="{'btn': !disabled}" [disabled]="!userDetailsForm.get('matching_passwords').valid">
+                            <!-- <button class="submit-btn" mat-raised-button type="submit" [ngClass]="{'btn': !disabled}" [disabled]="!userDetailsForm.get('matching_passwords').valid"> -->
+                            <button class="submit-btn btn" mat-raised-button type="submit" [disabled]="!userDetailsForm.get('matching_passwords').valid">
                                 Create
                             </button>
                         </div>
