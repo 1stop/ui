@@ -84,7 +84,8 @@
                             </mat-form-field>
                             
                             <mat-form-field class="full-width">
-                                <input matInput type="password" placeholder="Confirm Password" formControlName="confirm_password"  [errorStateMatcher]="parentErrorStateMatcher" required>
+                                    <input matInput type="password" placeholder="Confirm Password" formControlName="confirm_password" required>
+                                <!-- <input matInput type="password" placeholder="Confirm Password" formControlName="confirm_password"  [errorStateMatcher]="parentErrorStateMatcher" required> -->
                                 <!-- <mat-error *ngFor="let validation of account_validation_messages.confirm_password">
                                     <mat-error class="error-message" *ngIf="(userDetailsForm.get('matching_passwords').get('confirm_password').hasError(validation.type)|| userDetailsForm.get('matching_passwords').hasError(validation.type)) && (userDetailsForm.get('matching_passwords').get('confirm_password').dirty || userDetailsForm.get('matching_passwords').get('confirm_password').touched)">{{validation.message}}</mat-error>
                                 </mat-error> -->
