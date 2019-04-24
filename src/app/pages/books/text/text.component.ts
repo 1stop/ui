@@ -119,6 +119,7 @@ export class TextComponent implements OnInit {
         text: this.text
       }).subscribe((v: {data: Text}) => {
         this._store.dispatch(new text.Update(state.category, <any>v.data));
+        this.openSnackBar('Saved!');
       });
     });
   }
@@ -149,6 +150,8 @@ export class TextComponent implements OnInit {
     el.select();
     document.execCommand('copy');
     document.body.removeChild(el);
+
+    this.openSnackBar('Text copied!');
   }
 
   openReportDialog(id, title) {
@@ -162,8 +165,16 @@ export class TextComponent implements OnInit {
         this._http.post('/api/reports', {
           text: data.id,
           message: data.message,
+        }).subscribe(()=>{
+          this.openSnackBar('Report Submitted');
         });
       }
+    });
+  }
+
+  openSnackBar(message: string) {
+    this.snackBar.open(message, '', {
+      duration: 1500,
     });
   }
 }

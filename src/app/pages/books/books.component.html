@@ -4,7 +4,7 @@
     <div fxFlex="20"
          fxFlex.lt-sm="100"
          [fxShow.gt-sm]="true"
-         [fxShow.lt-sm]="page == 'category'"
+         [fxShow.lt-sm]="page == 'category' || page == 'list'"
          splitArea
          (swipeleft)="swipe('text')">
         <app-category (select)="navigate($event)">
@@ -23,7 +23,7 @@
             <div
                 style="padding:0 1rem 0 1rem"
                 [fxShow.gt-sm]="true"
-                [fxShow.lt-sm]="page == 'text' || page == 'list' || page == undefined"
+                [fxShow.lt-sm]="page == 'text' || page == undefined"
                 (swiperight)="swipe('category')"
                 style="height:100%;width:100%">
                 <app-text *ngIf="list != undefined"

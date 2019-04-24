@@ -185,7 +185,7 @@ export class BooksComponent implements OnInit {
                     'category': item.id,
                     'list': listId,
                     'query': this.query,
-                    'page': this._media.isActive('lt-sm') ? 'list' : undefined
+                    'page': this._media.isActive('lt-sm') ? (this.page === 'text'? 'text' : 'list') : undefined
                 });
                 break;
             case 'list':
