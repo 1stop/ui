@@ -12,7 +12,7 @@ import { Category } from '../../model/category';
 import get from 'lodash-es/get';
 import compact from 'lodash-es/compact';
 import { SearchService } from '../../element/search-bar/search-bar.service';
-import { ObservableMedia } from '@angular/flex-layout';
+import { MediaObserver } from '@angular/flex-layout';
 import { isPlatformBrowser } from '@angular/common';
 import { environment } from '../../../environments/environment';
 
@@ -40,7 +40,7 @@ export class BooksComponent implements OnInit {
                 private _http: HttpClient,
                 private _router: Router,
                 private _search: SearchService,
-                private _media: ObservableMedia,
+                private _media: MediaObserver,
                 @Inject(PLATFORM_ID) private platformId: Object) {}
 
     ngOnInit() {
@@ -185,7 +185,7 @@ export class BooksComponent implements OnInit {
                     'category': item.id,
                     'list': listId,
                     'query': this.query,
-                    'page': this._media.isActive('lt-sm') ? (this.page === 'text'? 'text' : 'list') : undefined
+                    'page': this._media.isActive('lt-sm') ? 'list' : undefined
                 });
                 break;
             case 'list':
